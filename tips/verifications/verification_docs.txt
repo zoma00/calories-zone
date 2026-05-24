@@ -1,0 +1,147 @@
+https://support.google.com/googleplay/android-developer/answer/10841920?hl=en#zippy=%2Ci-didnt-receive-an-email-verification-code-what-should-i-do%2Chow-much-will-text-messages-or-calls-cost-when-verifying-my-phone-number%2Chow-should-i-enter-my-phone-number
+
+
+Skip to main content
+Help Center
+Community
+Announcements
+Play Console
+Play Console HelpPolicy Center
+Set up your developer accountVerify your developer identity information
+You can now request help from the Help page in your Play Console account.  If you don't have access to Play Console, ask your account admin for an invite.
+
+Verify your developer identity information
+As part of our ongoing efforts to keep Google Play a safe and trusted platform, you must complete the verification described on this page when setting up your Play Console developer account. This helps us to better understand developers and help prevent bad actors from distributing malware. Developers can complete verification in Play Console 60 days before their individual deadline by following the steps in this Help Center article.
+
+Important: Selecting the correct type of developer account for your situation and completing the necessary verification is key to a smooth onboarding experience. Learn about choosing a developer account type.
+Developer information that must be verified and is shown on Google Play
+This section describes the information you need to provide that will be shown to users on Google Play after it's been verified.
+
+Legal name and address
+As part of creating your Google Play developer account, you will be asked to link a Google Payments profile. This profile helps Google Play verify your developer identity.
+
+During the registration process, you can select an existing payment profile (if you have one), or you will have the option to create a new one. The type of payment profile is based on the type of developer account you want to create (personal or organization). Payments profiles for personal accounts and organization accounts have different information verification requirements.
+
+Personal account
+Organization account
+Be sure to review these Help Center articles for information on developer verification requirements and acceptable document types in your country/region.
+
+Developer email address
+All developers must provide and verify a developer email address that will be shown on Google Play. This is to help Google Play users learn more about the developer.
+
+The following steps describe how to verify your developer email address when providing contact information when creating your account or updating your information on the Developer account page in Play Console:
+
+Enter your email address.
+Click Verify email address. You will receive an email containing a 6-digit code.
+Enter the 6-digit code and click Verify.
+Developer phone number
+Organizations must provide and verify a developer phone number that will be shown on Google Play. This is to help Google Play users learn more about the developer.
+
+The following steps describe how to verify your developer phone number when providing contact information, creating your account or updating your information on the Account details (Developer account > About you > Contact details) page in Play Console:
+
+Enter your phone number in international format.
+Phone numbers in international format begin with a plus (+) sign, followed by the country code, the area code, and the phone number:
+
++(Country code)(Area code)(Phone number)
+Examples: +14155552671, +441234567890
+
+Choose whether you’d like to receive your verification code by text message or voice call.
+Click Verify phone number. You will receive a text message or voice call sharing a 6-digit code.
+Enter the 6-digit code and click Verify.
+Note: You will be required to complete the phone verification process whenever you update your developer phone number.
+
+Important: Korean developers with personal developer accounts must also provide a developer phone number and they will be blocked from publishing if they do not have one. Learn more about requirements for distributing apps in Korea.
+Website
+In February 2024, we introduced new verification requirements for developers who create new organization accounts. These requirements are described in this article, along with guidance for creating a website and the verification process.
+
+Other developers can optionally provide and verify a website to help Google verify your identity, which we recommend you do to help us keep Google Play safe.
+
+Contact information that Google uses to communicate with you
+To keep Google Play safe and protect users from abuse, you must verify your contact information. This information is not shown on Google Play.
+
+Verification are an effective way to keep spammers from abusing our systems, and verifiable contact details ensure that we have trusted means to communicate with developer account owners.
+
+Contact phone number
+The following steps describe how to verify your contact phone number when providing contact information when creating your account or updating your information on the About you(Developer account > About you)page in Play Console:
+
+Enter your phone number in international format.
+Phone numbers in international format begin with a plus (+) sign, followed by the country code, the area code, and the phone number:
+
++(Country code)(Area code)(Phone number)
+Examples: +14155552671, +441234567890
+
+Choose whether you’d like to receive your verification code by text message or voice call.
+Click Verify phone number. You will receive a text message or voice call sharing a 6-digit code.
+Enter the 6-digit code and click Verify.
+Note: You will be required to complete the phone verification process whenever you update your developer phone number.
+
+Contact email address
+The following steps describe how to verify your contact email address when creating your account or updating your information on the About you (Developer account > About you) page in Play Console (this email address will not be shown on Google Play; it will be used by Google to contact you if necessary):
+
+Enter your email address.
+Click Verify email address. You will receive an email containing a 6-digit code.
+Enter the 6-digit code and click Verify.
+Note: If the contact email address that you entered has already been verified as part of your Google account, you do not need to verify it again and can skip the email verification process. However, you will be required to complete the email verification process whenever you update your contact email address in the future.
+
+Other verification not shown on Google Play
+Device verification
+New personal accounts will be required to verify that they have access to a real Android mobile device using the Play Console mobile app before they can make their app available on Google Play.
+
+This is an important step in our ongoing efforts to improve user trust and safety for the billions of people that use Google Play. By requiring developers to verify that they have access to an Android device, we can help ensure that they are able to properly test their apps before making them available to users. This will help to improve the quality of apps on Google Play, and to keep users safe.
+
+Learn more about completing device verification.
+
+Frequently asked questions
+Email verification
+I didn't receive an email verification code. What should I do?
+If you’ve tried to verify your email address several times and you’re still unable to receive a verification code, we suggest that you do the following:
+
+Check your spam folder in case the message has been marked as spam.
+Verify your email address at a different time.
+Use a different email address.
+Phone number verification
+How should I enter my phone number?
+Enter your phone number for verification using the E.164 format.
+
+How much will text messages or calls cost when verifying my phone number?
+Depending on your country, you may be charged for the SMS or voice call that you receive. The cost of your text or voice messages will also vary based on your plan and provider, but will likely be standard text message and call charges. Contact your mobile phone provider for details.
+
+Text message delivery is slow. What should I do?
+What carriers are supported?
+The text message or voice call verification isn’t working. What should I do?
+General
+Can I submit apps while my verifications are pending?
+My organization has multiple developer accounts that share the same identity details. Is it possible to to reuse the same payments profile across these accounts to simplify the verification process?
+Why does Google Play publish my legal name or home address?
+Why is Google Play rejecting my verification documents?
+Related content
+Contact information requirements for developer accounts
+Manage your developer account contact information
+
+Give feedback about this article
+Was this helpful?YesNo
+Need more help?
+Try these next steps:
+Post to the help community
+Get answers from community members
+Contact us
+Tell us more and we’ll help you get there
+Set up your developer account
+Developer account registration payment methods and receipts
+Choose a developer account type
+Contact information requirements for developer accounts
+View and manage your developer account information (for Play Console Requirements-verified accounts)
+Verifying your Play Console developer account (for accounts created before September, 2023)
+Verify your developer identity information
+Download our organization verification guide
+Add developer account users and manage permissions
+Create and manage your Account Group
+Export a list of users with account access
+Create or update your developer profile
+Required information to create a Play Console developer account
+Keeping your developer account information up to date
+Manage email recipients
+Updating developer identity details managed by a Google Payments profile
+©2026 Google  Privacy Policy  Terms of Service
+Language
+

@@ -1,0 +1,60 @@
+ZombaCal Build Commands Guide
+
+Run all commands from the project root:
+/home/hazem-elbatawy/Downloads/zomba_cal
+
+Basic checks
+1. Run unit tests
+./gradlew testDebugUnitTest
+
+2. Build debug APK
+./gradlew assembleDebug
+
+3. Build release bundle
+./gradlew bundleRelease
+
+Useful local preview command
+Serve the browser preview locally:
+cd preview && python3 -m http.server 4173
+
+Install debug APK on phone
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+
+Main output paths
+- Debug APK:
+app/build/outputs/apk/debug/app-debug.apk
+
+- Release bundle:
+app/build/outputs/bundle/release/app-release.aab
+
+Signed release bundle setup
+If you want a signed upload bundle for Google Play, export these variables before running the release build:
+
+export ZOMBA_UPLOAD_STORE_FILE=/absolute/path/to/zomba-upload-key.jks
+export ZOMBA_UPLOAD_STORE_PASSWORD=your-store-password
+export ZOMBA_UPLOAD_KEY_ALIAS=zomba-upload
+export ZOMBA_UPLOAD_KEY_PASSWORD=your-key-password
+
+Then build:
+./gradlew bundleRelease
+
+Current known working commands in this workspace
+- ./gradlew testDebugUnitTest
+- ./gradlew assembleDebug
+- ./gradlew bundleRelease
+
+Current environment notes
+- Android SDK path is already configured in local.properties.
+- The project currently builds with compileSdk 35.
+- Gradle may show a warning that Android Gradle Plugin 8.5.2 was tested up to compileSdk 34. This warning did not block the debug build.
+
+Quick recommendation
+For normal development use this order:
+1. ./gradlew testDebugUnitTest
+2. ./gradlew assembleDebug
+3. adb install -r app/build/outputs/apk/debug/app-debug.apk
+
+For Play Store upload use this order:
+1. Export signing environment variables
+2. ./gradlew bundleRelease
+3. Upload app/build/outputs/bundle/release/app-release.aab to Play Console

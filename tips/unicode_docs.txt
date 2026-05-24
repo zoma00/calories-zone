@@ -1,0 +1,32 @@
+═══════════════════════════════════════════════════════════════
+Symbols & Separators:
+  U+2500   ─    Box drawing horizontal
+  U+2502   │    Box drawing vertical
+  U+2588   █    Full block
+  U+2591   ░    Light shade
+  U+2592   ▒    Medium shade
+  U+2593   ▓    Dark shade
+  U+2599   ▙    Block lower-left
+  U+25A0   ■    Black square
+  U+25CF   ●    Black circle
+
+Arrows:
+  U+2192   →    Right arrow
+  U+2190   ←    Left arrow
+  U+21D2   ⇒    Double right arrow
+  U+2193   ↓    Down arrow
+
+Warning / Info symbols:
+  U+26A0   ⚠    Warning sign
+  U+2714   ✔    Check mark
+  U+2718   ✘    Cross mark
+  U+2605   ★    Black star
+  U+25B6   ▶    Play triangle
+  ═══════════════════════════════════════════════════════════════
+
+
+2559   ╙ 
+2600   ☀ 
+2525   ┥
+2551   ║
+2659   ♙ 

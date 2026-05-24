@@ -1,0 +1,76 @@
+ZombaCal App Content Policy
+
+Purpose
+ZombaCal is a nutrition and wellness app for calorie calculation, meal logging, simple weight-management support, and general wellness guidance.
+
+App position
+- Health and fitness app
+- Nutrition and Weight Management category
+- Not a medical device
+- Not a diagnostic, treatment, or disease-management tool
+
+Allowed app content
+- Calorie estimates
+- Meal logging
+- Nutrition goal tracking
+- Weight-management support
+- General wellness tips
+- Generic educational content about food habits and daily tracking
+
+Allowed store listing claims
+- calorie calculator
+- meal tracker
+- nutrition tracking
+- weight management support
+- local profile and meal logging
+- general wellness guidance
+
+Prohibited claims
+- diagnosing diseases or conditions
+- treating, curing, or preventing medical conditions
+- replacing a doctor, dietitian, or healthcare professional
+- guaranteed weight-loss outcomes
+- clinical-grade or doctor-grade advice
+- disease-specific treatment advice
+
+AI content rules
+- AI output must be framed as general wellness guidance only.
+- AI output must not be presented as medical, diagnostic, or professional nutrition advice.
+- The first Play Store release should avoid strong marketing language such as AI doctor, AI dietitian, or expert medical coaching.
+
+Required disclaimer
+Use this text in the store listing and preferably inside the app:
+"ZombaCal is not a medical device and does not diagnose, treat, cure, or prevent any medical condition. Consult a qualified healthcare professional for medical advice."
+
+Privacy and data position
+- Current version stores profile and meal data locally on the device.
+- The privacy policy must clearly explain local data storage.
+- If cloud sync, analytics, or external AI services are added later, the privacy policy must be updated before release.
+
+Permissions policy
+- Request only permissions needed for core app functionality.
+- Avoid unnecessary sensitive or health-related permissions.
+- Remove unused permissions before submission.
+
+Store listing policy
+- Screenshots and description must match the actual app.
+- Avoid medical wording, before-and-after health promises, or exaggerated outcomes.
+- Keep the first release positioned as a simple nutrition tracker.
+
+Health apps declaration guidance
+- Planned declaration: Health and fitness -> Nutrition and Weight Management.
+- Do not declare the app as a Medical Device unless it later becomes a regulated medical product.
+
+Release blockers before paying or submitting
+1. No privacy policy.
+2. No non-medical disclaimer.
+3. Store description contains medical or disease claims.
+4. AI is marketed as expert or clinical advice.
+5. Health apps declaration answers are inconsistent with the app.
+
+Recommended launch path
+Release version 1 as a free, local-only nutrition tracker.
+Delay in-app billing, aggressive AI claims, and any medical-style features until after the first approval.
+
+Submission decision
+If the app keeps this scope, the Play review risk is manageable enough to prepare the documents first and then complete the developer signup.

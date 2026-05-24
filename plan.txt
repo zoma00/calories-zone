@@ -1,0 +1,10 @@
+ZombaCal AI MVP
+
+1. Collect age, height, weight, sex, activity level, and goal.
+2. Save the user profile locally on the device.
+3. Estimate BMR with Mifflin-St Jeor.
+4. Convert BMR into maintenance and target calories.
+5. Generate a macro split for protein, carbs, and fat.
+6. Log meals locally and track daily totals against the calorie target.
+7. Show coach-style AI guidance from a replaceable engine.
+8. Later: add a small on-device LLM for meal parsing, then Play Billing for premium features.

@@ -1,0 +1,24 @@
+
+The signing hooks are in place. I’m rebuilding the release bundle now to confirm the project still packages cleanly when no signing secrets are provided yet.
+
+Ran terminal command: ./gradlew bundleRelease
+
+The bundle still builds after the signing setup. I’m recording the new preview and release details in repo memory so the next pass can pick up the exact same path without rediscovering it.
+
+Read memory [](file:///home/hazem-elbatawy/.config/Code/User/workspaceStorage/0a12e5fa22d0fb93ad0f512215bdaf4e/GitHub.copilot-chat/memory-tool/memories/repo/android-build.md)
+
+Inserted into memory file [](file:///home/hazem-elbatawy/.config/Code/User/workspaceStorage/0a12e5fa22d0fb93ad0f512215bdaf4e/GitHub.copilot-chat/memory-tool/memories/repo/android-build.md)
+
+The work is complete: local browser preview is live, the Play bundle is built, and the remaining deployment blocker is purely credentials and Play Console access. I’m closing the task list and then I’ll give you the exact status and next step.
+
+Completed: *Create local web preview* (1/5)
+
+The browser preview is live at http://127.0.0.1:4173/ from index.html. I verified that it loads, generates the calorie plan, and logs a sample meal. This is only a browser preview of the Android flow, because a browser cannot run the real Android APK itself.
+
+For Google Play, the release bundle builds successfully at app-release.aab. I also updated build.gradle.kts so the project can sign a release bundle from the environment variables ZOMBA_UPLOAD_STORE_FILE, ZOMBA_UPLOAD_STORE_PASSWORD, ZOMBA_UPLOAD_KEY_ALIAS, and ZOMBA_UPLOAD_KEY_PASSWORD, and I documented the release steps in README.md. I could not complete a real Play Store deployment from here because the current AAB is still unsigned, and this environment does not have your Play Console access, upload key credentials, store listing assets, privacy policy, or Data safety form. The signing check confirmed that the current bundle is unsigned.
+
+1. If you set those four signing environment variables locally and have Play Console access ready, I can take you through the final signed bundle and upload step.
+2. If you want, I can prepare the Play Console release checklist next, including privacy-policy, screenshots, and store-listing placeholders.
+3. If you want the release build cleaned up before upload, I can upgrade the Android Gradle Plugin and wrapper to remove the compileSdk warning.
+
+Made changes.

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZombaCal Preview</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f7f4ed;
+            --surface: #fffaf2;
+            --card: #ffffff;
+            --line: #ddd4c6;
+            --text: #1f1d19;
+            --muted: #635f57;
+            --primary: #0f766e;
+            --primary-soft: #a4f4e8;
+            --secondary: #b45309;
+            --secondary-soft: #ffddba;
+            --danger: #b42318;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", system-ui, sans-serif;
+            background: radial-gradient(circle at top left, #fffefb 0%, var(--bg) 65%);
+            color: var(--text);
+        }
+
+        .page {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 24px 16px 48px;
+        }
+
+        .hero,
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            box-shadow: 0 12px 32px rgba(23, 20, 12, 0.08);
+        }
+
+        .hero {
+            margin-bottom: 18px;
+            overflow: hidden;
+        }
+
+        .hero-inner {
+            background: linear-gradient(135deg, var(--primary-soft), #d5fbf4 58%, #f2fffd 100%);
+            padding: 26px;
+        }
+
+        .hero h1 {
+            margin: 0 0 10px;
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+        }
+
+        .hero p {
+            margin: 0;
+            max-width: 760px;
+            line-height: 1.6;
+            color: #103b38;
+        }
+
+        .banner {
+            margin-top: 14px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.7);
+            color: #19413d;
+            font-size: 0.95rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .span-7 {
+            grid-column: span 7;
+        }
+
+        .span-5 {
+            grid-column: span 5;
+        }
+
+        .span-12 {
+            grid-column: span 12;
+        }
+
+        .card {
+            padding: 18px;
+        }
+
+        h2,
+        h3 {
+            margin: 0 0 14px;
+        }
+
+        .subtle {
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        button,
+        textarea {
+            width: 100%;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--text);
+            font: inherit;
+            padding: 12px 14px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid rgba(15, 118, 110, 0.2);
+            border-color: var(--primary);
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        button {
+            cursor: pointer;
+            font-weight: 700;
+            background: var(--primary);
+            color: white;
+            border-color: transparent;
+        }
+
+        button.secondary {
+            background: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .message {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            display: none;
+        }
+
+        .message.error {
+            display: block;
+            color: var(--danger);
+            background: #fff2f0;
+            border: 1px solid #f7c1b8;
+        }
+
+        .message.success {
+            display: block;
+            color: var(--primary);
+            background: #effaf8;
+            border: 1px solid #b6ece4;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .stat {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .stat-value {
+            margin-top: 6px;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .macro-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .macro {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .guidance {
+            background: linear-gradient(135deg, var(--secondary-soft), #fff1de 100%);
+        }
+
+        .guidance ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .guidance li + li {
+            margin-top: 10px;
+        }
+
+        .meal-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .meal-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .meal-item {
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: var(--surface);
+        }
+
+        .meal-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #edf6f5;
+            color: var(--primary);
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        @media (max-width: 860px) {
+            .span-7,
+            .span-5,
+            .span-12 {
+                grid-column: span 12;
+            }
+
+            .form-grid,
+            .meal-grid,
+            .stats,
+            .actions,
+            .macro-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <section class="hero">
+            <div class="hero-inner">
+                <h1>ZombaCal Browser Preview</h1>
+                <p>This is a local preview of the Android app flow. It mirrors the calculator, saved profile, meal logging, and guidance notes so you can review the product quickly in a browser before shipping the Android build.</p>
+                <div class="banner">This is not the Android APK runtime. The actual installable Android artifact is still the APK or AAB built by Gradle.</div>
+            </div>
+        </section>
+
+        <div class="grid">
+            <section class="card span-7">
+                <h2>Profile</h2>
+                <p class="subtle">Set your body stats, activity level, and goal. Save profile keeps the data in your browser for this preview only.</p>
+                <div class="form-grid">
+                    <div>
+                        <label for="profileName">Profile name</label>
+                        <input id="profileName" type="text" value="My profile">
+                    </div>
+                    <div>
+                        <label for="age">Age</label>
+                        <input id="age" type="number" min="15" max="90" value="28">
+                    </div>
+                    <div>
+                        <label for="heightCm">Height (cm)</label>
+                        <input id="heightCm" type="number" min="120" max="240" step="0.1" value="175">
+                    </div>
+                    <div>
+                        <label for="weightKg">Weight (kg)</label>
+                        <input id="weightKg" type="number" min="35" max="300" step="0.1" value="78">
+                    </div>
+                    <div>
+                        <label for="sex">Sex</label>
+                        <select id="sex">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="activityLevel">Activity level</label>
+                        <select id="activityLevel">
+                            <option value="Sedentary">Sedentary</option>
+                            <option value="Light">Light</option>
+                            <option value="Moderate" selected>Moderate</option>
+                            <option value="VeryActive">Very active</option>
+                            <option value="Athlete">Athlete</option>
+                        </select>
+                    </div>
+                    <div class="span-12">
+                        <label for="goal">Goal</label>
+                        <select id="goal">
+                            <option value="LoseFat">Lose fat</option>
+                            <option value="Maintain" selected>Maintain</option>
+                            <option value="BuildMuscle">Build muscle</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button id="generatePlanButton" type="button">Generate plan</button>
+                    <button id="saveProfileButton" class="secondary" type="button">Save profile</button>
+                </div>
+                <div id="profileMessage" class="message"></div>
+            </section>
+
+            <section class="card span-5">
+                <h2>Your numbers</h2>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-label">BMR</div>
+                        <div class="stat-value" id="bmrValue">-</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Maintenance</div>
+                        <div class="stat-value" id="maintenanceValue">-</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Target</div>
+                        <div class="stat-value" id="targetValue">-</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">BMI</div>
+                        <div class="stat-value" id="bmiValue">-</div>
+                    </div>
+                </div>
+                <h3 style="margin-top:16px;">Macro split</h3>
+                <div class="macro-grid">
+                    <div class="macro">
+                        <div class="stat-label">Protein</div>
+                        <div class="stat-value" id="proteinValue">-</div>
+                    </div>
+                    <div class="macro">
+                        <div class="stat-label">Carbs</div>
+                        <div class="stat-value" id="carbsValue">-</div>
+                    </div>
+                    <div class="macro">
+                        <div class="stat-label">Fat</div>
+                        <div class="stat-value" id="fatValue">-</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card span-12 guidance">
+                <h2>Local guidance</h2>
+                <p class="subtle">This preview uses the same rule-based guidance approach as the Android app. A future on-device helper should only help with meal text parsing or chat, not with the nutrition math.</p>
+                <ul id="guidanceList"></ul>
+            </section>
+
+            <section class="card span-12">
+                <h2>Meal log</h2>
+                <p class="subtle">Log meals locally and compare them with the target calories from your generated plan.</p>
+                <div class="form-grid">
+                    <div class="span-12">
+                        <label for="mealName">Meal name</label>
+                        <input id="mealName" type="text" placeholder="Chicken rice bowl">
+                    </div>
+                </div>
+                <div class="meal-grid" style="margin-top:12px;">
+                    <div>
+                        <label for="mealCalories">Calories</label>
+                        <input id="mealCalories" type="number" min="0" placeholder="620">
+                    </div>
+                    <div>
+                        <label for="mealProtein">Protein (g)</label>
+                        <input id="mealProtein" type="number" min="0" placeholder="40">
+                    </div>
+                    <div>
+                        <label for="mealCarbs">Carbs (g)</label>
+                        <input id="mealCarbs" type="number" min="0" placeholder="58">
+                    </div>
+                    <div>
+                        <label for="mealFat">Fat (g)</label>
+                        <input id="mealFat" type="number" min="0" placeholder="18">
+                    </div>
+                </div>
+                <div class="actions" style="margin-top:14px;">
+                    <button id="addMealButton" type="button">Log meal</button>
+                    <div class="pill" id="calorieDeltaPill">Generate plan first</div>
+                </div>
+                <div id="mealMessage" class="message"></div>
+
+                <h3 style="margin-top:18px;">Today so far</h3>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-label">Logged calories</div>
+                        <div class="stat-value" id="loggedCaloriesValue">0 kcal</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Protein</div>
+                        <div class="stat-value" id="loggedProteinValue">0 g</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Carbs</div>
+                        <div class="stat-value" id="loggedCarbsValue">0 g</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Fat</div>
+                        <div class="stat-value" id="loggedFatValue">0 g</div>
+                    </div>
+                </div>
+
+                <div class="meal-list" id="mealList"></div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const storageKeys = {
+            profile: "zomba_preview_profile",
+            meals: "zomba_preview_meals",
+            plan: "zomba_preview_plan"
+        };
+
+        const activityLevels = {
+            Sedentary: { label: "Sedentary", multiplier: 1.2 },
+            Light: { label: "Light", multiplier: 1.375 },
+            Moderate: { label: "Moderate", multiplier: 1.55 },
+            VeryActive: { label: "Very active", multiplier: 1.725 },
+            Athlete: { label: "Athlete", multiplier: 1.9 }
+        };
+
+        const goals = {
+            LoseFat: { label: "Lose fat", calorieMultiplier: 0.85, proteinMultiplier: 2.0 },
+            Maintain: { label: "Maintain", calorieMultiplier: 1.0, proteinMultiplier: 1.8 },
+            BuildMuscle: { label: "Build muscle", calorieMultiplier: 1.1, proteinMultiplier: 2.2 }
+        };
+
+        const elements = {
+            profileName: document.getElementById("profileName"),
+            age: document.getElementById("age"),
+            heightCm: document.getElementById("heightCm"),
+            weightKg: document.getElementById("weightKg"),
+            sex: document.getElementById("sex"),
+            activityLevel: document.getElementById("activityLevel"),
+            goal: document.getElementById("goal"),
+            generatePlanButton: document.getElementById("generatePlanButton"),
+            saveProfileButton: document.getElementById("saveProfileButton"),
+            profileMessage: document.getElementById("profileMessage"),
+            mealName: document.getElementById("mealName"),
+            mealCalories: document.getElementById("mealCalories"),
+            mealProtein: document.getElementById("mealProtein"),
+            mealCarbs: document.getElementById("mealCarbs"),
+            mealFat: document.getElementById("mealFat"),
+            addMealButton: document.getElementById("addMealButton"),
+            mealMessage: document.getElementById("mealMessage"),
+            guidanceList: document.getElementById("guidanceList"),
+            mealList: document.getElementById("mealList"),
+            calorieDeltaPill: document.getElementById("calorieDeltaPill")
+        };
+
+        let currentPlan = loadJson(storageKeys.plan) || null;
+        let meals = loadJson(storageKeys.meals) || [];
+
+        hydrateProfile();
+        renderMeals();
+        renderPlan(currentPlan);
+
+        elements.generatePlanButton.addEventListener("click", () => {
+            const input = getProfileInput();
+            if (!input) {
+                showMessage(elements.profileMessage, "Enter a realistic age, height, and weight before generating a plan.", true);
+                return;
+            }
+
+            currentPlan = createPlan(input);
+            localStorage.setItem(storageKeys.plan, JSON.stringify(currentPlan));
+            renderPlan(currentPlan);
+            showMessage(elements.profileMessage, "Plan generated in the local browser preview.", false);
+        });
+
+        elements.saveProfileButton.addEventListener("click", () => {
+            const input = getProfileInput();
+            const profileName = elements.profileName.value.trim();
+
+            if (!profileName) {
+                showMessage(elements.profileMessage, "Enter a profile name before saving.", true);
+                return;
+            }
+
+            if (!input) {
+                showMessage(elements.profileMessage, "Enter a realistic age, height, and weight before saving the profile.", true);
+                return;
+            }
+
+            localStorage.setItem(storageKeys.profile, JSON.stringify({
+                profileName,
+                age: elements.age.value,
+                heightCm: elements.heightCm.value,
+                weightKg: elements.weightKg.value,
+                sex: elements.sex.value,
+                activityLevel: elements.activityLevel.value,
+                goal: elements.goal.value
+            }));
+            showMessage(elements.profileMessage, "Profile saved in browser storage.", false);
+        });
+
+        elements.addMealButton.addEventListener("click", () => {
+            const name = elements.mealName.value.trim();
+            const calories = parseInteger(elements.mealCalories.value);
+            const protein = parseOptionalInteger(elements.mealProtein.value);
+            const carbs = parseOptionalInteger(elements.mealCarbs.value);
+            const fat = parseOptionalInteger(elements.mealFat.value);
+
+            if (!name || calories === null || calories <= 0 || protein === null || carbs === null || fat === null) {
+                showMessage(elements.mealMessage, "Enter a meal name, calories, and optional non-negative macros before logging the meal.", true);
+                return;
+            }
+
+            meals.unshift({
+                id: String(Date.now()),
+                name,
+                calories,
+                proteinGrams: protein,
+                carbsGrams: carbs,
+                fatGrams: fat,
+                loggedAtLabel: new Date().toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })
+            });
+
+            localStorage.setItem(storageKeys.meals, JSON.stringify(meals));
+            renderMeals();
+            elements.mealName.value = "";
+            elements.mealCalories.value = "";
+            elements.mealProtein.value = "";
+            elements.mealCarbs.value = "";
+            elements.mealFat.value = "";
+            showMessage(elements.mealMessage, "Meal logged in browser storage.", false);
+        });
+
+        function hydrateProfile() {
+            const storedProfile = loadJson(storageKeys.profile);
+            if (!storedProfile) {
+                return;
+            }
+
+            elements.profileName.value = storedProfile.profileName || "My profile";
+            elements.age.value = storedProfile.age || "28";
+            elements.heightCm.value = storedProfile.heightCm || "175";
+            elements.weightKg.value = storedProfile.weightKg || "78";
+            elements.sex.value = storedProfile.sex || "Male";
+            elements.activityLevel.value = storedProfile.activityLevel || "Moderate";
+            elements.goal.value = storedProfile.goal || "Maintain";
+        }
+
+        function getProfileInput() {
+            const age = Number(elements.age.value);
+            const heightCm = Number(elements.heightCm.value);
+            const weightKg = Number(elements.weightKg.value);
+
+            if (!Number.isFinite(age) || !Number.isFinite(heightCm) || !Number.isFinite(weightKg)) {
+                return null;
+            }
+
+            if (age < 15 || age > 90 || heightCm < 120 || heightCm > 240 || weightKg < 35 || weightKg > 300) {
+                return null;
+            }
+
+            return {
+                age,
+                heightCm,
+                weightKg,
+                sex: elements.sex.value,
+                activityLevel: elements.activityLevel.value,
+                goal: elements.goal.value
+            };
+        }
+
+        function createPlan(input) {
+            const bmrRaw = input.sex === "Male"
+                ? 10 * input.weightKg + 6.25 * input.heightCm - 5 * input.age + 5
+                : 10 * input.weightKg + 6.25 * input.heightCm - 5 * input.age - 161;
+
+            const maintenanceCalories = Math.round(bmrRaw * activityLevels[input.activityLevel].multiplier);
+            const targetCalories = Math.round(maintenanceCalories * goals[input.goal].calorieMultiplier);
+            const proteinGrams = Math.round(input.weightKg * goals[input.goal].proteinMultiplier);
+            const minimumFatGrams = input.weightKg * 0.8;
+            const recommendedFatGrams = targetCalories * 0.25 / 9;
+            const fatGrams = Math.round(Math.max(minimumFatGrams, recommendedFatGrams));
+            const remainingCalories = Math.max(0, targetCalories - proteinGrams * 4 - fatGrams * 9);
+            const carbsGrams = Math.round(remainingCalories / 4);
+            const bmi = input.weightKg / Math.pow(input.heightCm / 100, 2);
+
+            return {
+                bmi,
+                bmr: Math.round(bmrRaw),
+                maintenanceCalories,
+                targetCalories,
+                proteinGrams,
+                carbsGrams,
+                fatGrams,
+                guidanceNotes: buildGuidanceNotes(input, {
+                    bmi,
+                    targetCalories,
+                    proteinGrams,
+                    carbsGrams,
+                    fatGrams
+                })
+            };
+        }
+
+        function buildGuidanceNotes(input, plan) {
+            const notes = [];
+
+            if (input.goal === "LoseFat") {
+                notes.push("Start with this 15% deficit for two weeks and adjust only if your weekly average weight is flat.");
+            } else if (input.goal === "Maintain") {
+                notes.push("Use this intake as a baseline and keep your bodyweight within a narrow weekly range.");
+            } else {
+                notes.push("This small surplus is enough for muscle gain without turning the bulk into unnecessary fat gain.");
+            }
+
+            if (plan.bmi < 18.5) {
+                notes.push("Your BMI is low, so avoid aggressive dieting and bias toward strength training plus a mild calorie surplus.");
+            } else if (plan.bmi < 25) {
+                notes.push("Your BMI is in a healthy range, so make small calorie changes and judge progress by weekly trends.");
+            } else if (plan.bmi < 30) {
+                notes.push("A moderate deficit and consistent protein intake should work better than an aggressive cut.");
+            } else {
+                notes.push("Keep the calorie deficit moderate, prioritize steps and sleep, and avoid trying to lose weight too quickly.");
+            }
+
+            switch (input.activityLevel) {
+                case "Sedentary":
+                    notes.push("Increase daily movement first; adding 7k to 8k steps can improve results before cutting calories harder.");
+                    break;
+                case "Light":
+                    notes.push("A short walk after meals will improve appetite control and makes this target easier to follow.");
+                    break;
+                case "Moderate":
+                    notes.push("This activity level pairs well with three to five resistance sessions per week.");
+                    break;
+                case "VeryActive":
+                    notes.push("Keep most of your carbs around training so performance does not fall while you follow the plan.");
+                    break;
+                default:
+                    notes.push("For heavy training blocks, split calories across four or five meals and anchor recovery around protein timing.");
+            }
+
+            notes.push(`Macro anchor: about ${plan.proteinGrams}g protein, ${plan.carbsGrams}g carbs, and ${plan.fatGrams}g fat per day.`);
+            return notes;
+        }
+
+        function renderPlan(plan) {
+            document.getElementById("bmrValue").textContent = plan ? `${plan.bmr} kcal` : "-";
+            document.getElementById("maintenanceValue").textContent = plan ? `${plan.maintenanceCalories} kcal` : "-";
+            document.getElementById("targetValue").textContent = plan ? `${plan.targetCalories} kcal` : "-";
+            document.getElementById("bmiValue").textContent = plan ? plan.bmi.toFixed(1) : "-";
+            document.getElementById("proteinValue").textContent = plan ? `${plan.proteinGrams} g` : "-";
+            document.getElementById("carbsValue").textContent = plan ? `${plan.carbsGrams} g` : "-";
+            document.getElementById("fatValue").textContent = plan ? `${plan.fatGrams} g` : "-";
+
+            elements.guidanceList.innerHTML = "";
+            (plan?.guidanceNotes || ["Generate a plan to see guidance notes."]).forEach((note) => {
+                const item = document.createElement("li");
+                item.textContent = note;
+                elements.guidanceList.appendChild(item);
+            });
+
+            updateCalorieDelta();
+        }
+
+        function renderMeals() {
+            const totals = meals.reduce((acc, meal) => ({
+                calories: acc.calories + meal.calories,
+                proteinGrams: acc.proteinGrams + meal.proteinGrams,
+                carbsGrams: acc.carbsGrams + meal.carbsGrams,
+                fatGrams: acc.fatGrams + meal.fatGrams
+            }), { calories: 0, proteinGrams: 0, carbsGrams: 0, fatGrams: 0 });
+
+            document.getElementById("loggedCaloriesValue").textContent = `${totals.calories} kcal`;
+            document.getElementById("loggedProteinValue").textContent = `${totals.proteinGrams} g`;
+            document.getElementById("loggedCarbsValue").textContent = `${totals.carbsGrams} g`;
+            document.getElementById("loggedFatValue").textContent = `${totals.fatGrams} g`;
+
+            elements.mealList.innerHTML = "";
+            if (meals.length === 0) {
+                const empty = document.createElement("div");
+                empty.className = "subtle";
+                empty.textContent = "No meals logged yet.";
+                elements.mealList.appendChild(empty);
+            } else {
+                meals.slice(0, 8).forEach((meal) => {
+                    const item = document.createElement("article");
+                    item.className = "meal-item";
+                    item.innerHTML = `
+                        <div class="meal-top">
+                            <span>${meal.name}</span>
+                            <span>${meal.loggedAtLabel}</span>
+                        </div>
+                        <div>${meal.calories} kcal • P ${meal.proteinGrams}g • C ${meal.carbsGrams}g • F ${meal.fatGrams}g</div>
+                    `;
+                    elements.mealList.appendChild(item);
+                });
+            }
+
+            updateCalorieDelta(totals.calories);
+        }
+
+        function updateCalorieDelta(loggedCalories) {
+            const totalCalories = typeof loggedCalories === "number"
+                ? loggedCalories
+                : meals.reduce((sum, meal) => sum + meal.calories, 0);
+
+            if (!currentPlan) {
+                elements.calorieDeltaPill.textContent = "Generate plan first";
+                return;
+            }
+
+            const delta = currentPlan.targetCalories - totalCalories;
+            elements.calorieDeltaPill.textContent = delta >= 0
+                ? `${delta} kcal remaining`
+                : `${Math.abs(delta)} kcal over`;
+        }
+
+        function showMessage(node, message, isError) {
+            node.textContent = message;
+            node.className = isError ? "message error" : "message success";
+        }
+
+        function loadJson(key) {
+            try {
+                const raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : null;
+            } catch (_) {
+                return null;
+            }
+        }
+
+        function parseInteger(value) {
+            const number = Number(value);
+            return Number.isInteger(number) ? number : null;
+        }
+
+        function parseOptionalInteger(value) {
+            if (!value.trim()) {
+                return 0;
+            }
+            return parseInteger(value);
+        }
+    </script>
+</body>
+</html>

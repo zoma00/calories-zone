@@ -1,0 +1,89 @@
+ZombaCal Rejection Risk Checks
+
+Current risk level
+Low to moderate, if the first Play Store release stays simple and avoids medical claims.
+
+Why calorie apps still get approved
+- They present themselves as wellness or nutrition tools, not medical products.
+- They use safe store text.
+- They include a privacy policy.
+- They complete the Health apps declaration correctly.
+- They do not request unnecessary sensitive permissions.
+
+
+
+
+                                ════════════════════════════════════════════
+                                ║    ● Main rejection risks for this app ● ║
+                                ════════════════════════════════════════════
+
+Main rejection risks for this app
+1. Medical claims
+High risk if the app says it diagnoses, treats, cures, prevents, or manages diseases.
+
+2. Strong AI health claims
+High risk if the AI is marketed as expert nutrition advice, diagnosis, or a replacement for a doctor or dietitian.
+
+3. Missing or weak privacy policy
+High risk if Play Console asks how user data is handled and the policy is missing or unclear.
+
+4. Wrong Health apps declaration
+Medium risk if the app is submitted as non-health when it clearly logs calories, meals, weight, or nutrition goals.
+
+5. Risky store listing text
+Medium risk if screenshots or descriptions promise health outcomes or clinical results.
+
+6. Unnecessary permissions
+Medium risk if the app asks for permissions that are not needed for local meal logging and profile storage.
+
+Low-risk setup for version 1
+- Calorie calculation
+- Meal logging
+- Saved local profile
+- Simple nutrition goals
+- Generic wellness tips
+
+Avoid in version 1
+- Disease-specific advice
+- Medical claims
+- Supplement or prescription content
+- Payment integration for app features unless it is needed immediately
+- Aggressive AI marketing claims
+
+Safe wording to use
+- calorie calculator
+- meal tracker
+- nutrition tracking
+- weight management support
+- general wellness tips
+
+Wording to avoid
+- treats obesity
+- fixes metabolism
+- diagnoses conditions
+- doctor-level advice
+- personalized medical treatment
+
+What to prepare before submission
+1. Privacy policy that says profile and meal data are stored locally on device.
+2. Non-medical disclaimer for the store listing and optionally in the app.
+3. Health apps declaration draft with Nutrition and Weight Management.
+4. Final review of screenshots, description, and AI wording.
+
+
+
+                                ════════════════════════════════════════
+                                ║       ☀ Payment integration ☀        ║
+                                ════════════════════════════════════════
+Payment integration note
+This means payment integration for app features, not for developer console account creation.
+The 25 USD fee is only the one-time Google Play developer signup fee.
+It is safer to avoid in-app payments, subscriptions, or Google Play Billing in version 1 unless you really need them.
+
+Recommended first release strategy
+Submit the app first as a free, local-only nutrition tracker.
+After the app is approved, add more features carefully.
+
+Bottom line
+The biggest risk is not the app category itself.
+The biggest risk is how the app is described and whether it looks like a medical or regulated product.
