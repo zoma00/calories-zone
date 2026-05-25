@@ -1,4 +1,4 @@
-ZombaCal AI MVP
+Calories Zone MVP
 
 1. Collect age, height, weight, sex, activity level, and goal.
 2. Save the user profile locally on the device.

@@ -1,4 +1,4 @@
-package com.zomba.cal.ui.theme
+package com.calories.zone.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -8,7 +8,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val ZombaLightColors = lightColorScheme(
+private val CaloriesZoneLightColors = lightColorScheme(
     primary = Color(0xFF0F766E),
     onPrimary = Color(0xFFFFFFFF),
     primaryContainer = Color(0xFFA4F4E8),
@@ -25,7 +25,7 @@ private val ZombaLightColors = lightColorScheme(
     onSurfaceVariant = Color(0xFF4A473D)
 )
 
-private val ZombaDarkColors = darkColorScheme(
+private val CaloriesZoneDarkColors = darkColorScheme(
     primary = Color(0xFF82D8CB),
     onPrimary = Color(0xFF003733),
     primaryContainer = Color(0xFF00504A),
@@ -43,12 +43,12 @@ private val ZombaDarkColors = darkColorScheme(
 )
 
 @Composable
-fun ZombaCalTheme(
+fun CaloriesZoneTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colorScheme = if (darkTheme) ZombaDarkColors else ZombaLightColors,
+        colorScheme = if (darkTheme) CaloriesZoneDarkColors else CaloriesZoneLightColors,
         typography = Typography(),
         content = content
     )

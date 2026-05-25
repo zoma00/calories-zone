@@ -1,4 +1,4 @@
-package com.zomba.cal.ui
+package com.calories.zone.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,13 +31,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.zomba.cal.data.LocalAppStorage
-import com.zomba.cal.model.ActivityLevel
-import com.zomba.cal.model.CaloriePlan
-import com.zomba.cal.model.Goal
-import com.zomba.cal.model.MealLogEntry
-import com.zomba.cal.model.MealTotals
-import com.zomba.cal.model.Sex
+import com.calories.zone.data.LocalAppStorage
+import com.calories.zone.model.ActivityLevel
+import com.calories.zone.model.CaloriePlan
+import com.calories.zone.model.Goal
+import com.calories.zone.model.MealLogEntry
+import com.calories.zone.model.MealTotals
+import com.calories.zone.model.Sex
 
 @Composable
 fun CaloriesRoute(
@@ -87,7 +87,7 @@ private fun CaloriesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("ZombaCal") },
+                title = { Text("Calories Zone") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background
                 )

@@ -1,6 +1,6 @@
-# ZombaCal
+# Calories Zone
 
-ZombaCal is a local-first Android calorie calculator built with Kotlin and Jetpack Compose. It estimates BMR, maintenance calories, target calories for cutting or bulking, and a macro split. The app now also saves a profile on-device and logs meals locally so you can use it without a backend.
+Calories Zone is a local-first Android calorie calculator built with Kotlin and Jetpack Compose. It estimates BMR, maintenance calories, target calories for cutting or bulking, and a macro split. The app now also saves a profile on-device and logs meals locally so you can use it without a backend.
 
 ## What is included
 

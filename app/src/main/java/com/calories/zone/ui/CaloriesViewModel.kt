@@ -1,22 +1,22 @@
-package com.zomba.cal.ui
+package com.calories.zone.ui
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.zomba.cal.data.LocalAppStorage
-import com.zomba.cal.domain.AiGuidanceEngine
-import com.zomba.cal.domain.CalorieCalculator
-import com.zomba.cal.domain.RuleBasedAiGuidanceEngine
-import com.zomba.cal.model.ActivityLevel
-import com.zomba.cal.model.CaloriePlan
-import com.zomba.cal.model.Goal
-import com.zomba.cal.model.MealLogEntry
-import com.zomba.cal.model.MealTotals
-import com.zomba.cal.model.SavedProfile
-import com.zomba.cal.model.Sex
-import com.zomba.cal.model.UserProfileInput
+import com.calories.zone.data.LocalAppStorage
+import com.calories.zone.domain.AiGuidanceEngine
+import com.calories.zone.domain.CalorieCalculator
+import com.calories.zone.domain.RuleBasedAiGuidanceEngine
+import com.calories.zone.model.ActivityLevel
+import com.calories.zone.model.CaloriePlan
+import com.calories.zone.model.Goal
+import com.calories.zone.model.MealLogEntry
+import com.calories.zone.model.MealTotals
+import com.calories.zone.model.SavedProfile
+import com.calories.zone.model.Sex
+import com.calories.zone.model.UserProfileInput
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

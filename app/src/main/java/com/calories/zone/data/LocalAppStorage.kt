@@ -1,11 +1,11 @@
-package com.zomba.cal.data
+package com.calories.zone.data
 
 import android.content.Context
-import com.zomba.cal.model.ActivityLevel
-import com.zomba.cal.model.Goal
-import com.zomba.cal.model.MealLogEntry
-import com.zomba.cal.model.SavedProfile
-import com.zomba.cal.model.Sex
+import com.calories.zone.model.ActivityLevel
+import com.calories.zone.model.Goal
+import com.calories.zone.model.MealLogEntry
+import com.calories.zone.model.SavedProfile
+import com.calories.zone.model.Sex
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -79,7 +79,7 @@ class LocalAppStorage(context: Context) {
     }
 
     private companion object {
-        const val STORAGE_NAME = "zomba_cal_storage"
+        const val STORAGE_NAME = "calories_zone_storage"
         const val KEY_PROFILE = "saved_profile"
         const val KEY_MEALS = "meal_logs"
     }

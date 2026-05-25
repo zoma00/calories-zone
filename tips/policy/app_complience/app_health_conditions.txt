@@ -1,4 +1,4 @@
-ZombaCal Health App Note
+Calories Zone Health App Note
 
 Important access note
 The Health apps declaration form is usually not available until the Google Play developer account signup is completed.
@@ -10,7 +10,7 @@ It does not mean the app is already rejected.
 It only means Google does not open the declaration workflow before the developer account is activated.
 
 Practical risk for this app
-ZombaCal is a basic nutrition tracker, calorie calculator, and meal logger.
+Calories Zone is a basic nutrition tracker, calorie calculator, and meal logger.
 That is a much lower-risk category than a medical app.
 The app should fit under Health and fitness with Nutrition and Weight Management.
 
@@ -31,7 +31,7 @@ Do not say diagnosis, treatment, cure, or prevention.
 
 3. Non-medical disclaimer
 Use this text:
-"ZombaCal is not a medical device and does not diagnose, treat, cure, or prevent any medical condition. Consult a qualified healthcare professional for medical advice."
+"Calories Zone is not a medical device and does not diagnose, treat, cure, or prevent any medical condition. Consult a qualified healthcare professional for medical advice."
 
 4. Health declaration draft
 Planned answer: Nutrition and Weight Management.

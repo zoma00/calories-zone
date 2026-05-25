@@ -1,9 +1,9 @@
-package com.zomba.cal.domain
+package com.calories.zone.domain
 
-import com.zomba.cal.model.ActivityLevel
-import com.zomba.cal.model.Goal
-import com.zomba.cal.model.Sex
-import com.zomba.cal.model.UserProfileInput
+import com.calories.zone.model.ActivityLevel
+import com.calories.zone.model.Goal
+import com.calories.zone.model.Sex
+import com.calories.zone.model.UserProfileInput
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

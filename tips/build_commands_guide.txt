@@ -1,4 +1,4 @@
-ZombaCal Build Commands Guide
+Calories Zone Build Commands Guide
 
 Run all commands from the project root:
 /home/hazem-elbatawy/Downloads/zomba_cal

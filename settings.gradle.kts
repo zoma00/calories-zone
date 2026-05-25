@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ZombaCal"
+rootProject.name = "calories-zone"
 include(":app")

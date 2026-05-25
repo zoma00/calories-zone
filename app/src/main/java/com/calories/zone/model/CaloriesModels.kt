@@ -1,4 +1,4 @@
-package com.zomba.cal.model
+package com.calories.zone.model
 
 enum class Sex(val label: String) {
     Male("Male"),

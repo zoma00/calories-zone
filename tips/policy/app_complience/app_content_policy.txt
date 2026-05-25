@@ -1,7 +1,7 @@
-ZombaCal App Content Policy
+Calories Zone App Content Policy
 
 Purpose
-ZombaCal is a nutrition and wellness app for calorie calculation, meal logging, simple weight-management support, and general wellness guidance.
+Calories Zone is a nutrition and wellness app for calorie calculation, meal logging, simple weight-management support, and general wellness guidance.
 
 App position
 - Health and fitness app
@@ -40,7 +40,7 @@ AI content rules
 
 Required disclaimer
 Use this text in the store listing and preferably inside the app:
-"ZombaCal is not a medical device and does not diagnose, treat, cure, or prevent any medical condition. Consult a qualified healthcare professional for medical advice."
+"Calories Zone is not a medical device and does not diagnose, treat, cure, or prevent any medical condition. Consult a qualified healthcare professional for medical advice."
 
 Privacy and data position
 - Current version stores profile and meal data locally on the device.
