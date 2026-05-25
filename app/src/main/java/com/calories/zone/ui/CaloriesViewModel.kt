@@ -8,10 +8,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.calories.zone.data.LocalAppStorage
 import com.calories.zone.domain.AiGuidanceEngine
 import com.calories.zone.domain.CalorieCalculator
+import com.calories.zone.domain.MealNutritionEstimate
+import com.calories.zone.domain.MealNutritionEstimator
 import com.calories.zone.domain.RuleBasedAiGuidanceEngine
+import com.calories.zone.domain.RuleBasedMealNutritionEstimator
 import com.calories.zone.model.ActivityLevel
 import com.calories.zone.model.CaloriePlan
+import com.calories.zone.model.CustomFoodProfile
 import com.calories.zone.model.Goal
+import com.calories.zone.model.MealEntryUnit
 import com.calories.zone.model.MealLogEntry
 import com.calories.zone.model.MealTotals
 import com.calories.zone.model.SavedProfile
@@ -19,6 +24,7 @@ import com.calories.zone.model.Sex
 import com.calories.zone.model.UserProfileInput
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 data class CaloriesUiState(
     val profileName: String = "My profile",
@@ -28,9 +34,17 @@ data class CaloriesUiState(
     val sex: Sex = Sex.Male,
     val activityLevel: ActivityLevel = ActivityLevel.Moderate,
     val goal: Goal = Goal.Maintain,
+    val customFoods: List<CustomFoodProfile> = emptyList(),
+    val customFoodName: String = "",
+    val customFoodCalories: String = "",
+    val customFoodProtein: String = "",
+    val customFoodCarbs: String = "",
+    val customFoodFat: String = "",
     val meals: List<MealLogEntry> = emptyList(),
     val mealTotals: MealTotals = MealTotals(),
     val mealName: String = "",
+    val mealEntryAmount: String = "",
+    val mealEntryUnit: MealEntryUnit = MealEntryUnit.Grams,
     val mealCalories: String = "",
     val mealProtein: String = "",
     val mealCarbs: String = "",
@@ -44,6 +58,7 @@ data class CaloriesUiState(
 class CaloriesViewModel(
     private val calculator: CalorieCalculator = CalorieCalculator(),
     private val aiGuidanceEngine: AiGuidanceEngine = RuleBasedAiGuidanceEngine(),
+    private val mealNutritionEstimator: MealNutritionEstimator = RuleBasedMealNutritionEstimator(),
     private val storage: LocalAppStorage? = null
 ) : ViewModel() {
     var uiState by mutableStateOf(CaloriesUiState())
@@ -51,6 +66,7 @@ class CaloriesViewModel(
 
     init {
         val savedMeals = storage?.loadMeals().orEmpty()
+        val savedCustomFoods = storage?.loadCustomFoods().orEmpty()
         val savedProfile = storage?.loadProfile()
         uiState = if (savedProfile != null) {
             CaloriesUiState(
@@ -61,11 +77,13 @@ class CaloriesViewModel(
                 sex = savedProfile.sex,
                 activityLevel = savedProfile.activityLevel,
                 goal = savedProfile.goal,
+                customFoods = savedCustomFoods,
                 meals = savedMeals,
                 mealTotals = calculateMealTotals(savedMeals)
             )
         } else {
             CaloriesUiState(
+                customFoods = savedCustomFoods,
                 meals = savedMeals,
                 mealTotals = calculateMealTotals(savedMeals)
             )
@@ -103,22 +121,94 @@ class CaloriesViewModel(
 
     fun updateMealName(value: String) {
         uiState = uiState.copy(mealName = value, validationMessage = null, statusMessage = null)
+        recalculateMealEstimate()
     }
 
-    fun updateMealCalories(value: String) {
-        uiState = uiState.copy(mealCalories = value.filter(Char::isDigit), validationMessage = null, statusMessage = null)
+    fun updateMealEntryAmount(value: String) {
+        uiState = uiState.copy(
+            mealEntryAmount = sanitizeDecimal(value),
+            validationMessage = null,
+            statusMessage = null
+        )
+        recalculateMealEstimate()
     }
 
-    fun updateMealProtein(value: String) {
-        uiState = uiState.copy(mealProtein = value.filter(Char::isDigit), validationMessage = null, statusMessage = null)
+    fun updateMealEntryUnit(value: MealEntryUnit) {
+        uiState = uiState.copy(mealEntryUnit = value, validationMessage = null, statusMessage = null)
+        recalculateMealEstimate()
     }
 
-    fun updateMealCarbs(value: String) {
-        uiState = uiState.copy(mealCarbs = value.filter(Char::isDigit), validationMessage = null, statusMessage = null)
+    fun updateCustomFoodName(value: String) {
+        uiState = uiState.copy(customFoodName = value, validationMessage = null, statusMessage = null)
     }
 
-    fun updateMealFat(value: String) {
-        uiState = uiState.copy(mealFat = value.filter(Char::isDigit), validationMessage = null, statusMessage = null)
+    fun updateCustomFoodCalories(value: String) {
+        uiState = uiState.copy(customFoodCalories = value.filter(Char::isDigit), validationMessage = null, statusMessage = null)
+    }
+
+    fun updateCustomFoodProtein(value: String) {
+        uiState = uiState.copy(customFoodProtein = value.filter(Char::isDigit), validationMessage = null, statusMessage = null)
+    }
+
+    fun updateCustomFoodCarbs(value: String) {
+        uiState = uiState.copy(customFoodCarbs = value.filter(Char::isDigit), validationMessage = null, statusMessage = null)
+    }
+
+    fun updateCustomFoodFat(value: String) {
+        uiState = uiState.copy(customFoodFat = value.filter(Char::isDigit), validationMessage = null, statusMessage = null)
+    }
+
+    fun addCustomFood() {
+        val name = uiState.customFoodName.trim()
+        val calories = uiState.customFoodCalories.toIntOrNull()
+        val protein = parseOptionalWholeNumber(uiState.customFoodProtein)
+        val carbs = parseOptionalWholeNumber(uiState.customFoodCarbs)
+        val fat = parseOptionalWholeNumber(uiState.customFoodFat)
+
+        if (name.isBlank() || calories == null || calories <= 0 || protein == null || carbs == null || fat == null) {
+            uiState = uiState.copy(
+                validationMessage = "Enter custom food name, calories per 100g, and optional non-negative macros.",
+                statusMessage = null
+            )
+            return
+        }
+
+        val customFood = CustomFoodProfile(
+            id = System.currentTimeMillis().toString(),
+            name = name,
+            caloriesPer100g = calories,
+            proteinPer100g = protein,
+            carbsPer100g = carbs,
+            fatPer100g = fat
+        )
+
+        val updatedFoods = listOf(customFood) + uiState.customFoods
+        storage?.saveCustomFoods(updatedFoods)
+
+        uiState = uiState.copy(
+            customFoods = updatedFoods,
+            customFoodName = "",
+            customFoodCalories = "",
+            customFoodProtein = "",
+            customFoodCarbs = "",
+            customFoodFat = "",
+            validationMessage = null,
+            statusMessage = null
+        )
+        recalculateMealEstimate()
+        uiState = uiState.copy(statusMessage = "Custom food saved locally.", validationMessage = null)
+    }
+
+    fun deleteCustomFood(foodId: String) {
+        val updatedFoods = uiState.customFoods.filterNot { it.id == foodId }
+        if (updatedFoods.size == uiState.customFoods.size) {
+            return
+        }
+
+        storage?.saveCustomFoods(updatedFoods)
+        uiState = uiState.copy(customFoods = updatedFoods, validationMessage = null, statusMessage = null)
+        recalculateMealEstimate()
+        uiState = uiState.copy(statusMessage = "Custom food removed.", validationMessage = null)
     }
 
     fun saveProfile() {
@@ -159,26 +249,34 @@ class CaloriesViewModel(
 
     fun addMeal() {
         val mealName = uiState.mealName.trim()
-        val mealCalories = uiState.mealCalories.toIntOrNull()
-        val mealProtein = parseOptionalWholeNumber(uiState.mealProtein)
-        val mealCarbs = parseOptionalWholeNumber(uiState.mealCarbs)
-        val mealFat = parseOptionalWholeNumber(uiState.mealFat)
+        val mealAmount = uiState.mealEntryAmount.toDoubleOrNull()
 
-        if (mealName.isBlank() || mealCalories == null || mealCalories <= 0 || mealProtein == null || mealCarbs == null || mealFat == null) {
+        if (mealName.isBlank() || mealAmount == null || mealAmount <= 0.0) {
             uiState = uiState.copy(
-                validationMessage = "Enter a meal name, calories, and optional non-negative macros before logging the meal.",
+                validationMessage = "Enter a meal name and meal entry amount before logging the meal.",
                 statusMessage = null
             )
             return
         }
 
+        val estimate = estimateNutrition(mealName = mealName, mealAmount = mealAmount, mealEntryUnit = uiState.mealEntryUnit)
+        if (estimate == null) {
+            uiState = uiState.copy(
+                validationMessage = "Could not auto-estimate this meal. Include foods like eggs, rice, chicken, milk, or fruit.",
+                statusMessage = null
+            )
+            return
+        }
+
+        val mealEntryName = "$mealName (${formatAmount(mealAmount)} ${uiState.mealEntryUnit.shortLabel})"
+
         val mealEntry = MealLogEntry(
             id = System.currentTimeMillis().toString(),
-            name = mealName,
-            calories = mealCalories,
-            proteinGrams = mealProtein,
-            carbsGrams = mealCarbs,
-            fatGrams = mealFat,
+            name = mealEntryName,
+            calories = estimate.calories,
+            proteinGrams = estimate.proteinGrams,
+            carbsGrams = estimate.carbsGrams,
+            fatGrams = estimate.fatGrams,
             loggedAtLabel = LocalDateTime.now().format(MEAL_TIME_FORMATTER)
         )
         val updatedMeals = listOf(mealEntry) + uiState.meals
@@ -188,12 +286,28 @@ class CaloriesViewModel(
             meals = updatedMeals,
             mealTotals = calculateMealTotals(updatedMeals),
             mealName = "",
+            mealEntryAmount = "",
             mealCalories = "",
             mealProtein = "",
             mealCarbs = "",
             mealFat = "",
             validationMessage = null,
             statusMessage = "Meal logged locally."
+        )
+    }
+
+    fun deleteMeal(mealId: String) {
+        val updatedMeals = uiState.meals.filterNot { it.id == mealId }
+        if (updatedMeals.size == uiState.meals.size) {
+            return
+        }
+
+        storage?.saveMeals(updatedMeals)
+        uiState = uiState.copy(
+            meals = updatedMeals,
+            mealTotals = calculateMealTotals(updatedMeals),
+            validationMessage = null,
+            statusMessage = "Meal removed."
         )
     }
 
@@ -273,6 +387,64 @@ class CaloriesViewModel(
             carbsGrams = totals.carbsGrams + meal.carbsGrams,
             fatGrams = totals.fatGrams + meal.fatGrams
         )
+    }
+
+    private fun recalculateMealEstimate() {
+        val mealName = uiState.mealName.trim()
+        val mealAmount = uiState.mealEntryAmount.toDoubleOrNull()
+
+        if (mealName.isBlank() || mealAmount == null || mealAmount <= 0.0) {
+            uiState = uiState.copy(
+                mealCalories = "",
+                mealProtein = "",
+                mealCarbs = "",
+                mealFat = "",
+                validationMessage = null,
+                statusMessage = null
+            )
+            return
+        }
+
+        val estimate = estimateNutrition(mealName, mealAmount, uiState.mealEntryUnit)
+        if (estimate == null) {
+            uiState = uiState.copy(
+                mealCalories = "",
+                mealProtein = "",
+                mealCarbs = "",
+                mealFat = "",
+                validationMessage = null,
+                statusMessage = null
+            )
+            return
+        }
+
+        uiState = uiState.copy(
+            mealCalories = estimate.calories.toString(),
+            mealProtein = estimate.proteinGrams.toString(),
+            mealCarbs = estimate.carbsGrams.toString(),
+            mealFat = estimate.fatGrams.toString(),
+            validationMessage = null,
+            statusMessage = null
+        )
+    }
+
+    private fun estimateNutrition(
+        mealName: String,
+        mealAmount: Double,
+        mealEntryUnit: MealEntryUnit,
+        customFoods: List<CustomFoodProfile> = uiState.customFoods
+    ): MealNutritionEstimate? {
+        val estimatorPrompt = "${formatAmount(mealAmount)} ${mealEntryUnit.estimatorToken} $mealName"
+        return mealNutritionEstimator.estimateFromText(estimatorPrompt, customFoods)
+    }
+
+    private fun formatAmount(amount: Double): String {
+        val whole = amount.toInt().toDouble()
+        return if (amount == whole) {
+            amount.toInt().toString()
+        } else {
+            String.format(Locale.US, "%.1f", amount)
+        }
     }
 
     private fun sanitizeDecimal(value: String): String {

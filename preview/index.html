@@ -396,35 +396,50 @@
 
             <section class="card span-12">
                 <h2>Meal log</h2>
-                <p class="subtle">Log meals locally and compare them with the target calories from your generated plan.</p>
+                <p class="subtle">Enter meal entry name and amount in grams, ml, or pounds. Nutrition is auto-calculated as you type.</p>
                 <div class="form-grid">
-                    <div class="span-12">
-                        <label for="mealName">Meal name</label>
+                    <div>
+                        <label for="mealName">Meal entry name</label>
                         <input id="mealName" type="text" placeholder="Chicken rice bowl">
                     </div>
-                </div>
-                <div class="meal-grid" style="margin-top:12px;">
                     <div>
-                        <label for="mealCalories">Calories</label>
-                        <input id="mealCalories" type="number" min="0" placeholder="620">
+                        <label for="mealAmount">Meal entry amount</label>
+                        <input id="mealAmount" type="number" min="0" step="0.1" placeholder="250">
                     </div>
-                    <div>
-                        <label for="mealProtein">Protein (g)</label>
-                        <input id="mealProtein" type="number" min="0" placeholder="40">
-                    </div>
-                    <div>
-                        <label for="mealCarbs">Carbs (g)</label>
-                        <input id="mealCarbs" type="number" min="0" placeholder="58">
-                    </div>
-                    <div>
-                        <label for="mealFat">Fat (g)</label>
-                        <input id="mealFat" type="number" min="0" placeholder="18">
+                    <div class="span-12">
+                        <label for="mealUnit">Entry unit</label>
+                        <select id="mealUnit">
+                            <option value="g" selected>Grams (g)</option>
+                            <option value="ml">Milliliters (ml)</option>
+                            <option value="lb">Pounds (lb)</option>
+                        </select>
                     </div>
                 </div>
-                <div class="actions" style="margin-top:14px;">
+
+                <h3 style="margin-top:18px;">Auto calculated</h3>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-label">Calories</div>
+                        <div class="stat-value" id="estimatedCaloriesValue">-</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Protein</div>
+                        <div class="stat-value" id="estimatedProteinValue">-</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Carbs</div>
+                        <div class="stat-value" id="estimatedCarbsValue">-</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Fat</div>
+                        <div class="stat-value" id="estimatedFatValue">-</div>
+                    </div>
+                </div>
+
+                <div class="actions" style="margin-top:14px; grid-template-columns: 1fr;">
                     <button id="addMealButton" type="button">Log meal</button>
-                    <div class="pill" id="calorieDeltaPill">Generate plan first</div>
                 </div>
+                <div class="pill" id="calorieDeltaPill" style="margin-top: 10px;">Generate plan first</div>
                 <div id="mealMessage" class="message"></div>
 
                 <h3 style="margin-top:18px;">Today so far</h3>
@@ -473,6 +488,28 @@
             BuildMuscle: { label: "Build muscle", calorieMultiplier: 1.1, proteinMultiplier: 2.2 }
         };
 
+        const gramsPerPound = 453.592;
+
+        const foodProfiles = [
+            { label: "egg", aliasPattern: "eggs?", calories: 78, protein: 6, carbs: 1, fat: 5, gramsPerServing: 50 },
+            { label: "chicken breast", aliasPattern: "chicken(?:\\s+breast)?", calories: 165, protein: 31, carbs: 0, fat: 4, gramsPerServing: 100 },
+            { label: "rice", aliasPattern: "(?:white\\s+|brown\\s+)?rice", calories: 206, protein: 4, carbs: 45, fat: 0, gramsPerServing: 158 },
+            { label: "bread", aliasPattern: "bread|toast", calories: 80, protein: 3, carbs: 15, fat: 1, gramsPerServing: 30 },
+            { label: "oats", aliasPattern: "oats?|oatmeal", calories: 150, protein: 5, carbs: 27, fat: 3, gramsPerServing: 40 },
+            { label: "banana", aliasPattern: "bananas?", calories: 105, protein: 1, carbs: 27, fat: 0, gramsPerServing: 118 },
+            { label: "apple", aliasPattern: "apples?", calories: 95, protein: 0, carbs: 25, fat: 0, gramsPerServing: 182 },
+            { label: "black beans", aliasPattern: "black\\s+beans?", calories: 227, protein: 15, carbs: 41, fat: 1, gramsPerServing: 172 },
+            { label: "milk", aliasPattern: "milk", calories: 122, protein: 8, carbs: 12, fat: 5, gramsPerServing: 244 },
+            { label: "yogurt", aliasPattern: "yogurt|yoghurt", calories: 150, protein: 13, carbs: 17, fat: 4, gramsPerServing: 170 },
+            { label: "salmon", aliasPattern: "salmon", calories: 208, protein: 22, carbs: 0, fat: 13, gramsPerServing: 100 },
+            { label: "beef", aliasPattern: "beef|steak", calories: 250, protein: 26, carbs: 0, fat: 15, gramsPerServing: 100 },
+            { label: "potato", aliasPattern: "potatoes?|potato", calories: 161, protein: 4, carbs: 37, fat: 0, gramsPerServing: 173 },
+            { label: "tuna", aliasPattern: "tuna", calories: 132, protein: 29, carbs: 0, fat: 1, gramsPerServing: 100 },
+            { label: "peanut butter", aliasPattern: "peanut\\s+butter", calories: 94, protein: 4, carbs: 3, fat: 8, gramsPerServing: 16 },
+            { label: "olive oil", aliasPattern: "olive\\s+oil", calories: 119, protein: 0, carbs: 0, fat: 14, gramsPerServing: 15 },
+            { label: "cheese", aliasPattern: "cheese", calories: 113, protein: 7, carbs: 1, fat: 9, gramsPerServing: 28 }
+        ];
+
         const elements = {
             profileName: document.getElementById("profileName"),
             age: document.getElementById("age"),
@@ -485,10 +522,12 @@
             saveProfileButton: document.getElementById("saveProfileButton"),
             profileMessage: document.getElementById("profileMessage"),
             mealName: document.getElementById("mealName"),
-            mealCalories: document.getElementById("mealCalories"),
-            mealProtein: document.getElementById("mealProtein"),
-            mealCarbs: document.getElementById("mealCarbs"),
-            mealFat: document.getElementById("mealFat"),
+            mealAmount: document.getElementById("mealAmount"),
+            mealUnit: document.getElementById("mealUnit"),
+            estimatedCaloriesValue: document.getElementById("estimatedCaloriesValue"),
+            estimatedProteinValue: document.getElementById("estimatedProteinValue"),
+            estimatedCarbsValue: document.getElementById("estimatedCarbsValue"),
+            estimatedFatValue: document.getElementById("estimatedFatValue"),
             addMealButton: document.getElementById("addMealButton"),
             mealMessage: document.getElementById("mealMessage"),
             guidanceList: document.getElementById("guidanceList"),
@@ -502,6 +541,7 @@
         hydrateProfile();
         renderMeals();
         renderPlan(currentPlan);
+        updateMealEstimatePreview();
 
         elements.generatePlanButton.addEventListener("click", () => {
             const input = getProfileInput();
@@ -542,35 +582,43 @@
             showMessage(elements.profileMessage, "Profile saved in browser storage.", false);
         });
 
+        [elements.mealName, elements.mealAmount].forEach((field) => {
+            field.addEventListener("input", updateMealEstimatePreview);
+        });
+        elements.mealUnit.addEventListener("change", updateMealEstimatePreview);
+
         elements.addMealButton.addEventListener("click", () => {
             const name = elements.mealName.value.trim();
-            const calories = parseInteger(elements.mealCalories.value);
-            const protein = parseOptionalInteger(elements.mealProtein.value);
-            const carbs = parseOptionalInteger(elements.mealCarbs.value);
-            const fat = parseOptionalInteger(elements.mealFat.value);
+            const amount = parseDecimal(elements.mealAmount.value);
+            const unit = elements.mealUnit.value;
 
-            if (!name || calories === null || calories <= 0 || protein === null || carbs === null || fat === null) {
-                showMessage(elements.mealMessage, "Enter a meal name, calories, and optional non-negative macros before logging the meal.", true);
+            if (!name || amount === null || amount <= 0) {
+                showMessage(elements.mealMessage, "Enter a meal name and meal entry amount before logging the meal.", true);
+                return;
+            }
+
+            const estimatorInput = buildEstimatorInput(name, amount, unit);
+            const estimate = estimateMealNutrition(estimatorInput);
+            if (!estimate) {
+                showMessage(elements.mealMessage, "Could not auto-estimate this meal. Include foods like eggs, rice, chicken, milk, or fruit.", true);
                 return;
             }
 
             meals.unshift({
                 id: String(Date.now()),
-                name,
-                calories,
-                proteinGrams: protein,
-                carbsGrams: carbs,
-                fatGrams: fat,
+                name: `${name} (${formatAmount(amount)} ${unit})`,
+                calories: estimate.calories,
+                proteinGrams: estimate.proteinGrams,
+                carbsGrams: estimate.carbsGrams,
+                fatGrams: estimate.fatGrams,
                 loggedAtLabel: new Date().toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })
             });
 
             localStorage.setItem(storageKeys.meals, JSON.stringify(meals));
             renderMeals();
             elements.mealName.value = "";
-            elements.mealCalories.value = "";
-            elements.mealProtein.value = "";
-            elements.mealCarbs.value = "";
-            elements.mealFat.value = "";
+            elements.mealAmount.value = "";
+            updateMealEstimatePreview();
             showMessage(elements.mealMessage, "Meal logged in browser storage.", false);
         });
 
@@ -736,11 +784,187 @@
                         </div>
                         <div>${meal.calories} kcal • P ${meal.proteinGrams}g • C ${meal.carbsGrams}g • F ${meal.fatGrams}g</div>
                     `;
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.type = "button";
+                    deleteButton.className = "secondary";
+                    deleteButton.style.marginTop = "10px";
+                    deleteButton.textContent = "Delete meal";
+                    deleteButton.addEventListener("click", () => {
+                        deleteMealById(meal.id);
+                    });
+
+                    item.appendChild(deleteButton);
                     elements.mealList.appendChild(item);
                 });
             }
 
             updateCalorieDelta(totals.calories);
+        }
+
+        function deleteMealById(mealId) {
+            const updatedMeals = meals.filter((meal) => meal.id !== mealId);
+            if (updatedMeals.length === meals.length) {
+                return;
+            }
+
+            meals = updatedMeals;
+            localStorage.setItem(storageKeys.meals, JSON.stringify(meals));
+            renderMeals();
+            showMessage(elements.mealMessage, "Meal removed from browser storage.", false);
+        }
+
+        function updateMealEstimatePreview() {
+            const name = elements.mealName.value.trim();
+            const amount = parseDecimal(elements.mealAmount.value);
+
+            if (!name || amount === null || amount <= 0) {
+                renderEstimatedNutrition(null);
+                return;
+            }
+
+            const estimatorInput = buildEstimatorInput(name, amount, elements.mealUnit.value);
+            renderEstimatedNutrition(estimateMealNutrition(estimatorInput));
+        }
+
+        function renderEstimatedNutrition(estimate) {
+            elements.estimatedCaloriesValue.textContent = estimate ? `${estimate.calories} kcal` : "-";
+            elements.estimatedProteinValue.textContent = estimate ? `${estimate.proteinGrams} g` : "-";
+            elements.estimatedCarbsValue.textContent = estimate ? `${estimate.carbsGrams} g` : "-";
+            elements.estimatedFatValue.textContent = estimate ? `${estimate.fatGrams} g` : "-";
+        }
+
+        function buildEstimatorInput(name, amount, unit) {
+            return `${formatAmount(amount)} ${unit} ${name}`;
+        }
+
+        function estimateMealNutrition(mealText) {
+            const normalizedMeal = mealText.trim().toLowerCase();
+            if (!normalizedMeal) {
+                return null;
+            }
+
+            let calories = 0;
+            let protein = 0;
+            let carbs = 0;
+            let fat = 0;
+            const matchedFoods = [];
+
+            foodProfiles.forEach((profile) => {
+                const servings = findServings(normalizedMeal, profile);
+                if (servings <= 0) {
+                    return;
+                }
+
+                calories += profile.calories * servings;
+                protein += profile.protein * servings;
+                carbs += profile.carbs * servings;
+                fat += profile.fat * servings;
+
+                if (servings === 1) {
+                    matchedFoods.push(profile.label);
+                } else {
+                    matchedFoods.push(`${formatServings(servings)} x ${profile.label}`);
+                }
+            });
+
+            if (!matchedFoods.length) {
+                return null;
+            }
+
+            return {
+                calories: Math.max(0, Math.round(calories)),
+                proteinGrams: Math.max(0, Math.round(protein)),
+                carbsGrams: Math.max(0, Math.round(carbs)),
+                fatGrams: Math.max(0, Math.round(fat)),
+                matchedFoods
+            };
+        }
+
+        function findServings(mealText, profile) {
+            const aliasRegex = new RegExp(`\\b(?:${profile.aliasPattern})\\b`, "i");
+            if (!aliasRegex.test(mealText)) {
+                return 0;
+            }
+
+            if (profile.gramsPerServing) {
+                const metricRegex = new RegExp(
+                    `(\\d+(?:\\.\\d+)?)\\s*(g|gram|grams|ml|milliliter|milliliters|lb|lbs|pound|pounds)\\s*(?:of\\s+)?(?:${profile.aliasPattern})\\b|(?:${profile.aliasPattern})\\b\\s*(\\d+(?:\\.\\d+)?)\\s*(g|gram|grams|ml|milliliter|milliliters|lb|lbs|pound|pounds)`,
+                    "i"
+                );
+                const metricMatch = mealText.match(metricRegex);
+                if (metricMatch) {
+                    const amountValue = Number(metricMatch[1] || metricMatch[3]);
+                    const unitLabel = String(metricMatch[2] || metricMatch[4] || "").toLowerCase();
+                    const gramsValue = toGrams(amountValue, unitLabel);
+
+                    if (Number.isFinite(gramsValue) && gramsValue > 0) {
+                        return clamp(gramsValue / profile.gramsPerServing, 0.25, 20);
+                    }
+                }
+            }
+
+            const prefixCountRegex = new RegExp(
+                `(\\d+(?:\\.\\d+)?)\\s*(?:x\\s*)?(?:cups?|cup|slices?|slice|tbsp|tablespoons?|tsp|teaspoons?|servings?|pieces?|piece|cans?|can|bowls?|bowl)?\\s*(?:of\\s+)?(?:${profile.aliasPattern})\\b`,
+                "i"
+            );
+            const prefixMatch = mealText.match(prefixCountRegex);
+            if (prefixMatch) {
+                const count = Number(prefixMatch[1]);
+                if (Number.isFinite(count) && count > 0) {
+                    return clamp(count, 0.25, 20);
+                }
+            }
+
+            const postfixCountRegex = new RegExp(
+                `(?:${profile.aliasPattern})\\b\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cups?|cup|slices?|slice|tbsp|tablespoons?|tsp|teaspoons?|servings?|pieces?|piece|cans?|can|bowls?|bowl)?`,
+                "i"
+            );
+            const postfixMatch = mealText.match(postfixCountRegex);
+            if (postfixMatch) {
+                const count = Number(postfixMatch[1]);
+                if (Number.isFinite(count) && count > 0) {
+                    return clamp(count, 0.25, 20);
+                }
+            }
+
+            return 1;
+        }
+
+        function toGrams(value, unit) {
+            if (!Number.isFinite(value)) {
+                return NaN;
+            }
+
+            switch (unit) {
+                case "g":
+                case "gram":
+                case "grams":
+                    return value;
+                case "ml":
+                case "milliliter":
+                case "milliliters":
+                    return value;
+                case "lb":
+                case "lbs":
+                case "pound":
+                case "pounds":
+                    return value * gramsPerPound;
+                default:
+                    return NaN;
+            }
+        }
+
+        function formatServings(servings) {
+            return Number.isInteger(servings) ? String(servings) : servings.toFixed(1);
+        }
+
+        function clamp(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function formatAmount(value) {
+            return Number.isInteger(value) ? String(value) : value.toFixed(1);
         }
 
         function updateCalorieDelta(loggedCalories) {
@@ -773,16 +997,9 @@
             }
         }
 
-        function parseInteger(value) {
+        function parseDecimal(value) {
             const number = Number(value);
-            return Number.isInteger(number) ? number : null;
-        }
-
-        function parseOptionalInteger(value) {
-            if (!value.trim()) {
-                return 0;
-            }
-            return parseInteger(value);
+            return Number.isFinite(number) ? number : null;
         }
     </script>
 </body>

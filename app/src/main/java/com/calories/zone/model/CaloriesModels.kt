@@ -19,6 +19,21 @@ enum class Goal(val label: String, val calorieMultiplier: Double, val proteinMul
     BuildMuscle("Build muscle", 1.1, 2.2)
 }
 
+enum class MealEntryUnit(val label: String, val shortLabel: String, val estimatorToken: String) {
+    Grams("Grams (g)", "g", "g"),
+    Milliliters("Milliliters (ml)", "ml", "ml"),
+    Pounds("Pounds (lb)", "lb", "lb")
+}
+
+data class CustomFoodProfile(
+    val id: String,
+    val name: String,
+    val caloriesPer100g: Int,
+    val proteinPer100g: Int,
+    val carbsPer100g: Int,
+    val fatPer100g: Int
+)
+
 data class UserProfileInput(
     val age: Int,
     val heightCm: Double,

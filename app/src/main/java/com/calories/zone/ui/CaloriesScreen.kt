@@ -34,7 +34,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.calories.zone.data.LocalAppStorage
 import com.calories.zone.model.ActivityLevel
 import com.calories.zone.model.CaloriePlan
+import com.calories.zone.model.CustomFoodProfile
 import com.calories.zone.model.Goal
+import com.calories.zone.model.MealEntryUnit
 import com.calories.zone.model.MealLogEntry
 import com.calories.zone.model.MealTotals
 import com.calories.zone.model.Sex
@@ -56,10 +58,22 @@ fun CaloriesRoute(
         onGenerateClick = viewModel::generatePlan,
         onSaveProfileClick = viewModel::saveProfile,
         onMealNameChanged = viewModel::updateMealName,
-        onMealCaloriesChanged = viewModel::updateMealCalories,
-        onMealProteinChanged = viewModel::updateMealProtein,
-        onMealCarbsChanged = viewModel::updateMealCarbs,
-        onMealFatChanged = viewModel::updateMealFat,
+        onMealEntryAmountChanged = viewModel::updateMealEntryAmount,
+        onMealEntryUnitChanged = viewModel::updateMealEntryUnit,
+        onDeleteMealClick = viewModel::deleteMeal,
+        customFoods = viewModel.uiState.customFoods,
+        customFoodName = viewModel.uiState.customFoodName,
+        customFoodCalories = viewModel.uiState.customFoodCalories,
+        customFoodProtein = viewModel.uiState.customFoodProtein,
+        customFoodCarbs = viewModel.uiState.customFoodCarbs,
+        customFoodFat = viewModel.uiState.customFoodFat,
+        onCustomFoodNameChanged = viewModel::updateCustomFoodName,
+        onCustomFoodCaloriesChanged = viewModel::updateCustomFoodCalories,
+        onCustomFoodProteinChanged = viewModel::updateCustomFoodProtein,
+        onCustomFoodCarbsChanged = viewModel::updateCustomFoodCarbs,
+        onCustomFoodFatChanged = viewModel::updateCustomFoodFat,
+        onAddCustomFoodClick = viewModel::addCustomFood,
+        onDeleteCustomFoodClick = viewModel::deleteCustomFood,
         onAddMealClick = viewModel::addMeal
     )
 }
@@ -78,10 +92,22 @@ private fun CaloriesScreen(
     onGenerateClick: () -> Unit,
     onSaveProfileClick: () -> Unit,
     onMealNameChanged: (String) -> Unit,
-    onMealCaloriesChanged: (String) -> Unit,
-    onMealProteinChanged: (String) -> Unit,
-    onMealCarbsChanged: (String) -> Unit,
-    onMealFatChanged: (String) -> Unit,
+    onMealEntryAmountChanged: (String) -> Unit,
+    onMealEntryUnitChanged: (MealEntryUnit) -> Unit,
+    onDeleteMealClick: (String) -> Unit,
+    customFoods: List<CustomFoodProfile>,
+    customFoodName: String,
+    customFoodCalories: String,
+    customFoodProtein: String,
+    customFoodCarbs: String,
+    customFoodFat: String,
+    onCustomFoodNameChanged: (String) -> Unit,
+    onCustomFoodCaloriesChanged: (String) -> Unit,
+    onCustomFoodProteinChanged: (String) -> Unit,
+    onCustomFoodCarbsChanged: (String) -> Unit,
+    onCustomFoodFatChanged: (String) -> Unit,
+    onAddCustomFoodClick: () -> Unit,
+    onDeleteCustomFoodClick: (String) -> Unit,
     onAddMealClick: () -> Unit
 ) {
     Scaffold(
@@ -260,17 +286,34 @@ private fun CaloriesScreen(
                 mealTotals = state.mealTotals,
                 targetPlan = state.result,
                 mealName = state.mealName,
+                mealEntryAmount = state.mealEntryAmount,
+                mealEntryUnit = state.mealEntryUnit,
                 mealCalories = state.mealCalories,
                 mealProtein = state.mealProtein,
                 mealCarbs = state.mealCarbs,
                 mealFat = state.mealFat,
                 meals = state.meals,
                 onMealNameChanged = onMealNameChanged,
-                onMealCaloriesChanged = onMealCaloriesChanged,
-                onMealProteinChanged = onMealProteinChanged,
-                onMealCarbsChanged = onMealCarbsChanged,
-                onMealFatChanged = onMealFatChanged,
+                onMealEntryAmountChanged = onMealEntryAmountChanged,
+                onMealEntryUnitChanged = onMealEntryUnitChanged,
+                onDeleteMealClick = onDeleteMealClick,
                 onAddMealClick = onAddMealClick
+            )
+
+            CustomFoodsCard(
+                customFoods = customFoods,
+                customFoodName = customFoodName,
+                customFoodCalories = customFoodCalories,
+                customFoodProtein = customFoodProtein,
+                customFoodCarbs = customFoodCarbs,
+                customFoodFat = customFoodFat,
+                onCustomFoodNameChanged = onCustomFoodNameChanged,
+                onCustomFoodCaloriesChanged = onCustomFoodCaloriesChanged,
+                onCustomFoodProteinChanged = onCustomFoodProteinChanged,
+                onCustomFoodCarbsChanged = onCustomFoodCarbsChanged,
+                onCustomFoodFatChanged = onCustomFoodFatChanged,
+                onAddCustomFoodClick = onAddCustomFoodClick,
+                onDeleteCustomFoodClick = onDeleteCustomFoodClick
             )
         }
     }
@@ -365,16 +408,17 @@ private fun MealLogCard(
     mealTotals: MealTotals,
     targetPlan: CaloriePlan?,
     mealName: String,
+    mealEntryAmount: String,
+    mealEntryUnit: MealEntryUnit,
     mealCalories: String,
     mealProtein: String,
     mealCarbs: String,
     mealFat: String,
     meals: List<MealLogEntry>,
     onMealNameChanged: (String) -> Unit,
-    onMealCaloriesChanged: (String) -> Unit,
-    onMealProteinChanged: (String) -> Unit,
-    onMealCarbsChanged: (String) -> Unit,
-    onMealFatChanged: (String) -> Unit,
+    onMealEntryAmountChanged: (String) -> Unit,
+    onMealEntryUnitChanged: (MealEntryUnit) -> Unit,
+    onDeleteMealClick: (String) -> Unit,
     onAddMealClick: () -> Unit
 ) {
     ElevatedCard {
@@ -388,41 +432,43 @@ private fun MealLogCard(
                 fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = "Keep it simple for now: log meals manually on the phone. Later, a small on-device model can turn free text into a meal draft.",
+                text = "Enter meal name and amount in grams, ml, or pounds. Nutrition is auto-calculated as you type.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             MetricField(
-                label = "Meal name",
+                label = "Meal entry name",
                 value = mealName,
                 onValueChanged = onMealNameChanged,
                 keyboardType = KeyboardType.Text
             )
 
             MetricField(
-                label = "Calories",
-                value = mealCalories,
-                onValueChanged = onMealCaloriesChanged,
-                suffix = "kcal",
-                keyboardType = KeyboardType.Number
+                label = "Meal entry amount",
+                value = mealEntryAmount,
+                onValueChanged = onMealEntryAmountChanged,
+                keyboardType = KeyboardType.Decimal
             )
 
-            MacroInputField(
-                label = "Protein",
-                value = mealProtein,
-                onValueChanged = onMealProteinChanged
+            SelectionRow(
+                label = "Entry unit",
+                options = MealEntryUnit.entries,
+                selected = mealEntryUnit,
+                optionLabel = { it.label },
+                onSelected = onMealEntryUnitChanged
             )
-            MacroInputField(
-                label = "Carbs",
-                value = mealCarbs,
-                onValueChanged = onMealCarbsChanged
+
+            Text(
+                text = "Auto calculated",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
             )
-            MacroInputField(
-                label = "Fat",
-                value = mealFat,
-                onValueChanged = onMealFatChanged
-            )
+
+            ResultRow(label = "Calories", value = if (mealCalories.isBlank()) "-" else "$mealCalories kcal")
+            ResultRow(label = "Protein", value = if (mealProtein.isBlank()) "-" else "${mealProtein}g")
+            ResultRow(label = "Carbs", value = if (mealCarbs.isBlank()) "-" else "${mealCarbs}g")
+            ResultRow(label = "Fat", value = if (mealFat.isBlank()) "-" else "${mealFat}g")
 
             Button(
                 onClick = onAddMealClick,
@@ -472,7 +518,10 @@ private fun MealLogCard(
                 )
             } else {
                 meals.take(8).forEach { meal ->
-                    MealLogRow(meal = meal)
+                    MealLogRow(
+                        meal = meal,
+                        onDeleteMealClick = { onDeleteMealClick(meal.id) }
+                    )
                 }
             }
         }
@@ -480,22 +529,147 @@ private fun MealLogCard(
 }
 
 @Composable
-private fun MacroInputField(
-    label: String,
-    value: String,
-    onValueChanged: (String) -> Unit
+private fun CustomFoodsCard(
+    customFoods: List<CustomFoodProfile>,
+    customFoodName: String,
+    customFoodCalories: String,
+    customFoodProtein: String,
+    customFoodCarbs: String,
+    customFoodFat: String,
+    onCustomFoodNameChanged: (String) -> Unit,
+    onCustomFoodCaloriesChanged: (String) -> Unit,
+    onCustomFoodProteinChanged: (String) -> Unit,
+    onCustomFoodCarbsChanged: (String) -> Unit,
+    onCustomFoodFatChanged: (String) -> Unit,
+    onAddCustomFoodClick: () -> Unit,
+    onDeleteCustomFoodClick: (String) -> Unit
 ) {
-    MetricField(
-        label = label,
-        value = value,
-        onValueChanged = onValueChanged,
-        suffix = "g",
-        keyboardType = KeyboardType.Number
-    )
+    ElevatedCard {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            Text(
+                text = "Custom foods",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = "Add custom foods with calories and macros per 100g so meal estimation can use your own nutrition data.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            MetricField(
+                label = "Custom food name",
+                value = customFoodName,
+                onValueChanged = onCustomFoodNameChanged,
+                keyboardType = KeyboardType.Text
+            )
+
+            MetricField(
+                label = "Calories per 100g",
+                value = customFoodCalories,
+                onValueChanged = onCustomFoodCaloriesChanged,
+                suffix = "kcal",
+                keyboardType = KeyboardType.Number
+            )
+
+            MetricField(
+                label = "Protein per 100g",
+                value = customFoodProtein,
+                onValueChanged = onCustomFoodProteinChanged,
+                suffix = "g",
+                keyboardType = KeyboardType.Number
+            )
+
+            MetricField(
+                label = "Carbs per 100g",
+                value = customFoodCarbs,
+                onValueChanged = onCustomFoodCarbsChanged,
+                suffix = "g",
+                keyboardType = KeyboardType.Number
+            )
+
+            MetricField(
+                label = "Fat per 100g",
+                value = customFoodFat,
+                onValueChanged = onCustomFoodFatChanged,
+                suffix = "g",
+                keyboardType = KeyboardType.Number
+            )
+
+            Button(
+                onClick = onAddCustomFoodClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Save custom food")
+            }
+
+            HorizontalDivider()
+
+            Text(
+                text = "Saved custom foods",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            if (customFoods.isEmpty()) {
+                Text(
+                    text = "No custom foods saved yet.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else {
+                customFoods.take(8).forEach { customFood ->
+                    CustomFoodRow(
+                        customFood = customFood,
+                        onDeleteCustomFoodClick = { onDeleteCustomFoodClick(customFood.id) }
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Composable
-private fun MealLogRow(meal: MealLogEntry) {
+private fun CustomFoodRow(
+    customFood: CustomFoodProfile,
+    onDeleteCustomFoodClick: () -> Unit
+) {
+    ElevatedCard(
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(14.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Text(
+                text = customFood.name,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = "${customFood.caloriesPer100g} kcal • P ${customFood.proteinPer100g}g • C ${customFood.carbsPer100g}g • F ${customFood.fatPer100g}g (per 100g)",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            OutlinedButton(
+                onClick = onDeleteCustomFoodClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Delete custom food")
+            }
+        }
+    }
+}
+
+@Composable
+private fun MealLogRow(
+    meal: MealLogEntry,
+    onDeleteMealClick: () -> Unit
+) {
     ElevatedCard(
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -520,6 +694,13 @@ private fun MealLogRow(meal: MealLogEntry) {
                 text = "${meal.calories} kcal • P ${meal.proteinGrams}g • C ${meal.carbsGrams}g • F ${meal.fatGrams}g",
                 style = MaterialTheme.typography.bodyMedium
             )
+
+            OutlinedButton(
+                onClick = onDeleteMealClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Delete meal")
+            }
         }
     }
 }
