@@ -9,6 +9,7 @@ captures/
 *.keystore
 keystore.properties
 */tips/
+tips/
 *.log
 *.hprof
 *.orig
