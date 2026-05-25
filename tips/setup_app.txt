@@ -1,0 +1,24 @@
+** ** for now i had purchased the developer account and waiting for google verification my identity. can we continue for the app setup , or should i wait !!
+
+Continue now. Do not wait.
+
+You can do almost all app setup while identity verification is pending, then publish quickly once Google approves.
+
+Can do now:
+1. Finalize app branding and package setup (already mostly done).
+2. Build and verify signed release bundle (AAB).
+3. Prepare store listing text, screenshots, icon, feature graphic.
+4. Prepare policy answers drafts (Data safety, Health declaration, Content rating, App access).
+5. Run internal QA and testing.
+
+Usually blocked until verification is complete:
+====================================================
+1. Final contact phone verification flow.
+2. Final publish/release actions in Play Console.
+
+So the best approach is: keep preparing everything now, and as soon as approval email arrives, finish the last console steps.
+
+If you want, I can create a final ready-to-submit checklist for your exact app and put it in the tips folder.   
+
+Created checklist:
+tips/final_ready_to_submit_checklist.txt

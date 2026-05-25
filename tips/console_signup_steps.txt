@@ -1,0 +1,155 @@
+https://play.google.com/console/signup
+
+We'll automatically use some of the information you provide to meet Android developer verification requirements
+When creating your Play Console developer account, we'll use some of the information you provide to also meet Android developer verification requirements, saving you time.
+
+Providing identity information is a requirement in order to distribute on certified Android devices, including through Google Play, and is used to enhance user safety, elevate Android security, and to make sure that all apps come from verified developers.
+
+We'll use the following information:
+
+Legal name
+
+Legal address
+
+Website
+
+First, give us a developer name
+This is what users will see on Google Play to represent your developer profile and apps. It can be different to your name, and can be changed later.
+
+Hazem Elbatawy
+
+
+Link a payments profile to verify your identity
+To create a developer account, you need to link a Google payments profile. If you don't have a payments profile, you can create one.
+What is a payments profile?
+
+Your payments profile is used across Google products, and saves you time by allowing you to manage your information in one place. Learn more
+How Google Play uses your payments profile
+
+A payments profile is critical to the creation and verification of a Play Console developer account. Google Play uses your payments profile to collect and verify your legal name and address. Learn more
+
+
+
+Public developer profile
+The following information makes up your public developer profile, and will be shown on Google Play
+
+Legal name and country
+Legal name
+
+Hazem El Batawy
+Country / region
+
+Egypt (EG)
+If you choose to earn money on Google Play, your full legal address will be shown publicly. Learn more
+Developer email address
+This is shown on Google Play as part of your public developer profile. You can provide a different email address for app support queries, for each of your apps, once you've created your account.
+zoma0097@gmail.com
+ 
+
+Email address verified through Google account
+Are you sure you want to use this contact email address?
+Make sure this is the email address that you want us to use to contact you. You can use a mailing list if you want communications to be sent to multiple people.
+Acknowledgement
+
+I consent to Google showing this information on Google Play as part of my public developer profile. I understand that my developer profile and apps may be removed from Google Play if Google is unable to verify this information.
+
+
+
+About you
+Your Play Console and Android experience
+Tell us about your previous experience with Play Console and Android. This is only visible to you.
+
+For example, tell us about:
+any experience using Play Console
+any apps that you've built, managed, or published
+any Android development experience
+You can include links to supporting information.
+This is my first time using Play Console. But I am a website developer.
+
+
+ 
+
+71 / 5000
+Text is 71 characters out of 5000
+Other Google accounts
+Have you used any other Google accounts to access Play Console in the past 6 months, other than zoma0097@gmail.com?
+
+This includes Google Accounts that you've used to:
+create Play Console developer accounts
+sign in to Play Console as a team member, either as part of an organization, or for personal use.
+This won't be visible to anyone else, and we won't send any communications to any other Google Accounts.
+
+Yes
+
+No
+Make sure you tell us about other Google Accounts you've used
+Telling us about other Google Accounts you've used is fast, helps us to verify your identity, and helps to protect Google Play users from abuse
+Website
+Enter the URL of your website. This won't be shown on Google Play.
+https://zoma00.github.io/Robotic-Resilience-React/
+ 
+
+
+I don't have a website
+
+
+
+
+Apps
+Number of apps
+How many apps do you plan to publish on Google Play in the next 12 months?
+
+If you're not sure, provide an approximate answer. This won't affect the number of apps you can publish.
+2 - 5
+Earning money on Google Play
+Do you plan to earn money from the apps you publish on Google Play? This won't affect your ability to earn money from your apps, or the features and services you can access.
+
+No
+
+Yes
+How do you plan to earn money? Select all that apply.
+
+Ads
+
+In-app purchases
+
+Subscriptions
+
+Paid apps
+
+Other
+
+I don't know yet
+App categories
+Do you plan to publish any of the following types of apps on Google Play? Select all that apply. This won't affect how your app is displayed on Google Play, and you can change this later.
+Some types of apps can only be distributed by organizations. Learn more
+
+Apps designed for kids or families  ●
+
+COVID 19 proof of vaccination or contact tracing apps
+
+Government apps
+
+Election apps
+
+News apps ● 
+
+Telehealth or medical apps
+
+Tobacco apps
+
+Banking apps
+
+Crowdfunding or microloan apps
+
+Cryptocurrency wallet or exchange apps
+
+Personal loan apps
+
+Real-money gambling apps
+
+Any other financial products or services not listed above
+
+None of the above
+
+

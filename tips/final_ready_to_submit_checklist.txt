@@ -1,0 +1,72 @@
+Calories Zone Final Ready-to-Submit Checklist
+
+Project and package
+- [x] App display name: Calories Zone
+- [x] Android package / namespace: com.calories.zone
+- [x] App ID in Gradle: com.calories.zone
+- [x] Local Git remote points to: git@github.com:zoma00/calories-zone.git
+
+Build verification (completed)
+- [x] ./gradlew testDebugUnitTest
+- [x] ./gradlew assembleDebug
+- [x] ./gradlew bundleRelease
+
+Build outputs
+- [x] Debug APK: app/build/outputs/apk/debug/app-debug.apk
+- [x] Release AAB: app/build/outputs/bundle/release/app-release.aab
+
+Signing status
+- [ ] Release AAB is signed for Play upload
+  Current status: jar is unsigned.
+
+How to create a signed release AAB
+1. Export signing environment variables (new names, preferred):
+
+export CALORIES_ZONE_UPLOAD_STORE_FILE=/absolute/path/to/your-upload-key.jks
+export CALORIES_ZONE_UPLOAD_STORE_PASSWORD=your-store-password
+export CALORIES_ZONE_UPLOAD_KEY_ALIAS=your-key-alias
+export CALORIES_ZONE_UPLOAD_KEY_PASSWORD=your-key-password
+
+2. Build again:
+
+./gradlew bundleRelease
+
+3. Verify signature:
+
+jarsigner -verify app/build/outputs/bundle/release/app-release.aab
+
+Note: The build also accepts old variable names (ZOMBA_UPLOAD_*) for backward compatibility.
+
+Google Play Console account status
+- [ ] Identity verification approved by Google
+- [ ] Contact phone verification enabled in console
+
+Store listing assets
+- [ ] App icon
+- [ ] Feature graphic
+- [ ] Phone screenshots
+- [ ] Short description
+- [ ] Full description
+
+Policy and console forms
+- [ ] Data safety form
+- [ ] Health declaration (Nutrition and Weight Management)
+- [ ] Content rating questionnaire
+- [ ] Privacy policy URL
+- [ ] App access declaration (if required)
+
+Recommended safe wording
+- Use: nutrition tracking, calorie calculator, meal logging, weight management support
+- Avoid: diagnosis, treatment, cure, prevention, medical claims
+
+Final publish steps (after identity verification email)
+1. Ensure signed AAB is generated.
+2. Upload AAB to Play Console.
+3. Complete all pending App content tasks.
+4. Run internal test track first.
+5. Promote to production when checks pass.
+
+Current deployment readiness summary
+- Technical build readiness: READY
+- Play account readiness: WAITING FOR GOOGLE IDENTITY VERIFICATION
+- Final blocker before production upload: signed AAB + completed console verification/forms

@@ -1,7 +1,11 @@
-val uploadStoreFile = providers.environmentVariable("ZOMBA_UPLOAD_STORE_FILE")
-val uploadStorePassword = providers.environmentVariable("ZOMBA_UPLOAD_STORE_PASSWORD")
-val uploadKeyAlias = providers.environmentVariable("ZOMBA_UPLOAD_KEY_ALIAS")
-val uploadKeyPassword = providers.environmentVariable("ZOMBA_UPLOAD_KEY_PASSWORD")
+val uploadStoreFile = providers.environmentVariable("CALORIES_ZONE_UPLOAD_STORE_FILE")
+    .orElse(providers.environmentVariable("ZOMBA_UPLOAD_STORE_FILE"))
+val uploadStorePassword = providers.environmentVariable("CALORIES_ZONE_UPLOAD_STORE_PASSWORD")
+    .orElse(providers.environmentVariable("ZOMBA_UPLOAD_STORE_PASSWORD"))
+val uploadKeyAlias = providers.environmentVariable("CALORIES_ZONE_UPLOAD_KEY_ALIAS")
+    .orElse(providers.environmentVariable("ZOMBA_UPLOAD_KEY_ALIAS"))
+val uploadKeyPassword = providers.environmentVariable("CALORIES_ZONE_UPLOAD_KEY_PASSWORD")
+    .orElse(providers.environmentVariable("ZOMBA_UPLOAD_KEY_PASSWORD"))
 val hasReleaseSigning = listOf(
     uploadStoreFile,
     uploadStorePassword,

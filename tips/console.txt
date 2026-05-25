@@ -1,4 +1,4 @@
-Calories Zone - Google Play Store Guide
+ZombaCal AI - Google Play Store Guide
 =====================================
 
 
@@ -75,7 +75,7 @@ Then build the signed bundle:
 Play Console checklist
 ----------------------
 1. Create a new app in Google Play Console
-2. Choose app name: Calories Zone
+2. Choose app name: ZombaCal AI
 3. Set default language
 4. Choose App or Game: App
 5. Choose Free or Paid
@@ -97,7 +97,7 @@ Short description example:
 Track calories, save your profile, and log meals with local offline tools.
 
 Full description example:
-Calories Zone helps you estimate calorie targets, save your profile on-device, and log meals locally. It is designed as a local-first nutrition tracker with simple calorie planning and meal logging.
+ZombaCal AI helps you estimate calorie targets, save your profile on-device, and log meals locally. It is designed as a local-first nutrition tracker with simple calorie planning and meal logging.
 
 Policy and content items to prepare
 -----------------------------------
@@ -168,7 +168,7 @@ Minimum next step
 
 What you'll need to create a developer account for yourself
 To create this account, you'll need:
-
+--------------------------------------------------
 An email address for your developer profile
 This will be shown on Google Play as part of your public developer profile. You'll need to verify it by receiving a code. You can provide a different email address for app support queries, for each of your apps, once you've created your account. Learn more about developer verifications
 

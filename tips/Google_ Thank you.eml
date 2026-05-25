@@ -1,0 +1,1145 @@
+Delivered-To: zoma0097@gmail.com
+Received: by 2002:a05:6214:2026:b0:8ca:117b:16fe with SMTP id 6csp2080517qvf;
+        Mon, 25 May 2026 01:07:17 -0700 (PDT)
+X-Received: by 2002:a05:6830:6a96:b0:7e4:4998:aaea with SMTP id 46e09a7af769-7e5fec69008mr8090539a34.2.1779696437234;
+        Mon, 25 May 2026 01:07:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779696437; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Eua2vsS/fve4n/seRoiUaEjJ90i9q0SC8DKavo+pFkbJl17ze5QKHhAp0iTnx+wVBW
+         RwB7cOZ5Bjcm5LApRQUQ7RI1eBBa5GXt0hCyJxaFFphd0Ksp9xACep/E1pB6Bx1KmCWY
+         lo8t9DmlboctX/ftDBKnK4t9ReFqhzT8Ag5/B8eL/WP+/ovou2z5N+Or5z0aOmxRiEaf
+         mzrvJiEcDT+sDLH0EBGrp9neLEjH2RaTyPl9rpL0w1EsrkggzcByWUH8p6eHKT/AdHQq
+         4ClYOYZG8Wt5AJyexTvO5hPufLG7Ujcoh9baNkyQtPi1qVHreLjhNvRLyS+4Kkiln6nk
+         psrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:from:subject:message-id:gmsai:feedback-id:reply-to:date
+         :mime-version:dkim-signature;
+        bh=z250bsV+T0b4T4O+vVdVVcsGNiIExyUleghCG2I4lzY=;
+        fh=S0zxxOuv9ODYYUf4shvKCxCnmHo6conSQ+KyvpsznX0=;
+        b=abBDWNAAh3Z+DFHuUAkb1OfvhPD6hFf/Z3Sjhz1thrF5MWCSKmNuvjy6IJw6si8zVb
+         bqHG644hgoISQIC9X7et+Re2MgJdEd6+441ZMQ0R82QoSwei1gfYvz3xiiA/TIp8mgEa
+         39AjwYrvY5VoQooyWadxU6syNGw0Xvl+zHnIQn5JA6kTp6jsFWEOfBnnf7d7S49Kskgf
+         EpCmyevEv08+SYXeAA4TybVrNMlPV5+8OAfpEPKOcvBGil3+VYfHrvxyFjqMzyAyxfOV
+         Q1D6ufXuA63BrN96DBoDKsCmV4oei58pO4JUo8fIDUSf/SMP2+aIFJQzdmamFh1AamG/
+         svSg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@google.com header.s=20251104 header.b=pWsBhwrW;
+       spf=pass (google.com: domain of 3nqmuahakcoitecqirxw-rsvitpcksskpi.gsqdsqeeenlkqemp.gsq@scoutcamp.bounces.google.com designates 209.85.220.69 as permitted sender) smtp.mailfrom=3NQMUahAKCOITEcQIRXW-RSVITPcKSSKPI.GSQdSQEeenlKQEMP.GSQ@scoutcamp.bounces.google.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=google.com;
+       dara=pass header.i=@gmail.com
+Return-Path: <3NQMUahAKCOITEcQIRXW-RSVITPcKSSKPI.GSQdSQEeenlKQEMP.GSQ@scoutcamp.bounces.google.com>
+Received: from mail-sor-f69.google.com (mail-sor-f69.google.com. [209.85.220.69])
+        by mx.google.com with SMTPS id 46e09a7af769-7e60665023dsor4243525a34.15.2026.05.25.01.07.17
+        for <zoma0097@gmail.com>
+        (Google Transport Security);
+        Mon, 25 May 2026 01:07:17 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 3nqmuahakcoitecqirxw-rsvitpcksskpi.gsqdsqeeenlkqemp.gsq@scoutcamp.bounces.google.com designates 209.85.220.69 as permitted sender) client-ip=209.85.220.69;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@google.com header.s=20251104 header.b=pWsBhwrW;
+       spf=pass (google.com: domain of 3nqmuahakcoitecqirxw-rsvitpcksskpi.gsqdsqeeenlkqemp.gsq@scoutcamp.bounces.google.com designates 209.85.220.69 as permitted sender) smtp.mailfrom=3NQMUahAKCOITEcQIRXW-RSVITPcKSSKPI.GSQdSQEeenlKQEMP.GSQ@scoutcamp.bounces.google.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=google.com;
+       dara=pass header.i=@gmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1779696437; x=1780301237; dara=google.com;
+        h=to:from:subject:message-id:gmsai:feedback-id:reply-to:date
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=z250bsV+T0b4T4O+vVdVVcsGNiIExyUleghCG2I4lzY=;
+        b=pWsBhwrWLjXLFPVKPUO2yAJpvpNdKGSonBzEKOdMHxpXR8EMnmE2F2mGRw3/nCCaLs
+         Pay6KZ+zmyiiCw790DXsl8UMF5nS3+7oh3BteORdijnO1ADFOpWFmcnwLmimCprygn1Z
+         j2a7zdb4kndR9+L4c8r0g9V7dd//fJ5g2gDBi/I0RvuE46D8EAGXogRzVmJMBa5yu8K2
+         7NeC0K5muSVukooaEb0Dk74DBf+1SvrwTTJ/oiVjVQCIvg5Hosr5m320hhnoGf5+Mf9S
+         gqyNhN5fxlB2iHt3aM/8qOu2hhvxjc7AdDBKxcqWUCVmqxe5NxU3FAs9pitb+BBw2C/B
+         OUOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779696437; x=1780301237;
+        h=to:from:subject:message-id:gmsai:feedback-id:reply-to:date
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z250bsV+T0b4T4O+vVdVVcsGNiIExyUleghCG2I4lzY=;
+        b=YYlzSPy2AJqT7tEk7o21DhGzFTNC/jysDWGU13sr46Ukwzf/wiwE8bWZZE6pZ/RKhI
+         DhiVTRPgjTT/IP/EGMJCNfIpQu8HQjFkFtoQaS6CU56vJ6FfC+WhCAEzN5k9KBqsz8yH
+         JQ2XQ2jgpo45o3rNETrdJY9kW2ck66r59h0Q1BkKwtluILLJlyl3LGQuvWgRxMREWq9L
+         7Iui0skEghFek1vfqli/im4pRWnGjCn1gWrFjezpVvuR1ZKIADtcFABLnQ63oIzqhZYZ
+         eMBp1dVWu2q85/JYSxVvhLm8TBq5gnT+ob2tCX9mHHkl18kRc0lPGap6/K8n0x5719fk
+         5hQQ==
+X-Gm-Message-State: AOJu0YxR2c0C1aBiyjzTGVYKyS7d3GZ38GsSVFyXBY0U5evVtHUKV/Me
+	fRtKSVEZ+/ZN4NQ3DXQ0uI7amlN15P0H56HJgAsG6MdZb/kvOH8=
+MIME-Version: 1.0
+X-Received: by 2002:a05:6820:814:b0:69d:96dd:43be with SMTP id
+ 006d021491bc7-69d96dd45a6mr4205762eaf.31.1779696437044; Mon, 25 May 2026
+ 01:07:17 -0700 (PDT)
+Date: Mon, 25 May 2026 01:07:17 -0700
+Reply-To: Google Payments <payments-noreply@google.com>
+X-Google-Id: 240499 
+Feedback-ID: P-58-0:C20058377:M110124988-en-US:gamma
+gmsai: true
+X-Google-Notification-Metadata: CgISAA
+X-Notifications: 2e65bf59c90e0000
+X-Notifications-Bounce-Info: AZJPhI0UMBadn5sWfYE20lMYtupT-dol8TtsNjAjL0qxnZRANcSlNodptf9jd1zS8oXDi6uqBxiaDrwSSksv-2XVWIxCu1sm8KFqknGfFXFr8DXASZJgfEMq8X6GewNz2BmbB2O4kubDW2rWVWItjDGPUMKU3g8zRV5YK7ZIQ_1T9CFGa3SHYk6JSU5pHfxsJfCZLyjh1J2MaHVLcnYzR0Vhax0FBBqelTIWd493UJ5LADycwxFHD4f35Qv_EZUCGAxBV8hP6_pPkzME7s6GQzgQGyWCf0Sa65hEr2yaZaH66CFLwPy9EnZO9zq9P511isvhCRsV2-OQWcn8vqBgscg_p4RaElOpRCePs_uJcXzOlpGtAIhsufoN8W_cCYuXa8-2zhfOCtQqnCYPj_e35vrmN9xo0NrcvILg1xW_NpM1LAeeqwCsk4ksyz1fvQIHzJHW0is1owRESkFl6jsJSLU47vaTE7gQDBNdnDC3HMdpx2I57ALrA6kGgU2HzlUp6NGcDvuK_OryJ2TDLwrPiXwjQkX-w_O7IGMyaWS0IiySfDU8sl1sLXbMnXLjoPS3RdJLJFGWnxZOq9Tqvrb9VEjOuU28ldaGWFReESier6slIGrAqf8hL3nubxrkJjlRlZtPZbKd3Zs-IAixSIIGU0LxnHwLpy74Iz3zQamL1zk7myunJYethmMQECbMABjCuAfAqqaQGgQT14-Bf8qwNjAwNjA0MDQxNTM1NTk2OTMzMg
+Message-ID: <7a35e3b535d366ed125f1ed0a97e2c78a7049190-20058377-110326027@google.com>
+Subject: Google: Thank you
+From: Google Payments <payments-noreply@google.com>
+To: zoma0097@gmail.com
+Content-Type: multipart/alternative; boundary="000000000000f027d406529fdd60"
+
+--000000000000f027d406529fdd60
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+Content-Transfer-Encoding: base64
+
+R29vZ2xlDQoNClRoYW5rIHlvdQ0KWW91J3ZlIG1hZGUgYSBwdXJjaGFzZSBmcm9tIEdvb2dsZS4N
+Cg0KR29vZ2xlDQpNYXkgMjUsIDIwMjYgYXQgMTowNzowN+KAr0FNIFBEVA0KSXRlbSBRdWFudGl0
+eSBQcmljZQ0KRGV2ZWxvcGVyIFJlZ2lzdHJhdGlvbiBGZWUNCiAgMSAkMjUuMDANCg0KDQpJbmNs
+dWRlcyBWQVQgKDE0JSkgJDMuMDcNClRvdGFsICQyNS4wMA0KUGF5bWVudCBtZXRob2QNCk1hc3Rl
+cmNhcmTCoMKg4oCi4oCG4oCi4oCG4oCi4oCG4oCi4oCGOTExMg0KDQpPcmRlciBudW1iZXINClBE
+Uy45MzM1LTExMzMtNTc1OC0xMTgwMA0KVklFVyBPTkxJTkUgIA0KPGh0dHBzOi8vYy5nbGUvQU9F
+eG1xMmV5emVzNlItNnFlaEV3MUd1UDNrREZ4Mm1IVzBua2puZDZhU0dTclJ0VzRwVGhzVk1JWEJa
+aVRjUk4yYTVocjRCMVExc3RfVlF4NHlPLXE3Z1hubHNhNUxfLU1mSzcyX25aM2xKaUdmWUhLd2Rv
+enR6bjRFME9wQ1R4U0MwNHNfWmo4eWMwVUxpaWJSM2V3aElFSEktVng5ZWVOWU9SOVBYNXVBZDhJ
+Q1NPekc5dkc5aXBoOE5qbDFaUkxzV0xLTDJWcU1aV25FOTZoN1MycGIyaWpwVENwbU9HWlRDZXgw
+SkJoSnZGckFRUVZZRERHSDNNYlpPXzY3a0FYUmtEM25jdGhRT2NuMGZSd2tGYmlNVXJYZWFkN0R2
+cWk1X3VSRnE0NFZNRWJLMUh5T2xGdXh6RlBYM1JSOWJxRG40c1E+DQoNCg0KLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KSEVMUCBDRU5URVI8aHR0cHM6Ly9z
+dXBwb3J0Lmdvb2dsZS5jb20vcGF5bWVudHNjZW50ZXIvP3A9ZW1haWxfaG9tZT4NCkNPTlRBQ1Qg
+VVM8aHR0cHM6Ly9zdXBwb3J0Lmdvb2dsZS5jb20vcGF5bWVudHNjZW50ZXIvP3A9ZW1haWxfY29u
+dGFjdD4NCg0KUGF5bWVudHMgcHJvZmlsZSBJRDoNCjQzMjYtNzYwNC0xNzkzDQoNCkdvb2dsZSBM
+TEMgMTYwMCBBbXBoaXRoZWF0cmUgUGt3eSBNb3VudGFpbiBWaWV3LCBDQSA5NDA0MyBVbml0ZWQg
+U3RhdGVzDQoNCllvdSBoYXZlIHJlY2VpdmVkIHRoaXMgbWFuZGF0b3J5IHNlcnZpY2UgYW5ub3Vu
+Y2VtZW50IHRvIHVwZGF0ZSB5b3UgYWJvdXQgIA0KaW1wb3J0YW50IGNoYW5nZXMgdG8gR29vZ2xl
+IG9yIHlvdXIgYWNjb3VudC4NCg0KDQpHb29nbGUNCg0KDQoNCg==
+--000000000000f027d406529fdd60
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+
+
+
+     =20
+=20
+=20
+   =20
+ =20
+ =20
+ =20
+  =20
+ =20
+ =20
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+
+
+
+
+
+     =20
+=20
+=20
+   =20
+ =20
+ =20
+ =20
+  =20
+ =20
+ =20
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+=20
+
+<!doctype html>
+<html lang=3Den>
+ <head>
+   <title>Thank you for your order!</title>
+   <meta http-equiv=3DContent-Type content=3D"text/html; charset=3DUTF-8">
+   <meta name=3Dviewport content=3Dinitial-scale=3D1>
+   <meta name=3Dsupported-color-schemes content=3D"light dark">
+   <style type=3Dtext/css>
+      a {color: #1967D2;}
+      #body_container{max-width:600px;}
+   </style>
+
+	<link href=3Dhttps://fonts.googleapis.com/css?family=3DGoogle+Sans:400,400=
+i,500,500i,700,700i|Google+Sans+Display:400,400i,500,500i,700,700i&amp;subs=
+et=3Dlatin,latin-ext,vietnamese,greek,cyrillic rel=3Dstylesheet>
+  =20
+    <style>
+	:root {     color-scheme: light dark;     supported-color-schemes: light d=
+ark;   }    =20
+	@media (prefers-color-scheme: dark ) {   /* Custom Dark Mode Font Colors *=
+/  =20
+		td, span, h1, h2, h3, h4, h5, h6, h7, p, div {    =20
+		color: #ffffff !important;}
+      .dark_headline{color:#1967D2 !important;}
+      .dark_link_color{color:#1967D2 !important;}
+		div, table, td { background-color: transparent !important;  }
+      .cart_bg_top{background: url('https://www.gstatic.com/gumdrop/files/p=
+ayments-dark-mode-cart-top-transparent-w800px-h78px-2x.png') no-repeat !imp=
+ortant;
+    background-size: 100% 100% !important;}
+       .cart_bg_bottom{background: url('https://www.gstatic.com/gumdrop/fil=
+es/payments-dark-mode-cart-bottom-transparent-w800px-h92px-2x.png') no-repe=
+at !important;
+    background-size: 100% 100% !important;}
+  		.cart_bg{background: url('https://www.gstatic.com/gumdrop/files/payment=
+s-dark-middle-cart-fill-w800px-h40px-2x.png') repeat-y !important;
+    background-size: 100% 100% !important;
+         =20
+    }
+		body { background-color: #202124 !important; }
+  			.footer_wrapper{background-color:#202124 !important;}
+      .darkmode_fix_datacard{background-color:#494f58 !important; }
+      .border_rad_cart{border-radius:20px !important;}
+      .link_fixNative{color:#bfbfbf !important;}
+      .header_dm_fix{background-color: transparent !important;}
+      .bg_red
+     {background-color:#7D6967 !important;
+     color: #ffffff !important;}
+     .bg_grey
+     {background-color:#6D6E70 !important;
+     color:#ffffff !important;}
+    =20
+     td
+     {color:#ffffff !important;}
+      .data_tbl_head
+      {background:#4285F4 !important;}
+      .footer_link
+      {color:#1967D2 !important;}
+      .table_data_color a
+      {color:#ffffff !important;}
+		}
+	</style>
+   <style>
+  @media only screen and (max-width:812px) {
+    .bullet_section_device_fix{
+     =20
+       padding: 0px 0px 0px 20px !important;
+    }
+  }
+     @media only screen and (min-width: 393px) and (max-width: 400px) {
+     	.bullet_section_device_fix{
+       padding: 0px 0px 0px 20px !important;
+    	}
+    =20
+      =20
+     }
+    =20
+     @media only screen and (min-width: 480px)and (max-width: 948px) {
+       .footer_icon
+       {max-width:100% !important;
+       margin:0px auto !important;
+       min-width:unset !important;
+      =20
+        max-width:320px !important;
+       }
+       .mob_icon_pad
+       {padding:0px 30px 0px 30px !important;
+       }
+       .div_data_table
+       {margin:0px auto 32px !important;}
+      =20
+       .landscape_spacer
+       {padding-top:16px !important;}
+        =20
+     }
+     @media only screen and (max-width: 851px){
+      .indent_class
+       {
+          margin: 0 16px 32px 30px !important;
+       }
+      =20
+      =20
+        .width_set
+       {=20
+         width:200px!important;
+      =20
+       }
+       .footer_touch_target
+       {padding:12px 12px !important;}
+       .cart_para
+       {padding: 0px 16px 16px 16px !important; }
+       .footer_text_class
+       {margin:0px 0px !important;}
+      =20
+       .mob_icon_pad
+       {
+          padding:0px 23px 0px 23px !important;
+       }
+
+      table{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+  }
+  .bullet_section_device_fix{
+       padding: 0px 0px 0px 20px !important;
+    }
+       .logo_class
+       {padding:15px 16px !important;}
+     .darkmode_fix_datacard{
+        max-width: 100% !important;
+        margin: 0px 0px 32px !important;
+        width: 100% !important;
+       =09
+      }
+       .cart_btn
+        {margin:0px 16px 0px 16px !important;}
+  .data_table_clm_right{
+    padding-right: 5px !important
+  }
+      =20
+        .div_main_first
+      {margin:24px 16px 48px 16px !important;
+      }=20
+      =20
+   .div_main
+      {margin:0px 16px 32px 16px !important;
+      }
+     .mob_bullet_above_spacer
+       {margin:0px 16px 16px 16px !important;}
+    .greetings_cls
+       {margin:32px 16px 32px 16px !important;}
+       .showdesktop{display:none !important;}
+       .mobile_show{display:block !important;
+         width:100%!important;}
+       .not_icon_class
+       {margin:0px 0px !important;}
+       .list_bullet_spacer
+       {
+         padding:0px 0px 0px 35px !important;
+       }
+  =20
+}
+    =20
+     </style>
+   <style>
+      @media only screen and (max-width: 851px){
+     =20
+        .main_Div_section
+       {width:100% !important;
+       max-width:100% !important;
+       min-width:100% !important;
+      }
+     =20
+=20
+     }
+   </style>
+   <!--[if mso]>=20
+<style>=20
+html, body, table, tr, td, div{=20
+font-family: Arial, sans-serif !important;
+}=20
+
+</style>
+<![endif]-->
+    <!--[if gte mso 9]>
+<xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG/>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+           <style>
+        </style>
+    </head>
+	<body class=3Dbody>
+      <div style=3D"font-size: 0px; line-height:0px; color: #ffffff; displa=
+y: none;">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0=C2=A0 =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0=C2=A0 =C2=A0 </div>
+        <center>
+		<table border=3D0 cellpadding=3D0 cellspacing=3D0 style=3D"min-width: 100=
+%; width: 100%; max-width: 100%; margin:0 auto;background:transparent; back=
+ground-color: transparent;" align=3Dcenter valign=3Dtop role=3Dpresentation=
+>
+		  <tbody><tr>
+           =20
+      =20
+      <td dir=3Dltr valign=3Dtop>
+                 =20
+				<div class=3Dmain_Div_section style=3D"font-family: Google Sans Text,&#=
+39;Roboto&#39;, &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Frutiger, &#3=
+9;Frutiger Linotype&#39;, &#39;Dejavu Sans&#39;, &#39;Trebuchet MS&#39;, Ve=
+rdana, Arial, sans-serif; color: #3C4043; font-size: 14px; font-weight: nor=
+mal; line-height: 21px; margin: 0 auto; padding: 0; max-width: 600px;">
+     <table class=3D"header_dm_fix main_Div_section" border=3D0 cellpadding=
+=3D0 cellspacing=3D0 style=3D"min-width: 100%; width: 100%; background:tran=
+sparent; background-color: transparent;" bgcolor=3Dtransparent align=3Dleft=
+ valign=3Dtop role=3Dpresentation>
+		  <tr>
+                 <td>
+			  <table class=3Dmain_Div_section border=3D0 cellpadding=3D0 cellspacing=
+=3D0 style=3D"min-width: 600px; width: 600px; max-width: 600px; margin:0 au=
+to;" align=3Dcenter valign=3Dtop role=3Dpresentation>
+				<tr>
+                    <!--[if mso]>=20
+  <td class=3D"logo_class" dir=3D"ltr" style=3D"border-bottom: 1px solid #D=
+ADCE0; padding: 10px 32px;" align=3D"left">
+                       <a href=3D"#" style=3D"text-decoration:none; outline=
+:0; border:0; cursor: text !important; cursor: text; pointer-events:none;">
+                         <img src=3D"https://www.gstatic.com/images/brandin=
+g/googlelogo/2x/googlelogo_color_120x48dp.png" width=3D"120" alt=3D"Google"=
+  vspace=3D"6" /></a>
+  				  </td>
+<![endif]-->
+                  <!--[if !mso]-->
+                  <td class=3Dlogo_class dir=3Dltr style=3D"border-bottom: =
+1px solid #DADCE0; padding: 0px 32px;">
+                       <a href=3D# style=3D"text-decoration:none; outline:0=
+; border:0; cursor: text !important; cursor: text; pointer-events:none;">
+                         <img src=3Dhttps://www.gstatic.com/images/branding=
+/googlelogo/2x/googlelogo_color_120x48dp.png width=3D120 alt=3DGoogle vspac=
+e=3D6 align=3Dleft></a>
+  				  </td><!--[endif]-->
+                </tr>
+              </table>=20
+            </td>
+          </tr>
+      </table>
+              </div>
+            </td>
+            </tr>
+          </tbody>
+          </table>
+        </center>
+       =20
+	  <center>
+		<table class=3Dmain_Div_section border=3D0 cellpadding=3D0 cellspacing=3D=
+0 style=3D"min-width: 600px; width: 600px; max-width: 600px; margin:0 auto;=
+" align=3Dcenter valign=3Dtop role=3Dpresentation>
+		  <tr>
+            <td dir=3Dltr valign=3Dtop>
+				<div class=3Dmain_Div_section style=3D"font-family: Google Sans Text,&#=
+39;Roboto&#39;, &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Frutiger, &#3=
+9;Frutiger Linotype&#39;, &#39;Dejavu Sans&#39;, &#39;Trebuchet MS&#39;, Ve=
+rdana, Arial, sans-serif; color: #3C4043; font-size: 14px; font-weight: nor=
+mal; line-height: 21px; margin: 0 auto; padding: 0; max-width: 600px;">
+
+
+
+
+     =20
+=20
+=20
+   =20
+ =20
+ =20
+ =20
+  =20
+ =20
+ =20
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+
+
+
+
+
+ =20
+
+
+
+
+
+     =20
+=20
+=20
+   =20
+ =20
+ =20
+ =20
+  =20
+ =20
+ =20
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     =20
+=20
+=20
+   =20
+ =20
+ =20
+ =20
+  =20
+ =20
+ =20
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+ =20
+
+
+
+<style>
+:root {     color-scheme: light dark;     supported-color-schemes: light da=
+rk;   }    =20
+@media (prefers-color-scheme: dark ) {   /* Custom Dark Mode Font Colors */=
+  =20
+td, span, h1, h2, h3, h4, h5, h6, h7, p, div {    =20
+color: #ffffff !important;}      =20
+div, table, td { background-color: transparent !important;  }
+  table.cart_bg{background-color:#444444 !important;}
+body { background-color: #202124 !important; }
+  .footer_wrapper{background-color:#222222 !important;}
+  .color_merchant_card
+  {color:#ffffff !important;}
+}
+</style>
+ =20
+<div style=3D"font-size: 0px; line-height:0px; color: #ffffff; display: non=
+e;">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+=C2=A0 =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0=C2=A0 =C2=A0 </div>
+
+    <!--[if mso]><div class=3D"dark_headline div_main_first" style=3D"color=
+: #1967D2; font-size: 30px; font-weight: normal; line-height: 42px; margin:=
+ 24px 32px 48px 32px;font-family:Google Sans Text,'Roboto', 'Segoe UI', 'He=
+lvetica Neue', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Trebuchet MS'=
+, Verdana, Arial, sans-serif;"><![endif]-->
+    <!--[if !mso]--><div class=3D"dark_headline div_main_first" style=3D"co=
+lor: #1967D2; font-size: 30px; font-weight: normal; line-height: 42px; marg=
+in: 24px 32px 48px 32px;font-family:Google Sans,&#39;Roboto&#39;, &#39;Sego=
+e UI&#39;, &#39;Helvetica Neue&#39;, Frutiger, &#39;Frutiger Linotype&#39;,=
+ &#39;Dejavu Sans&#39;, &#39;Trebuchet MS&#39;, Verdana, Arial, sans-serif;=
+"><!--[endif]-->
+ =20
+     Thank you
+  </div>
+
+  <div class=3Ddiv_main style=3D"margin: 0 32px 32px 32px; font-size: 14px;=
+ font-weight: normal;">
+    You&#39;ve made a purchase from Google.<br><br>
+  </div>
+
+
+
+
+
+
+<!--[if mso]>
+<div style=3D"max-width: 400px; margin: 0px auto 32px;">
+<[!endif]-->
+<!--[if !mso]-->
+<div class=3Ddiv_data_table style=3D"max-width: 400px; margin: 0px auto 32p=
+x; ">
+
+ =20
+<!--[endif]-->
+
+<center class=3Ddiv_main>
+ <!--[if gte mso 9]>=20
+<table class=3D"" border=3D0 cellpadding=3D0 cellspacing=3D0 width=3D"400" =
+style=3D"font-family: Google Sans Text,'Roboto', 'Segoe UI', 'Helvetica Neu=
+e', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Trebuchet MS', Verdana, =
+Arial, sans-serif; color: #3c4043; font-size: 18px;line-height:27px; font-w=
+eight: normal;mso-padding-alt: 0 3px 0 0;">
+<![endif]-->
+   <!--[if !mso]-->
+<table class=3D"" border=3D0 cellpadding=3D0 cellspacing=3D0 width=3D100% s=
+tyle=3D"font-family: Google Sans Text,&#39;Roboto&#39;, &#39;Segoe UI&#39;,=
+ &#39;Helvetica Neue&#39;, Frutiger, &#39;Frutiger Linotype&#39;, &#39;Deja=
+vu Sans&#39;, &#39;Trebuchet MS&#39;, Verdana, Arial, sans-serif; color: #3=
+c4043; font-size: 18px;line-height:27px; font-weight: normal;mso-padding-al=
+t: 0 3px 0 0;background:#eff5fe;border-radius: 20px">
+ <!--[endif]-->
+<tr>
+
+<!--[if mso]><td class=3D"cart_bg" style=3D"padding:40px 6px 40px 6px;backg=
+round:#EFF5FE"><[!endif]-->
+    <!--[if !mso]-->
+ <td class=3Dcart_bg style=3D"padding:40px 6px 40px 6px;background:#eff5fe;=
+border-radius: 20px">
+   <!--[endif]-->
+  =20
+<table border=3D0 cellpadding=3D0 cellspacing=3D0 width=3D100%>
+
+  <tr>
+<td dir=3Dltr colspan=3D3 style=3D"text-align: left; vertical-align:top; pa=
+dding: 0px 16px 4px 16px; font-size: 28px; line-height: 36px; font-weight: =
+bold;">Google</td>
+</tr>
+<tr>
+<td dir=3Dltr colspan=3D3 style=3D"text-align: left; vertical-align:top; pa=
+dding: 0px 16px 0px 16px; font-size: 13px; font-weight: normal; color: #3c4=
+043;">
+May 25, 2026 at 1:07:07=E2=80=AFAM PDT
+</td>
+</tr>
+
+<tr>
+  <td>
+    <table class=3Dcart_bg border=3D0 cellpadding=3D0 cellspacing=3D0 width=
+=3D100% style=3D"font-family: &#39;Google Sans, Roboto, &#39;Segoe UI&#39;,=
+ &#39;Helvetica Neue&#39;, Frutiger, &#39;Frutiger Linotype&#39;, &#39;Deja=
+vu Sans&#39;, &#39;Trebuchet MS&#39;, Verdana, Arial, sans-serif; color: #3=
+33333; font-size: 18px; font-weight: normal; background-color: #EFF5FE;">
+
+ <tr>
+ <th dir=3Dltr width=3D50% style=3D"text-align: left; vertical-align:top; p=
+adding: 16px 8px 0 16px;"><span style=3D"font-size: 12px; font-weight: norm=
+al; color: #3c4043;text-transform: uppercase;font-weight:bold;">Item</span>=
+</th>
+
+ <th dir=3Dltr width=3D20% style=3D"text-align: right; vertical-align:top; =
+padding: 16px 8px 0 8px;"><span style=3D"font-size: 12px; font-weight: norm=
+al; color: #3c4043;text-transform: uppercase;font-weight:bold;">Quantity</s=
+pan></th>
+
+ <th dir=3Dltr width=3D30% style=3D"text-align: right; vertical-align:top; =
+padding: 16px 16px 0 8px;"><span style=3D"font-size: 12px; font-weight: nor=
+mal; color: #3c4043;text-transform: uppercase;font-weight:bold;" dir=3Dltr>=
+Price</span></th>
+ </tr>
+
+
+  <tr>
+
+  <td dir=3Dltr width=3D50% style=3D"text-align: left; vertical-align:top; =
+word-break: break-word;font-size:20px;line-height:30px;padding: 20px 8px 0 =
+16px;">
+    Developer Registration Fee
+
+  </td>
+
+    <td dir=3Dltr width=3D20% style=3D"text-align: right; vertical-align:to=
+p; padding: 20px 8px 0 8px;font-size:14px;line-height:21px;font-size:14px">=
+1</td>
+
+  <td dir=3Dltr width=3D30% style=3D"text-align: right; vertical-align:top;=
+font-size:14px;line-height:21px;font-weight:bold; padding: 20px 16px 0 8px;=
+"><span dir=3Dltr>$25.00</span></td>
+  </tr>
+
+
+
+  </table>
+ </td>
+</tr>
+   <tr>
+     <td dir=3Dltr colspan=3D3 style=3D"text-align: right; vertical-align:t=
+op; padding: 16px 16px 0 16px;font-size:14px;line-height:21px; mso-padding-=
+alt: 0 32px 0 0;">
+         <span dir=3Dltr style=3D"display: inline-block;">Includes VAT (14%=
+)</span> =C2=A0
+       <span dir=3Dltr style=3D"display: inline-block;font-weight:bold;">$3=
+.07</span>
+     </td>
+   </tr>
+
+<tr>
+<!--[if mso]>
+<td colspan=3D"3" style=3D"text-align: left; vertical-align:top; padding: 1=
+6px 16px 8px 16px;"><div style=3D"border-top: 2px dashed #AECBFA;">&nbsp;</=
+div></td>
+<![endif]-->
+<!--[if !mso]><!-->
+<td colspan=3D3 style=3D"text-align: left; vertical-align:top; padding: 16p=
+x 16px 16px 16px;"><div style=3D"border-top: 2px dashed #AECBFA;"></div></t=
+d>
+<!--<![endif]-->
+</tr>
+<tr>
+<!--[if mso]>
+<td dir=3D"ltr" colspan=3D"3" style=3D"text-align: right; vertical-align:to=
+p; font-size: 20px; line-height:30px;padding: 4px 16px 24px 16px; mso-paddi=
+ng-alt: 0 32px 0 0;"><span style=3D"font-size:20px;padding-right:20px;verti=
+cal-align:middle;mso-padding-alt:0 20px 0 0;">Total&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;</span><span dir=3D"ltr">$25.00</span></td>
+<![endif]-->
+<!--[if !mso]><!-->
+  <td dir=3Dltr colspan=3D3 style=3D"text-align: right; vertical-align:top;=
+ font-size: 28px; padding: 4px 16px 24px 16px;font-weight:bold; mso-padding=
+-alt: 0 32px 0 0;"><span style=3D"font-size:20px;vertical-align:middle;mso-=
+padding-alt:0 20px 0 0;line-height:30px;padding-right:20px;">Total</span><s=
+pan dir=3Dltr style=3D"font-size:20px;line-height:30px;vertical-align:middl=
+e;mso-padding-alt:0 20px 0 0;">$25.00</span></td>
+<!--<![endif]-->
+</tr>
+
+      <tr>
+        <td dir=3Dltr colspan=3D3 style=3D"text-align: left; vertical-align=
+:top; padding: 8px 16px 16px 16px;">
+          <span style=3D"font-size: 12px; line-height:20px;font-weight: nor=
+mal; color: #3c4043;">Payment method</span><br>
+          <span style=3D"font-size: 1x; color: #3c4043; padding-top: 6px;fo=
+nt-size:14px;line-height:21px;font-weight:bold">Mastercard=C2=A0=C2=A0=E2=
+=80=A2=E2=80=86=E2=80=A2=E2=80=86=E2=80=A2=E2=80=86=E2=80=A2=E2=80=869112</=
+span>
+        </td>
+      </tr>
+
+<tr>
+<td dir=3Dltr colspan=3D3 style=3D"text-align: left; vertical-align:top; pa=
+dding: 8px 16px 16px 16px; word-break: break-word;">
+<span style=3D"font-size: 12px;line-height:20px; font-weight: normal; color=
+: #3c4043;">Order number</span><br>
+<span style=3D"font-size: 14px; color: #3c4043; padding-top: 6px;Line-heigh=
+t:21px;font-weight:bold;">PDS.9335-1133-5758-11800</span>
+</td>
+</tr>
+
+<tr>
+<td dir=3Dltr colspan=3D3 style=3D"text-align: left; vertical-align:top; pa=
+dding: 16px 0 0 0;">
+   <!--[if mso]><div class=3D"div_main " style=3D"margin: 0 32px; margin-bo=
+ttom: 48px;  font-family:Google Sans, 'Roboto', 'Segoe UI', 'Helvetica Neue=
+', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Trebuchet MS', Verdana, A=
+rial, sans-serif;font-size: 16px;line-height: 24px; padding-top:10px;"><![e=
+ndif]-->
+   <!--[if !mso]-->
+      <div class=3D"div_main " style=3D"margin: 0 32px; margin-bottom: 48px=
+;  font-family:Google Sans, &#39;Roboto&#39;, &#39;Segoe UI&#39;, &#39;Helv=
+etica Neue&#39;, Frutiger, &#39;Frutiger Linotype&#39;, &#39;Dejavu Sans&#3=
+9;, &#39;Trebuchet MS&#39;, Verdana, Arial, sans-serif;font-size: 16px;line=
+-height: 24px; padding-top:10px;margin:0px 16px;"><!--[endif]-->
+        <!--[if mso]>
+			<v:roundrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:sc=
+hemas-microsoft-com:office:word" href=3D"https://c.gle/AOExmq2XEddtg8g8526j=
+m9GITk-KTii3y-3ksMTZx6I3kNalooIkjOasjfApqq5A6D5K0M980cqiobrhhgu_PRD-JvFlgil=
+RruRjk9oxNWoiuPNfX7-dFJZ5d66ilUbE06fUxxjTrLZ3Z62gahOGjQ-jPJirugALuPDLzojcrp=
+qbZ6lon9W3UZCRuczxi8Mef80En5LbEfDvw-18BwAlwLFbz3RIyhnSvr1BVgCcmUHHiVOS2-YTQ=
+IJIDIzGEOV9J2udofC6FG8NWqLpBr8vRD4Q5ud1pYmtrq9KeCU1IQem8jhnJA_ZZl_zXb3X9TYB=
+H8QUbAQ4" style=3D"height:48px;v-text-anchor:middle;width:132px;direction:l=
+tr;font-family:Google Sans, 'Roboto', 'Segoe UI', 'Helvetica Neue', Frutige=
+r, 'Frutiger Linotype', 'Dejavu Sans', 'Trebuchet MS', Verdana, Arial, sans=
+-serif;font-size: 16px;line-height: 24px;" arcsize=3D"2%" stroke=3D"f" fill=
+color=3D"#1967D2">
+			<w:anchorlock/>
+			<center>
+		<![endif]-->
+        <a target=3D_blank style=3D"-webkit-border-radius: 4px;
+                   -mox-border-radius: 4px;
+                   border-radius: 4px;
+                   background-color: #1967D2;
+                   border: 0;
+                   color: #ffffff;
+                   cursor: pointer;
+                   display:inline-block;
+                   font-size: 16px;
+                   font-weight: 500;
+                   line-height: 24px;
+                   padding: 14px 24px;
+                   position: relative;
+                   text-align: center;
+                   text-decoration: none;
+                 =20
+                    border-radius: 4px;
+                   vertical-align: middle;
+                   letter-spacing:0.1px;" href=3Dhttps://c.gle/AOExmq2XEddt=
+g8g8526jm9GITk-KTii3y-3ksMTZx6I3kNalooIkjOasjfApqq5A6D5K0M980cqiobrhhgu_PRD=
+-JvFlgilRruRjk9oxNWoiuPNfX7-dFJZ5d66ilUbE06fUxxjTrLZ3Z62gahOGjQ-jPJirugALuP=
+DLzojcrpqbZ6lon9W3UZCRuczxi8Mef80En5LbEfDvw-18BwAlwLFbz3RIyhnSvr1BVgCcmUHHi=
+VOS2-YTQIJIDIzGEOV9J2udofC6FG8NWqLpBr8vRD4Q5ud1pYmtrq9KeCU1IQem8jhnJA_ZZl_z=
+Xb3X9TYBH8QUbAQ4>
+
+            <span dir=3Dltr style=3D"font-family:Google Sans ,&#39;Roboto&#=
+39;, &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Frutiger, &#39;Frutiger =
+Linotype&#39;, &#39;Dejavu Sans&#39;, &#39;Trebuchet MS&#39;, Verdana, Aria=
+l, sans-serif;font-size: 16px;line-height: 24px;">=C2=A0View Online=C2=A0</=
+span>
+
+        </a>
+        <!--[if mso]>
+			</center>
+			</v:roundrect>
+		<![endif]-->
+      </div>
+</td>
+</tr>
+  </table>
+</td>
+  </tr>
+
+
+</table>
+</center>
+</div>
+
+ =20
+ =20
+   =20
+<table cellpadding=3D0 cellspacing=3D0 border=3D0 role=3Dpresentation style=
+=3D" text-align: center; margin:0px auto;max-width:600px;">
+  <tr><td height=3D20 style=3Dheight:20px;line-height:20px;>=C2=A0</td></tr=
+></table>
+  <div style=3D"padding-top: 0px; text-align: center; line-height: 21px;mar=
+gin:0px auto;max-width:600px;border-top: 1px solid #bdbdbd;">
+         <div class=3Dlandscape_spacer style=3Dpadding-top:12px;>
+
+ =20
+ =20
+<table dir=3Dltr role=3Dpresentation border=3D0 cellspacing=3D0 cellpadding=
+=3D0 style=3D"margin:0px auto;direction:ltr">
+
+<tr>
+  <!--[if mso]>=20
+<td align=3D"center" style=3D"text-align:center;padding-bottom:40px;padding=
+:24px 20px 15px 20px;border-top: 1px solid #bdbdbd;width:600px;"><![endif]-=
+->
+   <!--[if !mso]><!-->
+<td class=3Dmob_icon_pad align=3Dcenter style=3D"text-align:center;padding-=
+bottom:40px;padding:0px 50px 10px 25px;padding:0px 50px 0px 25px;"><!--<![e=
+ndif]-->
+ =20
+  <table class=3Dfooter_icon role=3Dpresentation border=3D0 cellspacing=3D0=
+ cellpadding=3D0>
+    <tr>
+   =20
+  =20
+ =20
+  <!--[if mso]>
+<td>
+<table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"=
+0" width=3D"100%">
+<tr>
+<td style=3D"padding-right:10px;">
+<a href=3D"https://support.google.com/paymentscenter/?p=3Demail_home" style=
+=3D"color: #1967D2; display: inline-block; margin: 0 20px; text-transform: =
+capitalize; text-decoration:none;">
+       <img src=3D"https://www.gstatic.com/gumdrop/files/payments-help-cent=
+er-footer-transparent-w48px-h48px-2x.png" width=3D"22" valign=3D"bottom" st=
+yle=3D"vertical-align:bottom;"/>=20
+</a>
+
+</td>
+<td>
+<a href=3D"https://support.google.com/paymentscenter/?p=3Demail_home" style=
+=3D"color: #1967D2;; display: inline-block; margin: 0 20px; text-transform:=
+ capitalize; text-decoration:none;">
+      <span valign=3D"top" class=3D"footer_link" style=3D"font-family:Googl=
+e Sans Text,'Roboto', 'Segoe UI', 'Helvetica Neue', Frutiger, 'Frutiger Lin=
+otype', 'Dejavu Sans', 'Trebuchet MS', Verdana, Arial, sans-serif;font-size=
+:14px;line-height:48px;font-weight:500;padding:0px 0px 40px 0px;vertical-al=
+ign:top;"> Help center</span>
+</a>
+</td>
+</tr>
+</table>
+</td>
+
+
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  <![endif]-->
+  =20
+  <!--[if !mso]><!-->
+<td class=3Dwidth_set style=3Dtext-align:center;>
+<table role=3Dpresentation border=3D0 cellspacing=3D0 cellpadding=3D0>
+<tr>
+<td style=3Dwidth:50px>
+<a href=3Dhttps://c.gle/AOExmq1nbqAM-KJ5Dk-wp9IrUtD-9sYjePlWOk4ZWNBD_ZpzTi-=
+XPAK-OU_tTnVTIcvDSunT6eq4EIMzVw1-MhSVXvz7J-_vRowjvdXfsGp5SiC367Lqp2kJI60EmX=
+ua6aqa_FfAwquWRKRsgopKphntIsfZ-bMH class=3Dfooter_touch_target style=3D"col=
+or: #1967D2; display: inline-block; margin: 0 0px; text-transform: capitali=
+ze; text-decoration:none;padding:12px 6px 12px 18px;padding:12px 4px 12px 2=
+0px;">
+       <img src=3Dhttps://www.gstatic.com/gumdrop/files/payments-help-cente=
+r-footer-transparent-w48px-h48px-2x.png width=3D24 valign=3Dbottom style=3D=
+vertical-align:bottom; alt=3D"Help center">=20
+</a>
+
+</td>
+<td style=3Dtext-align:left;>
+<a class=3Dfooter_text_class href=3Dhttps://c.gle/AOExmq1nbqAM-KJ5Dk-wp9IrU=
+tD-9sYjePlWOk4ZWNBD_ZpzTi-XPAK-OU_tTnVTIcvDSunT6eq4EIMzVw1-MhSVXvz7J-_vRowj=
+vdXfsGp5SiC367Lqp2kJI60EmXua6aqa_FfAwquWRKRsgopKphntIsfZ-bMH style=3D"color=
+: #1967D2; display: inline-block; margin: 0px 0px;  text-decoration:none;pa=
+dding:13px 0px">
+      <span valign=3Dtop class=3D"footer_link not_icon_class" style=3D"font=
+-family:Google Sans Text,&#39;Roboto&#39;, &#39;Segoe UI&#39;, &#39;Helveti=
+ca Neue&#39;, Frutiger, &#39;Frutiger Linotype&#39;, &#39;Dejavu Sans&#39;,=
+ &#39;Trebuchet MS&#39;, Verdana, Arial, sans-serif;font-size:14px;line-hei=
+ght:21px;font-weight:500;padding:0px 0px 0px 0px;vertical-align:top;word-br=
+eak:break-word;">Help center</span>
+</a>
+</td>
+</tr>
+</table>
+</td>=20
+  <td width=3D10 style=3Dwidth:10px;>=C2=A0=C2=A0</td> =20
+  <!--<![endif]-->
+ =20
+  <!--[if mso]>
+<td>
+<table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"=
+0" width=3D"100%">
+<tr>
+<td style=3D"padding-right:10px;">
+<a href=3D"https://support.google.com/paymentscenter/?p=3Demail_contact" st=
+yle=3D"color: #1967D2; display: inline-block; margin: 0 20px; text-transfor=
+m: capitalize; text-decoration:none;">
+       <img src=3D"https://www.gstatic.com/gumdrop/files/payments-contact-u=
+s-footer-transparent-w48px-h48px-2x.png" width=3D"22" valign=3D"bottom" sty=
+le=3D"vertical-align:bottom;"/>=20
+</a>
+
+</td>
+<td>
+<a href=3D"https://support.google.com/paymentscenter/?p=3Demail_contact" st=
+yle=3D"color: #1967D2;; display: inline-block; margin: 0 20px; text-transfo=
+rm: capitalize; text-decoration:none;">
+      <span valign=3D"top" class=3D"footer_link" style=3D"font-family:Googl=
+e Sans Text,'Roboto', 'Segoe UI', 'Helvetica Neue', Frutiger, 'Frutiger Lin=
+otype', 'Dejavu Sans', 'Trebuchet MS', Verdana, Arial, sans-serif;font-size=
+:14px;line-height:48px;font-weight:500;padding:0px 0px 40px 0px;vertical-al=
+ign:top;"> Contact us</span>
+</a>
+</td>
+</tr>
+</table>
+</td>
+
+
+ <![endif]-->
+  =20
+  <!--[if !mso]><!-->
+<td class=3Dwidth_set style=3Dtext-align:center;>
+<table role=3Dpresentation border=3D0 cellspacing=3D0 cellpadding=3D0>
+<tr>
+<td style=3Dwidth:50px>
+<a href=3Dhttps://c.gle/AOExmq3rcIJkLEOjFUvwBQtfHXi90Lfk3RzjWGNf9UEniMALVQz=
+LQfYmLyBGC_L8SxI_EUltMt4d_H1D-hKulIFgMYAm-LexBk43QenjP15dsvr2jiL78Kd8ic_VS8=
+iUnJtpA5GJBo3Q1bPRNtm0z4CPmQb0GqIOKDux class=3Dfooter_touch_target style=3D=
+"color: #1967D2; display: inline-block; margin: 0 0px; text-transform: capi=
+talize; text-decoration:none;padding:12px 6px 12px 18px;padding:12px 8px 12=
+px 16px;">
+       <img src=3Dhttps://www.gstatic.com/gumdrop/files/payments-contact-us=
+-footer-transparent-w48px-h48px-2x.png width=3D24 valign=3Dbottom style=3Dv=
+ertical-align:bottom; alt=3D"Contact us">=20
+</a>
+
+</td>
+<td style=3Dtext-align:left;>
+<a class=3Dfooter_text_class href=3Dhttps://c.gle/AOExmq3rcIJkLEOjFUvwBQtfH=
+Xi90Lfk3RzjWGNf9UEniMALVQzLQfYmLyBGC_L8SxI_EUltMt4d_H1D-hKulIFgMYAm-LexBk43=
+QenjP15dsvr2jiL78Kd8ic_VS8iUnJtpA5GJBo3Q1bPRNtm0z4CPmQb0GqIOKDux style=3D"c=
+olor: #1967D2; display: inline-block; margin: 0px 0px;  text-decoration:non=
+e;padding:13px 0px">
+      <span valign=3Dtop class=3D"footer_link not_icon_class" style=3D"font=
+-family:Google Sans Text,&#39;Roboto&#39;, &#39;Segoe UI&#39;, &#39;Helveti=
+ca Neue&#39;, Frutiger, &#39;Frutiger Linotype&#39;, &#39;Dejavu Sans&#39;,=
+ &#39;Trebuchet MS&#39;, Verdana, Arial, sans-serif;font-size:14px;line-hei=
+ght:21px;font-weight:500;padding:0px 0px 0px 0px;vertical-align:top;word-br=
+eak:break-word;">Contact us</span>
+</a>
+</td>
+</tr>
+</table>
+</td>=20
+  =20
+  <!--<![endif]-->
+  </tr>
+  </table></td>
+  =20
+</tr>
+</table>
+
+
+
+ =20
+
+  <div style=3D"font-size: 12px; line-height: 20px;color:#3C4043;font-famil=
+y:Google Sans Text,&#39;Roboto&#39;, &#39;Segoe UI&#39;, &#39;Helvetica Neu=
+e&#39;, Frutiger, &#39;Frutiger Linotype&#39;, &#39;Dejavu Sans&#39;, &#39;=
+Trebuchet MS&#39;, Verdana, Arial, sans-serif;margin-top:8px">
+    Payments profile ID:=20
+<span style=3Dwhite-space:nowrap;><span class=3D"" role=3Dtext aria-label=
+=3D"4 3 2 6 7 6 0 4 1 7 9 3" style=3D"">4326-7604-1793</span></span>
+
+  </div>
+ <div class=3Dtable_data_color style=3D"margin: 0px 32px 5px 32px; font-siz=
+e: 14px; font-weight: normal;font-size:12px;line-height:20px;font-weight:bo=
+ld;margin:20px 16px 20px 16px">
+   =20
+   <a style=3D"color:#3c4043; font-weight:bold; text-decoration:none; curso=
+r:text;" href=3D#>Google LLC 1600 Amphitheatre Pkwy Mountain View, CA 94043=
+ United States</a>
+  </div>
+ =20
+ =20
+  <div style=3D"font-size: 12px; line-height: 20px;color:#3C4043;font-famil=
+y:Google Sans Text,&#39;Roboto&#39;, &#39;Segoe UI&#39;, &#39;Helvetica Neu=
+e&#39;, Frutiger, &#39;Frutiger Linotype&#39;, &#39;Dejavu Sans&#39;, &#39;=
+Trebuchet MS&#39;, Verdana, Arial, sans-serif;margin-top:0px; margin-bottom=
+:32px;padding-top:0px;margin-top:16px; margin-bottom:16px;font-family:Googl=
+e Sans Text,&#39;Roboto&#39;, &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;,=
+ Frutiger, &#39;Frutiger Linotype&#39;, &#39;Dejavu Sans&#39;, &#39;Trebuch=
+et MS&#39;, Verdana, Arial, sans-serif;font-size:12px;line-height:20px;">
+    You have received this mandatory service announcement to update you abo=
+ut important changes to Google or your account.
+  </div>
+
+     </div>
+     <div>
+    =20
+     =20
+<img src=3Dhttp://services.google.com/fh/files/emails/wa_google_logo.png wi=
+dth=3D76 style=3D"margin: 0;" alt=3DGoogle>
+
+  </div>
+
+</div>
+
+</div>
+
+</div>
+</td></tr></table><!-- end body_container -->
+
+</center></body></html>
+ =20
+
+ =20
+ =20
+
+
+--000000000000f027d406529fdd60--

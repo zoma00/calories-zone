@@ -8,3 +8,15 @@ captures/
 *.jks
 *.keystore
 keystore.properties
+*/tips/
+*.log
+*.hprof
+*.orig
+*.rej
+*.swo
+*.swp
+*.bak
+*.tmp       
+
+*/home/hazem-elbatawy/Downloads/zomba_cal/tips/url_my_dev_console.txt/
+## Check if the above file ignore pattern is correct and adjust it if necessary. The pattern should match the actual path of the file you want to ignore.
