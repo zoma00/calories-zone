@@ -79,3 +79,15 @@ data class MealTotals(
     val carbsGrams: Int = 0,
     val fatGrams: Int = 0
 )
+
+enum class ChatRole {
+    User,
+    Assistant
+}
+
+data class ChatMessage(
+    val id: String,
+    val role: ChatRole,
+    val text: String,
+    val createdAtLabel: String
+)

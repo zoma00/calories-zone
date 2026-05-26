@@ -252,6 +252,57 @@
             background: var(--surface);
         }
 
+        .chat-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+
+        .chat-item {
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: var(--surface);
+        }
+
+        .chat-item.user {
+            background: #ecf8f6;
+            border-color: #bde8e0;
+        }
+
+        .chat-item.assistant {
+            background: #fff4e8;
+            border-color: #f1d2b3;
+        }
+
+        .chat-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 6px;
+            font-size: 0.84rem;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .chat-text {
+            margin: 0;
+            line-height: 1.45;
+            white-space: pre-wrap;
+        }
+
+        .chat-actions {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .chat-actions button {
+            width: 140px;
+        }
+
         .meal-top {
             display: flex;
             justify-content: space-between;
@@ -283,6 +334,14 @@
             .actions,
             .macro-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .chat-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-actions button {
+                width: 100%;
             }
         }
     </style>
@@ -395,6 +454,17 @@
             </section>
 
             <section class="card span-12">
+                <h2>Local wellness assistant</h2>
+                <p class="subtle">General wellness guidance only. This preview assistant does not diagnose, treat, cure, or prevent medical conditions.</p>
+                <div id="chatList" class="chat-list"></div>
+                <div class="chat-actions">
+                    <textarea id="chatInput" rows="3" placeholder="Ask about meals, calories, macros, hydration, or consistency habits"></textarea>
+                    <button id="sendChatButton" type="button">Send</button>
+                </div>
+                <div id="chatMessage" class="message"></div>
+            </section>
+
+            <section class="card span-12">
                 <h2>Meal log</h2>
                 <p class="subtle">Enter meal entry name and amount in grams, ml, or pounds. Nutrition is auto-calculated as you type.</p>
                 <div class="form-grid">
@@ -471,8 +541,37 @@
         const storageKeys = {
             profile: "calories_zone_preview_profile",
             meals: "calories_zone_preview_meals",
-            plan: "calories_zone_preview_plan"
+            plan: "calories_zone_preview_plan",
+            chatMessages: "calories_zone_preview_chat_messages"
         };
+
+        const maxChatMessages = 30;
+        const defaultChatGreeting = "I am your local wellness assistant. I can help with meal tracking, target progress, and general nutrition habits. I cannot provide medical advice.";
+        const nonMedicalBoundaryMessage = "I can only provide general wellness guidance for meal tracking and nutrition habits. Calories Zone is not a medical device and does not diagnose, treat, cure, or prevent medical conditions. For medical questions, please consult a qualified healthcare professional.";
+        const fallbackChatResponse = "I can help with meal logging, calorie targets, and simple daily nutrition habits. Ask about meal ideas, target progress, or macro planning.";
+
+        const medicalRiskTerms = [
+            "diagnose",
+            "diagnosis",
+            "treat",
+            "treatment",
+            "cure",
+            "prevent",
+            "prescription",
+            "medication",
+            "medicine",
+            "disease",
+            "diabetes",
+            "hypertension",
+            "blood pressure",
+            "cancer",
+            "asthma",
+            "thyroid",
+            "pcos",
+            "anemia",
+            "heart attack",
+            "stroke"
+        ];
 
         const activityLevels = {
             Sedentary: { label: "Sedentary", multiplier: 1.2 },
@@ -532,15 +631,30 @@
             mealMessage: document.getElementById("mealMessage"),
             guidanceList: document.getElementById("guidanceList"),
             mealList: document.getElementById("mealList"),
-            calorieDeltaPill: document.getElementById("calorieDeltaPill")
+            calorieDeltaPill: document.getElementById("calorieDeltaPill"),
+            chatList: document.getElementById("chatList"),
+            chatInput: document.getElementById("chatInput"),
+            sendChatButton: document.getElementById("sendChatButton"),
+            chatMessage: document.getElementById("chatMessage")
         };
 
         let currentPlan = loadJson(storageKeys.plan) || null;
         let meals = loadJson(storageKeys.meals) || [];
+        let chatMessages = loadJson(storageKeys.chatMessages) || [];
+
+        if (!Array.isArray(chatMessages)) {
+            chatMessages = [];
+        }
+
+        if (chatMessages.length === 0) {
+            chatMessages = [createChatMessage("Assistant", defaultChatGreeting)];
+            persistChatMessages();
+        }
 
         hydrateProfile();
         renderMeals();
         renderPlan(currentPlan);
+        renderChatMessages();
         updateMealEstimatePreview();
 
         elements.generatePlanButton.addEventListener("click", () => {
@@ -620,6 +734,15 @@
             elements.mealAmount.value = "";
             updateMealEstimatePreview();
             showMessage(elements.mealMessage, "Meal logged in browser storage.", false);
+        });
+
+        elements.sendChatButton.addEventListener("click", sendChatMessage);
+
+        elements.chatInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                sendChatMessage();
+            }
         });
 
         function hydrateProfile() {
@@ -800,6 +923,224 @@
             }
 
             updateCalorieDelta(totals.calories);
+        }
+
+        function renderChatMessages() {
+            elements.chatList.innerHTML = "";
+
+            chatMessages.slice(-6).forEach((message) => {
+                const row = document.createElement("article");
+                row.className = `chat-item ${message.role === "User" ? "user" : "assistant"}`;
+
+                const meta = document.createElement("div");
+                meta.className = "chat-meta";
+
+                const role = document.createElement("span");
+                role.textContent = message.role === "User" ? "You" : "Assistant";
+
+                const time = document.createElement("span");
+                time.textContent = message.createdAtLabel;
+
+                meta.appendChild(role);
+                meta.appendChild(time);
+
+                const text = document.createElement("p");
+                text.className = "chat-text";
+                text.textContent = message.text;
+
+                row.appendChild(meta);
+                row.appendChild(text);
+                elements.chatList.appendChild(row);
+            });
+        }
+
+        function sendChatMessage() {
+            const userText = elements.chatInput.value.trim();
+            if (!userText) {
+                showMessage(elements.chatMessage, "Type a message before sending.", true);
+                return;
+            }
+
+            chatMessages = [...chatMessages, createChatMessage("User", userText)].slice(-maxChatMessages);
+            renderChatMessages();
+
+            const reply = buildChatReply(userText);
+            chatMessages = [...chatMessages, createChatMessage("Assistant", reply.message)].slice(-maxChatMessages);
+            persistChatMessages();
+            renderChatMessages();
+
+            elements.chatInput.value = "";
+
+            if (reply.blocked) {
+                showMessage(elements.chatMessage, "Medical requests are limited to general wellness safety guidance.", false);
+            } else {
+                clearMessage(elements.chatMessage);
+            }
+        }
+
+        function buildChatReply(userMessage) {
+            const normalized = userMessage.trim().toLowerCase();
+            if (!normalized) {
+                return {
+                    message: "Type a question and I can help with meal tracking and general wellness guidance.",
+                    blocked: false
+                };
+            }
+
+            if (containsMedicalTerms(normalized)) {
+                return { message: nonMedicalBoundaryMessage, blocked: true };
+            }
+
+            const context = buildChatContext();
+            const rawResponse = completeChatPrompt(userMessage, context).trim();
+            if (!rawResponse) {
+                return { message: fallbackChatResponse, blocked: false };
+            }
+
+            if (containsMedicalTerms(rawResponse.toLowerCase())) {
+                return { message: nonMedicalBoundaryMessage, blocked: true };
+            }
+
+            return { message: rawResponse, blocked: false };
+        }
+
+        function completeChatPrompt(userMessage, context) {
+            const normalized = userMessage.toLowerCase();
+
+            if (containsAny(normalized, ["remaining", "left", "over", "target", "today"])) {
+                return calorieStatusReply(context);
+            }
+
+            if (containsAny(normalized, ["calorie", "calories", "kcal"])) {
+                const estimateReply = calorieEstimateReply(userMessage);
+                if (estimateReply) {
+                    return estimateReply;
+                }
+            }
+
+            if (containsAny(normalized, ["macro", "protein", "carb", "fat"])) {
+                return macroReply(context);
+            }
+
+            if (containsAny(normalized, ["meal", "breakfast", "lunch", "dinner", "snack", "idea"])) {
+                return mealIdeaReply(context);
+            }
+
+            if (containsAny(normalized, ["water", "hydrate", "hydration"])) {
+                return "Hydration baseline: aim for steady water intake through the day and add extra around training or very hot weather.";
+            }
+
+            if (containsAny(normalized, ["data", "privacy", "store", "offline", "local"])) {
+                return "Your profile, meals, and chat stay local on this device in this version.";
+            }
+
+            return generalReply(context);
+        }
+
+        function calorieEstimateReply(userMessage) {
+            const estimatorInput = toEstimatorInput(userMessage);
+            if (!estimatorInput) {
+                return null;
+            }
+
+            const estimate = estimateMealNutrition(estimatorInput);
+            if (!estimate) {
+                return null;
+            }
+
+            return `Estimated for ${estimatorInput}: ${estimate.calories} kcal • P ${estimate.proteinGrams}g • C ${estimate.carbsGrams}g • F ${estimate.fatGrams}g.`;
+        }
+
+        function toEstimatorInput(userMessage) {
+            let value = userMessage.toLowerCase();
+            value = value.replace(/[?!.:,;]/g, " ");
+            value = value.replace(/\bhow\s+much\s+(?:calories?|kcal)\s+(?:in|for)\b/gi, " ");
+            value = value.replace(/\bhow\s+many\s+(?:calories?|kcal)\s+(?:in|for)\b/gi, " ");
+            value = value.replace(/\b(?:calories?|kcal)\s+(?:in|for)\b/gi, " ");
+            value = value.replace(/\b(?:boiled|grilled|fried|baked|steamed|roasted|raw)\b/gi, " ");
+            value = value.replace(/\s+/g, " ").trim();
+
+            return value;
+        }
+
+        function calorieStatusReply(context) {
+            if (context.targetCalories === null) {
+                return "Generate your calorie plan first, then I can compare your logged intake against your target.";
+            }
+
+            const delta = context.targetCalories - context.mealTotals.calories;
+            if (delta >= 0) {
+                return `You have logged ${context.mealTotals.calories} kcal and your target is ${context.targetCalories} kcal. You are ${delta} kcal under target today.`;
+            }
+
+            return `You have logged ${context.mealTotals.calories} kcal and your target is ${context.targetCalories} kcal. You are ${Math.abs(delta)} kcal over target today.`;
+        }
+
+        function macroReply(context) {
+            let goalLine = "";
+            if (context.goal === "LoseFat") {
+                goalLine = "For fat loss, keep protein consistent and manage calories with mostly whole foods.";
+            } else if (context.goal === "Maintain") {
+                goalLine = "For maintenance, keep portions stable and monitor weekly weight trend.";
+            } else {
+                goalLine = "For muscle gain, keep protein high and place more carbs around training.";
+            }
+
+            return `${goalLine} A simple structure is 3 to 4 meals with protein in each meal and vegetables in at least 2 meals.`;
+        }
+
+        function mealIdeaReply(context) {
+            if (context.goal === "LoseFat") {
+                return "Try a high-satiety plate: grilled chicken, large salad, olive oil, and fruit.";
+            }
+
+            if (context.goal === "Maintain") {
+                return "Try a balanced plate: rice, lean protein, vegetables, and yogurt.";
+            }
+
+            return "Try a higher-energy plate: rice or potatoes, salmon or beef, vegetables, and milk or yogurt.";
+        }
+
+        function generalReply(context) {
+            const targetLine = context.targetCalories === null
+                ? "Generate a plan to get your target calories first."
+                : `Your current target is ${context.targetCalories} kcal.`;
+
+            return `${targetLine} Focus on consistency: log meals, compare against target, and adjust using weekly trends instead of single days.`;
+        }
+
+        function buildChatContext() {
+            const mealTotals = meals.reduce((acc, meal) => ({
+                calories: acc.calories + meal.calories,
+                proteinGrams: acc.proteinGrams + meal.proteinGrams,
+                carbsGrams: acc.carbsGrams + meal.carbsGrams,
+                fatGrams: acc.fatGrams + meal.fatGrams
+            }), { calories: 0, proteinGrams: 0, carbsGrams: 0, fatGrams: 0 });
+
+            return {
+                profileName: elements.profileName.value.trim() || "My profile",
+                goal: elements.goal.value,
+                targetCalories: currentPlan ? currentPlan.targetCalories : null,
+                mealTotals
+            };
+        }
+
+        function createChatMessage(role, text) {
+            return {
+                id: `${Date.now()}-${Math.random().toString(16).slice(2, 8)}`,
+                role,
+                text,
+                createdAtLabel: new Date().toLocaleString([], {
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                })
+            };
+        }
+
+        function persistChatMessages() {
+            localStorage.setItem(storageKeys.chatMessages, JSON.stringify(chatMessages));
         }
 
         function deleteMealById(mealId) {
@@ -986,6 +1327,29 @@
         function showMessage(node, message, isError) {
             node.textContent = message;
             node.className = isError ? "message error" : "message success";
+        }
+
+        function clearMessage(node) {
+            node.textContent = "";
+            node.className = "message";
+        }
+
+        function containsMedicalTerms(text) {
+            return medicalRiskTerms.some((term) => {
+                const pattern = new RegExp(`\\b${escapeRegex(term)}\\b`, "i");
+                return pattern.test(text);
+            });
+        }
+
+        function containsAny(text, terms) {
+            return terms.some((term) => {
+                const pattern = new RegExp(`\\b${escapeRegex(term)}\\b`, "i");
+                return pattern.test(text);
+            });
+        }
+
+        function escapeRegex(value) {
+            return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         }
 
         function loadJson(key) {

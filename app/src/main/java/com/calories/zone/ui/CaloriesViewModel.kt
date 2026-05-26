@@ -5,15 +5,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.calories.zone.domain.AiChatEngine
 import com.calories.zone.data.LocalAppStorage
 import com.calories.zone.domain.AiGuidanceEngine
 import com.calories.zone.domain.CalorieCalculator
+import com.calories.zone.domain.ChatContext
 import com.calories.zone.domain.MealNutritionEstimate
 import com.calories.zone.domain.MealNutritionEstimator
+import com.calories.zone.domain.PolicyAwareAiChatEngine
 import com.calories.zone.domain.RuleBasedAiGuidanceEngine
 import com.calories.zone.domain.RuleBasedMealNutritionEstimator
 import com.calories.zone.model.ActivityLevel
 import com.calories.zone.model.CaloriePlan
+import com.calories.zone.model.ChatMessage
+import com.calories.zone.model.ChatRole
 import com.calories.zone.model.CustomFoodProfile
 import com.calories.zone.model.Goal
 import com.calories.zone.model.MealEntryUnit
@@ -51,6 +56,9 @@ data class CaloriesUiState(
     val mealFat: String = "",
     val result: CaloriePlan? = null,
     val guidanceNotes: List<String> = emptyList(),
+    val chatInput: String = "",
+    val chatMessages: List<ChatMessage> = emptyList(),
+    val chatStatusMessage: String? = null,
     val validationMessage: String? = null,
     val statusMessage: String? = null
 )
@@ -58,15 +66,22 @@ data class CaloriesUiState(
 class CaloriesViewModel(
     private val calculator: CalorieCalculator = CalorieCalculator(),
     private val aiGuidanceEngine: AiGuidanceEngine = RuleBasedAiGuidanceEngine(),
+    private val aiChatEngine: AiChatEngine = PolicyAwareAiChatEngine(),
     private val mealNutritionEstimator: MealNutritionEstimator = RuleBasedMealNutritionEstimator(),
     private val storage: LocalAppStorage? = null
 ) : ViewModel() {
     var uiState by mutableStateOf(CaloriesUiState())
         private set
 
+    private var localMessageSequence: Long = 0
+
     init {
         val savedMeals = storage?.loadMeals().orEmpty()
         val savedCustomFoods = storage?.loadCustomFoods().orEmpty()
+        val savedChatMessages = storage?.loadChatMessages().orEmpty()
+        val initialChatMessages = savedChatMessages.ifEmpty {
+            listOf(createChatMessage(role = ChatRole.Assistant, text = DEFAULT_CHAT_GREETING))
+        }
         val savedProfile = storage?.loadProfile()
         uiState = if (savedProfile != null) {
             CaloriesUiState(
@@ -79,15 +94,22 @@ class CaloriesViewModel(
                 goal = savedProfile.goal,
                 customFoods = savedCustomFoods,
                 meals = savedMeals,
-                mealTotals = calculateMealTotals(savedMeals)
+                mealTotals = calculateMealTotals(savedMeals),
+                chatMessages = initialChatMessages
             )
         } else {
             CaloriesUiState(
                 customFoods = savedCustomFoods,
                 meals = savedMeals,
-                mealTotals = calculateMealTotals(savedMeals)
+                mealTotals = calculateMealTotals(savedMeals),
+                chatMessages = initialChatMessages
             )
         }
+
+        if (savedChatMessages.isEmpty()) {
+            storage?.saveChatMessages(initialChatMessages)
+        }
+
         generatePlan()
     }
 
@@ -117,6 +139,49 @@ class CaloriesViewModel(
 
     fun updateGoal(value: Goal) {
         uiState = uiState.copy(goal = value, validationMessage = null, statusMessage = null)
+    }
+
+    fun updateChatInput(value: String) {
+        uiState = uiState.copy(chatInput = value, chatStatusMessage = null)
+    }
+
+    fun sendChatMessage() {
+        val userText = uiState.chatInput.trim()
+        if (userText.isBlank()) {
+            uiState = uiState.copy(chatStatusMessage = "Type a message before sending.")
+            return
+        }
+
+        val userMessage = createChatMessage(role = ChatRole.User, text = userText)
+        val withUserMessage = (uiState.chatMessages + userMessage).takeLast(MAX_CHAT_MESSAGES)
+        uiState = uiState.copy(
+            chatMessages = withUserMessage,
+            chatInput = "",
+            chatStatusMessage = null,
+            validationMessage = null,
+            statusMessage = null
+        )
+
+        val reply = aiChatEngine.reply(
+            userMessage = userText,
+            context = buildChatContext(),
+            recentMessages = withUserMessage
+        )
+
+        val assistantMessage = createChatMessage(role = ChatRole.Assistant, text = reply.message)
+        val updatedMessages = (withUserMessage + assistantMessage).takeLast(MAX_CHAT_MESSAGES)
+        storage?.saveChatMessages(updatedMessages)
+
+        uiState = uiState.copy(
+            chatMessages = updatedMessages,
+            chatStatusMessage = if (reply.blocked) {
+                "Medical requests are limited to general wellness safety guidance."
+            } else {
+                null
+            },
+            validationMessage = null,
+            statusMessage = null
+        )
     }
 
     fun updateMealName(value: String) {
@@ -277,7 +342,7 @@ class CaloriesViewModel(
             proteinGrams = estimate.proteinGrams,
             carbsGrams = estimate.carbsGrams,
             fatGrams = estimate.fatGrams,
-            loggedAtLabel = LocalDateTime.now().format(MEAL_TIME_FORMATTER)
+            loggedAtLabel = LocalDateTime.now().format(TIME_LABEL_FORMATTER)
         )
         val updatedMeals = listOf(mealEntry) + uiState.meals
         storage?.saveMeals(updatedMeals)
@@ -459,8 +524,29 @@ class CaloriesViewModel(
         return whole + fraction
     }
 
+    private fun buildChatContext(): ChatContext {
+        return ChatContext(
+            profileName = uiState.profileName,
+            goal = uiState.goal,
+            targetCalories = uiState.result?.targetCalories,
+            mealTotals = uiState.mealTotals
+        )
+    }
+
+    private fun createChatMessage(role: ChatRole, text: String): ChatMessage {
+        localMessageSequence += 1
+        return ChatMessage(
+            id = "${System.currentTimeMillis()}-$localMessageSequence",
+            role = role,
+            text = text,
+            createdAtLabel = LocalDateTime.now().format(TIME_LABEL_FORMATTER)
+        )
+    }
+
     companion object {
-        private val MEAL_TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("MMM d, HH:mm")
+        private const val MAX_CHAT_MESSAGES = 30
+        private const val DEFAULT_CHAT_GREETING = "I am your local wellness assistant. I can help with meal tracking, target progress, and general nutrition habits. I cannot provide medical advice."
+        private val TIME_LABEL_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("MMM d, HH:mm")
 
         fun factory(storage: LocalAppStorage): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")

@@ -34,6 +34,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.calories.zone.data.LocalAppStorage
 import com.calories.zone.model.ActivityLevel
 import com.calories.zone.model.CaloriePlan
+import com.calories.zone.model.ChatMessage
+import com.calories.zone.model.ChatRole
 import com.calories.zone.model.CustomFoodProfile
 import com.calories.zone.model.Goal
 import com.calories.zone.model.MealEntryUnit
@@ -57,6 +59,11 @@ fun CaloriesRoute(
         onGoalChanged = viewModel::updateGoal,
         onGenerateClick = viewModel::generatePlan,
         onSaveProfileClick = viewModel::saveProfile,
+        chatInput = viewModel.uiState.chatInput,
+        chatMessages = viewModel.uiState.chatMessages,
+        chatStatusMessage = viewModel.uiState.chatStatusMessage,
+        onChatInputChanged = viewModel::updateChatInput,
+        onSendChatClick = viewModel::sendChatMessage,
         onMealNameChanged = viewModel::updateMealName,
         onMealEntryAmountChanged = viewModel::updateMealEntryAmount,
         onMealEntryUnitChanged = viewModel::updateMealEntryUnit,
@@ -91,6 +98,11 @@ private fun CaloriesScreen(
     onGoalChanged: (Goal) -> Unit,
     onGenerateClick: () -> Unit,
     onSaveProfileClick: () -> Unit,
+    chatInput: String,
+    chatMessages: List<ChatMessage>,
+    chatStatusMessage: String?,
+    onChatInputChanged: (String) -> Unit,
+    onSendChatClick: () -> Unit,
     onMealNameChanged: (String) -> Unit,
     onMealEntryAmountChanged: (String) -> Unit,
     onMealEntryUnitChanged: (MealEntryUnit) -> Unit,
@@ -282,6 +294,14 @@ private fun CaloriesScreen(
                 }
             }
 
+            LocalAssistantCard(
+                chatMessages = chatMessages,
+                chatInput = chatInput,
+                chatStatusMessage = chatStatusMessage,
+                onChatInputChanged = onChatInputChanged,
+                onSendChatClick = onSendChatClick
+            )
+
             MealLogCard(
                 mealTotals = state.mealTotals,
                 targetPlan = state.result,
@@ -399,6 +419,106 @@ private fun ResultCard(result: CaloriePlan) {
                 MacroBadge(label = "Carbs", value = "${result.carbsGrams}g")
                 MacroBadge(label = "Fat", value = "${result.fatGrams}g")
             }
+        }
+    }
+}
+
+@Composable
+private fun LocalAssistantCard(
+    chatMessages: List<ChatMessage>,
+    chatInput: String,
+    chatStatusMessage: String?,
+    onChatInputChanged: (String) -> Unit,
+    onSendChatClick: () -> Unit
+) {
+    ElevatedCard {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = "Local wellness assistant",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = "General wellness guidance only. This app does not diagnose, treat, cure, or prevent medical conditions.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            chatMessages.takeLast(6).forEach { message ->
+                ChatMessageRow(message = message)
+            }
+
+            OutlinedTextField(
+                value = chatInput,
+                onValueChange = onChatInputChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Ask about meals, calories, or habits") }
+            )
+
+            Button(
+                onClick = onSendChatClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Send")
+            }
+
+            if (chatStatusMessage != null) {
+                Text(
+                    text = chatStatusMessage,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChatMessageRow(message: ChatMessage) {
+    val isUser = message.role == ChatRole.User
+    val roleLabel = if (isUser) "You" else "Assistant"
+    val containerColor = if (isUser) {
+        MaterialTheme.colorScheme.primaryContainer
+    } else {
+        MaterialTheme.colorScheme.secondaryContainer
+    }
+    val contentColor = if (isUser) {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    } else {
+        MaterialTheme.colorScheme.onSecondaryContainer
+    }
+
+    ElevatedCard(
+        colors = CardDefaults.elevatedCardColors(containerColor = containerColor)
+    ) {
+        Column(
+            modifier = Modifier.padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = roleLabel,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = contentColor,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    text = message.createdAtLabel,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = contentColor
+                )
+            }
+            Text(
+                text = message.text,
+                style = MaterialTheme.typography.bodyMedium,
+                color = contentColor
+            )
         }
     }
 }

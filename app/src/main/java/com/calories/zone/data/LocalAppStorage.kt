@@ -2,6 +2,8 @@ package com.calories.zone.data
 
 import android.content.Context
 import com.calories.zone.model.ActivityLevel
+import com.calories.zone.model.ChatMessage
+import com.calories.zone.model.ChatRole
 import com.calories.zone.model.CustomFoodProfile
 import com.calories.zone.model.Goal
 import com.calories.zone.model.MealLogEntry
@@ -116,10 +118,44 @@ class LocalAppStorage(context: Context) {
         preferences.edit().putString(KEY_CUSTOM_FOODS, payload.toString()).apply()
     }
 
+    fun loadChatMessages(): List<ChatMessage> = runCatching {
+        val rawMessages = preferences.getString(KEY_CHAT_MESSAGES, null) ?: return emptyList()
+        val messagesArray = JSONArray(rawMessages)
+        buildList {
+            for (index in 0 until messagesArray.length()) {
+                val item = messagesArray.getJSONObject(index)
+                add(
+                    ChatMessage(
+                        id = item.getString("id"),
+                        role = ChatRole.valueOf(item.getString("role")),
+                        text = item.getString("text"),
+                        createdAtLabel = item.getString("createdAtLabel")
+                    )
+                )
+            }
+        }
+    }.getOrElse { emptyList() }
+
+    fun saveChatMessages(messages: List<ChatMessage>) {
+        val payload = JSONArray()
+        messages.forEach { message ->
+            payload.put(
+                JSONObject()
+                    .put("id", message.id)
+                    .put("role", message.role.name)
+                    .put("text", message.text)
+                    .put("createdAtLabel", message.createdAtLabel)
+            )
+        }
+
+        preferences.edit().putString(KEY_CHAT_MESSAGES, payload.toString()).apply()
+    }
+
     private companion object {
         const val STORAGE_NAME = "calories_zone_storage"
         const val KEY_PROFILE = "saved_profile"
         const val KEY_MEALS = "meal_logs"
         const val KEY_CUSTOM_FOODS = "custom_foods"
+        const val KEY_CHAT_MESSAGES = "chat_messages"
     }
 }
