@@ -30,4 +30,25 @@ class CalorieCalculatorTest {
         assertEquals(365, plan.carbsGrams)
         assertEquals(75, plan.fatGrams)
     }
+
+    @Test
+    fun createPlan_usesLowCalorieTargetForObeseFatLossProfile() {
+        val plan = calculator.createPlan(
+            UserProfileInput(
+                age = 28,
+                heightCm = 173.0,
+                weightKg = 97.0,
+                sex = Sex.Male,
+                activityLevel = ActivityLevel.Light,
+                goal = Goal.LoseFat
+            )
+        )
+
+        assertEquals(1916, plan.bmr)
+        assertEquals(2635, plan.maintenanceCalories)
+        assertEquals(1200, plan.targetCalories)
+        assertEquals(120, plan.proteinGrams)
+        assertEquals(106, plan.carbsGrams)
+        assertEquals(33, plan.fatGrams)
+    }
 }

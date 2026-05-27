@@ -70,7 +70,8 @@ data class MealLogEntry(
     val proteinGrams: Int,
     val carbsGrams: Int,
     val fatGrams: Int,
-    val loggedAtLabel: String
+    val loggedAtLabel: String,
+    val matchedFoods: List<String> = emptyList()
 )
 
 data class MealTotals(
@@ -78,6 +79,17 @@ data class MealTotals(
     val proteinGrams: Int = 0,
     val carbsGrams: Int = 0,
     val fatGrams: Int = 0
+)
+
+data class NutritionGuideScore(
+    val overallScore: Int = 0,
+    val macroScore: Int = 0,
+    val satietyScore: Int = 0,
+    val slowCarbScore: Int = 0,
+    val nutrientDensityScore: Int = 0,
+    val processingScore: Int = 0,
+    val ageActivityScore: Int = 0,
+    val notes: List<String> = listOf("Log meals to calculate your beyond-calories guide score.")
 )
 
 enum class ChatRole {

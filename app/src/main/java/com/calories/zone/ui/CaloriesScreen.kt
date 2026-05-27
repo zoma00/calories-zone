@@ -41,6 +41,7 @@ import com.calories.zone.model.Goal
 import com.calories.zone.model.MealEntryUnit
 import com.calories.zone.model.MealLogEntry
 import com.calories.zone.model.MealTotals
+import com.calories.zone.model.NutritionGuideScore
 import com.calories.zone.model.Sex
 
 @Composable
@@ -320,6 +321,8 @@ private fun CaloriesScreen(
                 onAddMealClick = onAddMealClick
             )
 
+            BeyondCaloriesGuideCard(score = state.nutritionGuideScore)
+
             CustomFoodsCard(
                 customFoods = customFoods,
                 customFoodName = customFoodName,
@@ -335,6 +338,83 @@ private fun CaloriesScreen(
                 onAddCustomFoodClick = onAddCustomFoodClick,
                 onDeleteCustomFoodClick = onDeleteCustomFoodClick
             )
+        }
+    }
+}
+
+@Composable
+private fun BeyondCaloriesGuideCard(score: NutritionGuideScore) {
+    ElevatedCard {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            Text(
+                text = "Guide calculation: beyond calories",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = "This score is recalculated from your logged meals using the guide rules. It adds quality checks on top of the calorie and macro plan.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            ResultRow(label = "Guide score", value = "${score.overallScore}/100")
+
+            HorizontalDivider()
+
+            Text(
+                text = "Calculated from the guide",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            ResultRow(label = "Macro match", value = "${score.macroScore}/100")
+            ResultRow(label = "Satiety", value = "${score.satietyScore}/100")
+            ResultRow(label = "Slow-carb quality", value = "${score.slowCarbScore}/100")
+            ResultRow(label = "Nutrient density", value = "${score.nutrientDensityScore}/100")
+            ResultRow(label = "Processing level", value = "${score.processingScore}/100")
+            ResultRow(label = "Age/activity fit", value = "${score.ageActivityScore}/100")
+
+            HorizontalDivider()
+
+            Text(
+                text = "Next guide actions",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            score.notes.forEach { note ->
+                Text(
+                    text = "• $note",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            HorizontalDivider()
+
+            Text(
+                text = "Guide rules",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            beyondCaloriesMethods.forEach { method ->
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = method.title,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Text(
+                        text = method.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
         }
     }
 }
@@ -387,6 +467,50 @@ private fun <T> SelectionRow(
         }
     }
 }
+
+private data class NutritionMethod(
+    val title: String,
+    val description: String
+)
+
+private val beyondCaloriesMethods = listOf(
+    NutritionMethod(
+        title = "Macronutrient tracking",
+        description = "Watch protein, carbs, and fats so the same calories do not hide low protein or high sugar."
+    ),
+    NutritionMethod(
+        title = "Portion method",
+        description = "Use hand portions: palm for protein, fist for vegetables, cupped hand for carbs, and thumb for fats."
+    ),
+    NutritionMethod(
+        title = "Glycemic load",
+        description = "Prefer slower-digesting carbs like oats or beans when you want steadier energy and appetite control."
+    ),
+    NutritionMethod(
+        title = "Nutrient density",
+        description = "Choose foods that bring more vitamins, minerals, fiber, and protein for the calories."
+    ),
+    NutritionMethod(
+        title = "Satiety",
+        description = "Build meals around protein, fiber, and water-rich foods that help you stay full longer."
+    ),
+    NutritionMethod(
+        title = "Processing level",
+        description = "Limit sugary snacks, fast food, refined oils, and heavily packaged foods when possible."
+    ),
+    NutritionMethod(
+        title = "Meal timing",
+        description = "Keep meal times consistent and avoid making late-night eating your default routine."
+    ),
+    NutritionMethod(
+        title = "Behavior habits",
+        description = "Account for sleep, stress eating, emotional eating, and your food environment."
+    ),
+    NutritionMethod(
+        title = "Progress trends",
+        description = "Adjust using weekly weight, waist, hunger, energy, and training performance instead of one day."
+    )
+)
 
 @Composable
 private fun ResultCard(result: CaloriePlan) {
@@ -814,6 +938,14 @@ private fun MealLogRow(
                 text = "${meal.calories} kcal • P ${meal.proteinGrams}g • C ${meal.carbsGrams}g • F ${meal.fatGrams}g",
                 style = MaterialTheme.typography.bodyMedium
             )
+
+            if (meal.matchedFoods.isNotEmpty()) {
+                Text(
+                    text = "Guide foods: ${meal.matchedFoods.joinToString()}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
 
             OutlinedButton(
                 onClick = onDeleteMealClick,

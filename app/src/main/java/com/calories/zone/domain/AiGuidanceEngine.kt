@@ -13,7 +13,11 @@ class RuleBasedAiGuidanceEngine : AiGuidanceEngine {
     override fun buildInsights(input: UserProfileInput, plan: CaloriePlan): List<String> = buildList {
         add(
             when (input.goal) {
-                Goal.LoseFat -> "Start with this 15% deficit for two weeks and adjust only if your weekly average weight is flat."
+                Goal.LoseFat -> if (plan.targetCalories == 1200) {
+                    "This is an aggressive fat-loss target. Prioritize protein, high-volume foods, hydration, and consistent energy."
+                } else {
+                    "Start with this 15% deficit for two weeks and adjust only if your weekly average weight is flat."
+                }
                 Goal.Maintain -> "Use this intake as a baseline and keep your bodyweight within a narrow weekly range."
                 Goal.BuildMuscle -> "This small surplus is enough for muscle gain without turning the bulk into unnecessary fat gain."
             }

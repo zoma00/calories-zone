@@ -12,9 +12,11 @@ import com.calories.zone.domain.CalorieCalculator
 import com.calories.zone.domain.ChatContext
 import com.calories.zone.domain.MealNutritionEstimate
 import com.calories.zone.domain.MealNutritionEstimator
+import com.calories.zone.domain.NutritionGuideCalculator
 import com.calories.zone.domain.PolicyAwareAiChatEngine
 import com.calories.zone.domain.RuleBasedAiGuidanceEngine
 import com.calories.zone.domain.RuleBasedMealNutritionEstimator
+import com.calories.zone.domain.RuleBasedNutritionGuideCalculator
 import com.calories.zone.model.ActivityLevel
 import com.calories.zone.model.CaloriePlan
 import com.calories.zone.model.ChatMessage
@@ -24,6 +26,7 @@ import com.calories.zone.model.Goal
 import com.calories.zone.model.MealEntryUnit
 import com.calories.zone.model.MealLogEntry
 import com.calories.zone.model.MealTotals
+import com.calories.zone.model.NutritionGuideScore
 import com.calories.zone.model.SavedProfile
 import com.calories.zone.model.Sex
 import com.calories.zone.model.UserProfileInput
@@ -56,6 +59,7 @@ data class CaloriesUiState(
     val mealFat: String = "",
     val result: CaloriePlan? = null,
     val guidanceNotes: List<String> = emptyList(),
+    val nutritionGuideScore: NutritionGuideScore = NutritionGuideScore(),
     val chatInput: String = "",
     val chatMessages: List<ChatMessage> = emptyList(),
     val chatStatusMessage: String? = null,
@@ -68,6 +72,7 @@ class CaloriesViewModel(
     private val aiGuidanceEngine: AiGuidanceEngine = RuleBasedAiGuidanceEngine(),
     private val aiChatEngine: AiChatEngine = PolicyAwareAiChatEngine(),
     private val mealNutritionEstimator: MealNutritionEstimator = RuleBasedMealNutritionEstimator(),
+    private val nutritionGuideCalculator: NutritionGuideCalculator = RuleBasedNutritionGuideCalculator(),
     private val storage: LocalAppStorage? = null
 ) : ViewModel() {
     var uiState by mutableStateOf(CaloriesUiState())
@@ -342,14 +347,17 @@ class CaloriesViewModel(
             proteinGrams = estimate.proteinGrams,
             carbsGrams = estimate.carbsGrams,
             fatGrams = estimate.fatGrams,
-            loggedAtLabel = LocalDateTime.now().format(TIME_LABEL_FORMATTER)
+            loggedAtLabel = LocalDateTime.now().format(TIME_LABEL_FORMATTER),
+            matchedFoods = estimate.matchedFoods
         )
         val updatedMeals = listOf(mealEntry) + uiState.meals
         storage?.saveMeals(updatedMeals)
+        val updatedGuideScore = nutritionGuideCalculator.calculate(parseInput(), uiState.result, updatedMeals)
 
         uiState = uiState.copy(
             meals = updatedMeals,
             mealTotals = calculateMealTotals(updatedMeals),
+            nutritionGuideScore = updatedGuideScore,
             mealName = "",
             mealEntryAmount = "",
             mealCalories = "",
@@ -371,6 +379,7 @@ class CaloriesViewModel(
         uiState = uiState.copy(
             meals = updatedMeals,
             mealTotals = calculateMealTotals(updatedMeals),
+            nutritionGuideScore = nutritionGuideCalculator.calculate(parseInput(), uiState.result, updatedMeals),
             validationMessage = null,
             statusMessage = "Meal removed."
         )
@@ -410,6 +419,7 @@ class CaloriesViewModel(
         uiState = uiState.copy(
             result = result,
             guidanceNotes = aiGuidanceEngine.buildInsights(input, result),
+            nutritionGuideScore = nutritionGuideCalculator.calculate(input, result, uiState.meals),
             validationMessage = null,
             statusMessage = statusMessage
         )

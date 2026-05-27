@@ -56,7 +56,8 @@ class LocalAppStorage(context: Context) {
                         proteinGrams = item.getInt("proteinGrams"),
                         carbsGrams = item.getInt("carbsGrams"),
                         fatGrams = item.getInt("fatGrams"),
-                        loggedAtLabel = item.getString("loggedAtLabel")
+                        loggedAtLabel = item.getString("loggedAtLabel"),
+                        matchedFoods = item.optJSONArray("matchedFoods")?.toStringList().orEmpty()
                     )
                 )
             }
@@ -75,6 +76,7 @@ class LocalAppStorage(context: Context) {
                     .put("carbsGrams", meal.carbsGrams)
                     .put("fatGrams", meal.fatGrams)
                     .put("loggedAtLabel", meal.loggedAtLabel)
+                    .put("matchedFoods", JSONArray(meal.matchedFoods))
             )
         }
 
@@ -149,6 +151,12 @@ class LocalAppStorage(context: Context) {
         }
 
         preferences.edit().putString(KEY_CHAT_MESSAGES, payload.toString()).apply()
+    }
+
+    private fun JSONArray.toStringList(): List<String> = buildList {
+        for (index in 0 until length()) {
+            add(optString(index))
+        }
     }
 
     private companion object {
