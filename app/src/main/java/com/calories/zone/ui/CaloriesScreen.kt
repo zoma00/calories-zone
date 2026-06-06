@@ -164,6 +164,8 @@ private fun CaloriesScreen(
                 }
             }
 
+            PrivacyAndDisclaimerCard()
+
             ElevatedCard {
                 Column(
                     modifier = Modifier.padding(16.dp),
@@ -337,6 +339,42 @@ private fun CaloriesScreen(
                 onCustomFoodFatChanged = onCustomFoodFatChanged,
                 onAddCustomFoodClick = onAddCustomFoodClick,
                 onDeleteCustomFoodClick = onDeleteCustomFoodClick
+            )
+        }
+    }
+}
+
+@Composable
+private fun PrivacyAndDisclaimerCard() {
+    ElevatedCard {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Text(
+                text = "Privacy and disclaimer",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = "Calories Zone stores your profile, meals, custom foods, and assistant chat on this device. The Android app does not require an account, cloud sync, ads, analytics, or network access in this version.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                text = "Android backup is disabled. You can delete saved meals and custom foods in the app; clearing app storage or uninstalling removes remaining local data.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                text = "Calories Zone is not a medical device and does not diagnose, treat, cure, or prevent any medical condition. Consult a qualified healthcare professional for medical advice, diagnosis, or treatment.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                text = "Privacy policy: https://zoma00.github.io/calories-zone/privacy-policy.html",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

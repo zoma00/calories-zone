@@ -3,14 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calories Zone Preview</title>
+    <link rel="icon" type="image/png" href="../calories.png">
+    <title>Calories Zone Browser Preview</title>
+    <meta name="description" content="Browser preview of the Calories Zone Android app concept with calorie planning, saved profile flow, local meal logging, nutrition guidance, and food estimates.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Hazem El Batawy">
+    <meta name="theme-color" content="#0f766e">
+    <link rel="canonical" href="https://zoma00.github.io/calories-zone/preview/">
+    <link rel="privacy-policy" href="https://zoma00.github.io/calories-zone/privacy-policy.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Calories Zone">
+    <meta property="og:title" content="Calories Zone Browser Preview">
+    <meta property="og:description" content="Explore a static browser preview of the Calories Zone app flow for calorie planning, meal logging, and local nutrition guidance.">
+    <meta property="og:url" content="https://zoma00.github.io/calories-zone/preview/">
+    <meta property="og:image" content="https://zoma00.github.io/calories-zone/calories.png">
+    <meta property="og:image:alt" content="Calories Zone app icon">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calories Zone Browser Preview">
+    <meta name="twitter:description" content="Explore a static browser preview of the Calories Zone app flow for calorie planning, meal logging, and local nutrition guidance.">
+    <meta name="twitter:image" content="https://zoma00.github.io/calories-zone/calories.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Calories Zone Browser Preview",
+        "description": "Static browser preview of an Android app concept for calorie planning, saved profile flow, meal logging, and nutrition guidance.",
+        "url": "https://zoma00.github.io/calories-zone/preview/",
+        "image": "https://zoma00.github.io/calories-zone/calories.png",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web browser",
+        "author": {
+            "@type": "Person",
+            "name": "Hazem El Batawy"
+        },
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Calories Zone",
+            "url": "https://zoma00.github.io/calories-zone/"
+        }
+    }
+    </script>
     <style>
         :root {
             color-scheme: light;
-            --bg: #f7f4ed;
-            --surface: #fffaf2;
-            --card: #ffffff;
-            --line: #ddd4c6;
+            --bg: #d8f1ff;
+            --surface: #eef9ff;
+            --card: #f7fcff;
+            --line: #b9dceb;
             --text: #1f1d19;
             --muted: #635f57;
             --primary: #0f766e;
@@ -27,7 +66,7 @@
         body {
             margin: 0;
             font-family: "Segoe UI", system-ui, sans-serif;
-            background: radial-gradient(circle at top left, #fffefb 0%, var(--bg) 65%);
+            background: radial-gradient(circle at top left, #f1fbff 0%, var(--bg) 62%, #c7e8f8 100%);
             color: var(--text);
         }
 
@@ -50,29 +89,83 @@
             overflow: hidden;
         }
 
+        .dropdown-section {
+            padding: 0;
+        }
+
+        .dropdown-section summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 18px;
+            cursor: pointer;
+            font-weight: 800;
+            list-style: none;
+        }
+
+        .dropdown-section summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .dropdown-section summary::after {
+            content: "+";
+            flex: 0 0 auto;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            color: var(--primary);
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .dropdown-section[open] summary::after {
+            content: "-";
+        }
+
+        .dropdown-title {
+            font-size: 1.45rem;
+            line-height: 1.2;
+        }
+
+        .hero-title {
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            color: #18130d;
+        }
+
+        .dropdown-body {
+            padding: 0 18px 18px;
+        }
+
         .hero-inner {
-            background: linear-gradient(135deg, var(--primary-soft), #d5fbf4 58%, #f2fffd 100%);
+            background: linear-gradient(135deg, #e7f7ff 0%, #bfe8fb 58%, #f4fbff 100%);
             padding: 26px;
         }
 
         .hero h1 {
             margin: 0 0 10px;
             font-size: clamp(1.8rem, 3vw, 2.8rem);
+            color: #18130d;
         }
 
         .hero p {
             margin: 0;
             max-width: 760px;
             line-height: 1.6;
-            color: #103b38;
+            color: #33281a;
         }
 
         .banner {
             margin-top: 14px;
             padding: 12px 14px;
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.7);
-            color: #19413d;
+            background: rgba(239, 250, 255, 0.9);
+            border: 1px solid #9ed3e8;
+            color: #33281a;
             font-size: 0.95rem;
         }
 
@@ -244,6 +337,10 @@
             background: linear-gradient(135deg, var(--secondary-soft), #fff1de 100%);
         }
 
+        .guidance .dropdown-body {
+            padding-top: 0;
+        }
+
         .guidance ul {
             margin: 0;
             padding-left: 20px;
@@ -292,6 +389,14 @@
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 12px;
+        }
+
+        .meal-form {
+            grid-template-columns: minmax(0, 2fr) minmax(120px, 1fr);
+        }
+
+        .meal-unit-field {
+            grid-column: 1 / -1;
         }
 
         .meal-list {
@@ -358,12 +463,25 @@
             width: 140px;
         }
 
+        .chat-button-stack {
+            display: grid;
+            gap: 8px;
+        }
+
         .meal-top {
             display: flex;
             justify-content: space-between;
             gap: 12px;
             margin-bottom: 6px;
             font-weight: 700;
+        }
+
+        .meal-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
         .pill {
@@ -385,6 +503,7 @@
 
             .form-grid,
             .profile-form,
+            .meal-form,
             .meal-grid,
             .stats,
             .actions,
@@ -396,7 +515,8 @@
             .profile-name-field,
             .profile-age-field,
             .profile-half-field,
-            .profile-full-field {
+            .profile-full-field,
+            .meal-unit-field {
                 grid-column: 1 / -1;
             }
 
@@ -412,13 +532,14 @@
 </head>
 <body>
     <div class="page">
-        <section class="hero">
-            <div class="hero-inner">
-                <h1>Calories Zone Browser Preview</h1>
+        <details class="hero dropdown-section">
+            <summary><span class="dropdown-title hero-title">Calories Zone Browser Preview</span></summary>
+            <div class="hero-inner dropdown-body">
                 <p>This is a local preview of the Android app flow. It mirrors the calculator, saved profile, meal logging, and guidance notes so you can review the product quickly in a browser before shipping the Android build.</p>
                 <div class="banner">This is not the Android APK runtime. The actual installable Android artifact is still the APK or AAB built by Gradle.</div>
+                <p style="margin-top:12px;"><a href="../privacy-policy.html">Privacy policy</a></p>
             </div>
-        </section>
+        </details>
 
         <div class="grid">
             <section class="card span-7">
@@ -511,11 +632,13 @@
                 </div>
             </section>
 
-            <section class="card span-12 guidance">
-                <h2>Local guidance</h2>
-                <p class="subtle">This preview uses the same rule-based guidance approach as the Android app. A future on-device helper should only help with meal text parsing or chat, not with the nutrition math.</p>
-                <ul id="guidanceList"></ul>
-            </section>
+            <details class="card span-12 guidance dropdown-section">
+                <summary><span class="dropdown-title">Local guidance</span></summary>
+                <div class="dropdown-body">
+                    <p class="subtle">This preview uses the same rule-based guidance approach as the Android app. A future on-device helper should only help with meal text parsing or chat, not with the nutrition math.</p>
+                    <ul id="guidanceList"></ul>
+                </div>
+            </details>
 
             <section class="card span-12">
                 <h2>Guide calculation: beyond calories</h2>
@@ -551,57 +674,69 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top:18px;">Next guide actions</h3>
-                <ul id="guideNotesList"></ul>
+                <details class="dropdown-section" style="margin-top:18px;">
+                    <summary><span class="dropdown-title">Next guide actions</span></summary>
+                    <div class="dropdown-body">
+                        <ul id="guideNotesList"></ul>
+                    </div>
+                </details>
 
-                <h3 style="margin-top:18px;">Guide rules</h3>
-                <div class="method-grid">
-                    <article class="method-item">
-                        <h3>Macronutrient tracking</h3>
-                        <p>Watch protein, carbs, and fats so the same calories do not hide low protein or high sugar.</p>
-                    </article>
-                    <article class="method-item">
-                        <h3>Portion method</h3>
-                        <p>Use hand portions: palm for protein, fist for vegetables, cupped hand for carbs, and thumb for fats.</p>
-                    </article>
-                    <article class="method-item">
-                        <h3>Glycemic load</h3>
-                        <p>Prefer slower-digesting carbs like oats or beans when you want steadier energy and appetite control.</p>
-                    </article>
-                    <article class="method-item">
-                        <h3>Nutrient density</h3>
-                        <p>Choose foods that bring more vitamins, minerals, fiber, and protein for the calories.</p>
-                    </article>
-                    <article class="method-item">
-                        <h3>Satiety</h3>
-                        <p>Build meals around protein, fiber, and water-rich foods that help you stay full longer.</p>
-                    </article>
-                    <article class="method-item">
-                        <h3>Processing level</h3>
-                        <p>Limit sugary snacks, fast food, refined oils, and heavily packaged foods when possible.</p>
-                    </article>
-                    <article class="method-item">
-                        <h3>Meal timing</h3>
-                        <p>Keep meal times consistent and avoid making late-night eating your default routine.</p>
-                    </article>
-                    <article class="method-item">
-                        <h3>Behavior habits</h3>
-                        <p>Account for sleep, stress eating, emotional eating, and your food environment.</p>
-                    </article>
-                    <article class="method-item">
-                        <h3>Progress trends</h3>
-                        <p>Adjust using weekly weight, waist, hunger, energy, and training performance instead of one day.</p>
-                    </article>
-                </div>
+                <details class="dropdown-section" style="margin-top:18px;">
+                    <summary><span class="dropdown-title">Guide rules</span></summary>
+                    <div class="dropdown-body">
+                        <div class="method-grid">
+                            <article class="method-item">
+                                <h3>Macronutrient tracking</h3>
+                                <p>Watch protein, carbs, and fats so the same calories do not hide low protein or high sugar.</p>
+                            </article>
+                            <article class="method-item">
+                                <h3>Portion method</h3>
+                                <p>Use hand portions: palm for protein, fist for vegetables, cupped hand for carbs, and thumb for fats.</p>
+                            </article>
+                            <article class="method-item">
+                                <h3>Glycemic load</h3>
+                                <p>Prefer slower-digesting carbs like oats or beans when you want steadier energy and appetite control.</p>
+                            </article>
+                            <article class="method-item">
+                                <h3>Nutrient density</h3>
+                                <p>Choose foods that bring more vitamins, minerals, fiber, and protein for the calories.</p>
+                            </article>
+                            <article class="method-item">
+                                <h3>Satiety</h3>
+                                <p>Build meals around protein, fiber, and water-rich foods that help you stay full longer.</p>
+                            </article>
+                            <article class="method-item">
+                                <h3>Processing level</h3>
+                                <p>Limit sugary snacks, fast food, refined oils, and heavily packaged foods when possible.</p>
+                            </article>
+                            <article class="method-item">
+                                <h3>Meal timing</h3>
+                                <p>Keep meal times consistent and avoid making late-night eating your default routine.</p>
+                            </article>
+                            <article class="method-item">
+                                <h3>Behavior habits</h3>
+                                <p>Account for sleep, stress eating, emotional eating, and your food environment.</p>
+                            </article>
+                            <article class="method-item">
+                                <h3>Progress trends</h3>
+                                <p>Adjust using weekly weight, waist, hunger, energy, and training performance instead of one day.</p>
+                            </article>
+                        </div>
+                    </div>
+                </details>
             </section>
 
             <section class="card span-12">
                 <h2>Local wellness assistant</h2>
                 <p class="subtle">General wellness guidance only. This preview assistant does not diagnose, treat, cure, or prevent medical conditions.</p>
+                <p class="subtle">Food estimates use a local preview index, including values extracted from the Carbs &amp; Cals sample PDF where available.</p>
                 <div id="chatList" class="chat-list"></div>
                 <div class="chat-actions">
                     <textarea id="chatInput" rows="3" placeholder="Ask about meals, calories, macros, hydration, or consistency habits"></textarea>
-                    <button id="sendChatButton" type="button">Send</button>
+                    <div class="chat-button-stack">
+                        <button id="sendChatButton" type="button">Send</button>
+                        <button id="clearChatButton" class="secondary" type="button">Clear chat</button>
+                    </div>
                 </div>
                 <div id="chatMessage" class="message"></div>
             </section>
@@ -609,7 +744,8 @@
             <section class="card span-12">
                 <h2>Meal log</h2>
                 <p class="subtle">Enter meal entry name and amount in grams, ml, or pounds. Nutrition is auto-calculated as you type.</p>
-                <div class="form-grid">
+                <p class="subtle">The calorie index is local to this preview and combines built-in estimates with a Carbs &amp; Cals sample-derived subset.</p>
+                <div class="form-grid meal-form">
                     <div>
                         <label for="mealName">Meal entry name</label>
                         <input id="mealName" type="text" placeholder="Chicken rice bowl">
@@ -618,7 +754,7 @@
                         <label for="mealAmount">Meal entry amount</label>
                         <input id="mealAmount" type="number" min="0" step="0.1" placeholder="250">
                     </div>
-                    <div class="span-12">
+                    <div class="meal-unit-field">
                         <label for="mealUnit">Entry unit</label>
                         <select id="mealUnit">
                             <option value="g" selected>Grams (g)</option>
@@ -626,27 +762,42 @@
                             <option value="lb">Pounds (lb)</option>
                         </select>
                     </div>
+                    <div class="meal-unit-field">
+                        <label for="mealClassification">Meal classification</label>
+                        <select id="mealClassification">
+                            <option value="beforeBreakfast">Before breakfast</option>
+                            <option value="breakfast" selected>Breakfast</option>
+                            <option value="beforeLunch">Before lunch</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="beforeDinner">Before dinner</option>
+                            <option value="dinner">Dinner</option>
+                        </select>
+                    </div>
                 </div>
 
-                <h3 style="margin-top:18px;">Auto calculated</h3>
-                <div class="stats">
-                    <div class="stat">
-                        <div class="stat-label">Calories</div>
-                        <div class="stat-value" id="estimatedCaloriesValue">-</div>
+                <details class="dropdown-section" style="margin-top:18px;">
+                    <summary><span class="dropdown-title">Auto calculated</span></summary>
+                    <div class="dropdown-body">
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-label">Calories</div>
+                                <div class="stat-value" id="estimatedCaloriesValue">-</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">Protein</div>
+                                <div class="stat-value" id="estimatedProteinValue">-</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">Carbs</div>
+                                <div class="stat-value" id="estimatedCarbsValue">-</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">Fat</div>
+                                <div class="stat-value" id="estimatedFatValue">-</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat">
-                        <div class="stat-label">Protein</div>
-                        <div class="stat-value" id="estimatedProteinValue">-</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-label">Carbs</div>
-                        <div class="stat-value" id="estimatedCarbsValue">-</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-label">Fat</div>
-                        <div class="stat-value" id="estimatedFatValue">-</div>
-                    </div>
-                </div>
+                </details>
 
                 <div class="actions" style="margin-top:14px; grid-template-columns: 1fr;">
                     <button id="addMealButton" type="button">Log meal</button>
@@ -688,6 +839,7 @@
         };
 
         const maxChatMessages = 30;
+        const macroRuleVersion = 3;
         const defaultChatGreeting = "I am your local wellness assistant. I can help with meal tracking, target progress, and general nutrition habits. I cannot provide medical advice.";
         const nonMedicalBoundaryMessage = "I can only provide general wellness guidance for meal tracking and nutrition habits. Calories Zone is not a medical device and does not diagnose, treat, cure, or prevent medical conditions. For medical questions, please consult a qualified healthcare professional.";
         const fallbackChatResponse = "I can help with meal logging, calorie targets, and simple daily nutrition habits. Ask about meal ideas, target progress, or macro planning.";
@@ -731,7 +883,211 @@
 
         const gramsPerPound = 453.592;
 
-        const foodProfiles = [
+        const carbsAndCalsSampleProfiles = [
+            sampleFood("bourbon cream", 12, 58, 1, 8, 3),
+            sampleFood("chocolate digestive", 15, 73, 1, 9, 4),
+            sampleFood("shortbread", 15, 75, 1, 8, 4),
+            sampleFood("ginger nut", 10, 45, 0, 7, 2),
+            sampleFood("chocolate", 17, 82, 1, 11, 3),
+            sampleFood("custard cream", 12, 60, 1, 8, 2),
+            sampleFood("digestive biscuit", 15, 69, 1, 10, 3, ["digestive"]),
+            sampleFood("chocolate chip cookie", 10, 47, 1, 6, 2),
+            sampleFood("fig roll", 21, 76, 1, 14, 2),
+            sampleFood("ginger biscuit", 10, 44, 0, 8, 2),
+            sampleFood("chocolate oat biscuit", 19, 93, 1, 12, 5),
+            sampleFood("chocolate sandwich biscuit", 11, 51, 1, 7, 2),
+            sampleFood("gingerbread man", 58, 215, 3, 38, 7),
+            sampleFood("iced ring", 6, 27, 0, 5, 1),
+            sampleFood("burger bun", 82, 216, 7, 40, 4),
+            sampleFood("finger roll", 41, 104, 4, 21, 1),
+            sampleFood("baguette", 85, 224, 8, 48, 2),
+            sampleFood("petit pan", 25, 56, 2, 11, 1),
+            sampleFood("croutons", 15, 66, 2, 10, 2),
+            sampleFood("banana bread", 55, 182, 2, 30, 7),
+            sampleFood("ciabatta", 100, 271, 10, 52, 4),
+            sampleFood("panini", 100, 277, 10, 47, 5),
+            sampleFood("focaccia", 60, 176, 5, 31, 4),
+            sampleFood("toast with chocolate spread and butter", 33, 137, 3, 18, 6, ["toast with choc spread", "chocolate spread toast"]),
+            sampleFood("toast with honey and butter", 33, 124, 3, 19, 5, ["honey toast"]),
+            sampleFood("toast with jam and butter", 33, 123, 3, 19, 5, ["jam toast"]),
+            sampleFood("toast with lemon curd and butter", 33, 123, 3, 18, 5, ["lemon curd toast"]),
+            sampleFood("toast with marmalade and butter", 33, 123, 3, 19, 5, ["marmalade toast"]),
+            sampleFood("toast with peanut butter and butter", 33, 140, 4, 16, 7, ["peanut butter toast"]),
+            sampleFood("low-carb cooked breakfast", 165, 182, 12, 2, 14, ["low carb cooked breakfast"]),
+            sampleFood("kippers spinach and peppers", 175, 191, 12, 3, 12, ["kippers spinach peppers"]),
+            sampleFood("scrambled eggs tomatoes and halloumi", 150, 176, 13, 3, 13, ["scrambled eggs with tomatoes and halloumi"]),
+            sampleFood("apple danish", 87, 308, 6, 39, 14),
+            sampleFood("chocolate chip twist", 85, 340, 4, 32, 22),
+            sampleFood("chocolate eclair", 56, 217, 3, 16, 16, ["chocolate éclair"]),
+            sampleFood("corn flake cake", 54, 248, 3, 40, 10),
+            sampleFood("cinnamon swirl", 79, 357, 4, 36, 22),
+            sampleFood("fruit trellis", 58, 238, 3, 27, 13),
+            sampleFood("cup cake", 56, 272, 2, 34, 14, ["cupcake"]),
+            sampleFood("custard slice", 106, 286, 2, 40, 13),
+            sampleFood("pain aux raisins", 95, 318, 6, 37, 16),
+            sampleFood("pecan plait", 81, 340, 5, 36, 19),
+            sampleFood("custard tart", 92, 242, 6, 26, 13),
+            sampleFood("mini battenburg", 30, 106, 1, 20, 3),
+            sampleFood("cheddar", 25, 104, 6, 0, 9),
+            sampleFood("cottage cheese", 50, 52, 5, 2, 3),
+            sampleFood("cream cheese", 25, 62, 1, 1, 6),
+            sampleFood("edam", 25, 85, 7, 0, 7),
+            sampleFood("black forest gateau", 60, 177, 2, 22, 9),
+            sampleFood("bread and butter pudding", 81, 197, 5, 19, 11),
+            sampleFood("brownie", 45, 228, 3, 24, 14),
+            sampleFood("cheesecake", 100, 294, 4, 35, 16),
+            sampleFood("orange juice", 150, 50, 1, 12, 0),
+            sampleFood("pineapple juice", 150, 62, 0, 16, 0),
+            sampleFood("tomato juice", 150, 21, 1, 5, 0),
+            sampleFood("strawberry banana smoothie", 150, 74, 1, 18, 0, ["smoothie strawberry banana", "smoothie"]),
+            sampleFood("squash", 150, 11, 0, 3, 0),
+            sampleFood("squash no added sugar", 150, 2, 0, 0, 0, ["no added sugar squash"]),
+            sampleFood("boiled egg", 60, 79, 8, 0, 5),
+            sampleFood("fried egg", 50, 115, 8, 0, 9),
+            sampleFood("poached egg", 50, 79, 8, 0, 5),
+            sampleFood("scrambled egg with milk", 70, 125, 8, 1, 10, ["scrambled egg"]),
+            sampleFood("plain omelette", 50, 96, 5, 0, 8, ["omelette plain"]),
+            sampleFood("cheese omelette", 60, 161, 10, 0, 14, ["omelette cheese"]),
+            sampleFood("peach", 138, 46, 1, 10, 0),
+            sampleFood("pear", 104, 45, 0, 11, 0),
+            sampleFood("tinned peaches in juice", 80, 31, 0, 8, 0, ["peaches tinned in juice", "tinned peaches"]),
+            sampleFood("tinned pears in juice", 115, 38, 0, 10, 0, ["pears tinned in juice", "tinned pears"]),
+            sampleFood("nectarine", 80, 32, 1, 7, 0),
+            sampleFood("persimmon", 70, 58, 1, 14, 0),
+            sampleFood("breadstick", 5, 10, 0, 2, 0),
+            sampleFood("crispbread", 14, 48, 1, 10, 0),
+            sampleFood("naan bread", 84, 220, 4, 37, 6, ["naan"]),
+            sampleFood("pitta bread", 66, 175, 3, 33, 3, ["pita bread", "pitta"]),
+            sampleFood("rice cake", 8, 31, 1, 6, 0),
+            sampleFood("sweet biscuit", 12, 60, 1, 8, 3),
+            sampleFood("tea biscuit", 8, 38, 0, 5, 2),
+            sampleFood("quiche lorraine", 100, 269, 9, 20, 18),
+            sampleFood("salmon frittata", 145, 242, 18, 3, 17),
+            sampleFood("chicken caesar salad", 100, 182, 16, 1, 13),
+            sampleFood("greek salad", 140, 183, 4, 3, 18),
+            sampleFood("tuna nicoise salad", 160, 198, 7, 5, 17, ["tuna niçoise salad"]),
+            sampleFood("onion rings battered", 26, 65, 1, 7, 4, ["battered onion rings", "onion rings"]),
+            sampleFood("pickled onions", 35, 8, 0, 2, 0),
+            sampleFood("sun-dried tomatoes", 25, 43, 1, 2, 3, ["sun dried tomatoes"]),
+            sampleFood("stuffing", 65, 63, 2, 13, 1),
+            sampleFood("yorkshire pudding", 40, 79, 3, 10, 3),
+            sampleFood("grilled salmon steak", 130, 273, 34, 0, 15, ["salmon steak grilled", "salmon steak"]),
+            sampleFood("crab meat", 30, 23, 5, 0, 0),
+            sampleFood("baked trout fillet", 60, 90, 14, 0, 4, ["trout fillet baked", "trout fillet"]),
+            sampleFood("seafood sticks", 40, 41, 3, 6, 1),
+            sampleFood("grilled tuna steak", 75, 102, 24, 0, 1, ["tuna steak grilled", "tuna steak"]),
+            sampleFood("fried calamari", 30, 86, 3, 8, 5, ["calamari fried", "calamari"]),
+            sampleFood("whole milk", 150, 95, 5, 7, 5, ["milk whole"]),
+            sampleFood("semi-skimmed milk", 150, 69, 5, 7, 3, ["semi skimmed milk", "milk semi skimmed"]),
+            sampleFood("one percent milk", 150, 61, 5, 7, 2, ["1% milk", "milk 1%"]),
+            sampleFood("skimmed milk", 150, 51, 5, 7, 0, ["skim milk", "milk skimmed"]),
+            sampleFood("dried fruit and nuts", 10, 44, 1, 5, 2),
+            sampleFood("roasted peanuts", 10, 60, 2, 1, 5, ["peanuts roasted", "peanuts"]),
+            sampleFood("hazelnuts", 10, 65, 1, 1, 6),
+            sampleFood("pecans", 10, 69, 1, 1, 7),
+            sampleFood("macadamia nuts", 10, 75, 1, 0, 8),
+            sampleFood("pine nuts", 10, 69, 1, 0, 7),
+            sampleFood("rice noodles", 70, 86, 1, 20, 0, ["noodles rice"]),
+            sampleFood("tinned pasta shapes", 70, 42, 1, 9, 0, ["pasta shapes tinned"]),
+            sampleFood("tinned ravioli", 70, 54, 2, 10, 1, ["ravioli tinned"]),
+            sampleFood("tinned spaghetti", 70, 50, 1, 11, 0, ["spaghetti tinned"]),
+            sampleFood("baked potato slices", 28, 52, 1, 8, 2, ["potato slices baked"]),
+            sampleFood("roast potatoes in oil", 38, 61, 1, 10, 2, ["roast potatoes"]),
+            sampleFood("baked sweet potatoes", 55, 63, 1, 15, 0, ["sweet potatoes baked", "baked sweet potato"]),
+            sampleFood("mashed sweet potato", 55, 46, 1, 11, 0, ["sweet potato mash", "mashed sweet potatoes"]),
+            sampleFood("egg fried rice", 55, 102, 2, 18, 3),
+            sampleFood("jollof rice", 55, 97, 1, 10, 6),
+            sampleFood("mexican rice", 55, 86, 2, 17, 1),
+            sampleFood("pilau rice", 55, 74, 1, 13, 2),
+            sampleFood("blt sandwich", 85, 196, 7, 20, 10, ["blt"]),
+            sampleFood("coronation chicken sandwich", 90, 221, 9, 22, 11, ["coronation chicken"]),
+            sampleFood("cheese and pickle sandwich", 80, 226, 10, 22, 12, ["cheese pickle sandwich"]),
+            sampleFood("egg mayo sandwich", 60, 146, 5, 17, 7),
+            sampleFood("chicken salad sandwich", 95, 163, 10, 21, 5),
+            sampleFood("grilled cheese sandwich", 63, 197, 10, 15, 11),
+            sampleFood("fudge", 12, 52, 0, 10, 2),
+            sampleFood("milk chocolate", 16, 83, 1, 9, 5, ["chocolate milk"]),
+            sampleFood("dark chocolate", 16, 82, 1, 10, 4),
+            sampleFood("small marshmallows", 15, 49, 1, 12, 0, ["marshmallows small", "marshmallow small"]),
+            sampleFood("large marshmallows", 30, 98, 1, 25, 0, ["marshmallows large", "marshmallow large"]),
+            sampleFood("chunky veg soup", 130, 51, 2, 10, 1, ["chunky vegetable soup"]),
+            sampleFood("mushroom soup", 130, 60, 1, 5, 4),
+            sampleFood("onion soup", 130, 53, 1, 7, 3),
+            sampleFood("cream of tomato soup", 130, 66, 1, 10, 3, ["tomato soup cream of", "tomato soup cream"]),
+            sampleFood("sweet chilli sauce", 18, 33, 0, 8, 0),
+            sampleFood("thousand island dressing", 14, 29, 0, 2, 2),
+            sampleFood("sweet and sour sauce", 15, 24, 0, 5, 1),
+            sampleFood("white sauce", 50, 79, 2, 6, 5),
+            sampleFood("tartare sauce", 30, 90, 0, 5, 7),
+            sampleFood("worcestershire sauce", 5, 6, 0, 1, 0),
+            sampleFood("boiled spinach", 40, 8, 1, 0, 0, ["spinach boiled"]),
+            sampleFood("spring greens", 40, 8, 1, 1, 0),
+            sampleFood("sweetcorn", 40, 31, 1, 6, 1),
+            sampleFood("boiled corn on the cob", 44, 17, 1, 2, 0, ["corn on the cob boiled", "corn on the cob"]),
+            sampleFood("quorn chicken pieces", 50, 52, 7, 3, 1),
+            sampleFood("fried tofu", 40, 104, 9, 1, 7, ["tofu fried"]),
+            sampleFood("fried quorn burger", 41, 107, 7, 4, 7, ["quorn burger fried"]),
+            sampleFood("grilled quorn burger", 38, 80, 7, 4, 4, ["quorn burger grilled"]),
+            sampleFood("fried veggie burger", 100, 255, 5, 28, 13, ["veggie burger fried"]),
+            sampleFood("grilled veggie burger", 100, 228, 5, 28, 10, ["veggie burger grilled"]),
+            sampleFood("fried quorn sausage", 39, 97, 5, 5, 6, ["quorn sausage fried"]),
+            sampleFood("grilled quorn sausage", 36, 70, 5, 5, 3, ["quorn sausage grilled"]),
+            sampleFood("fried veggie sausage", 47, 124, 3, 9, 8, ["veggie sausage fried"]),
+            sampleFood("grilled veggie sausage", 44, 97, 3, 9, 5, ["veggie sausage grilled"]),
+            sampleFood("fruit yogurt", 125, 131, 5, 17, 4, ["fruit yoghurt"]),
+            sampleFood("greek yogurt", 125, 166, 7, 6, 13, ["greek yoghurt"]),
+            sampleFood("fruit yogurt fat free", 125, 72, 6, 11, 0, ["fat free fruit yogurt", "fruit yoghurt fat free", "fat free fruit yoghurt"]),
+            sampleFood("greek yogurt low fat", 125, 96, 9, 8, 3, ["low fat greek yogurt", "greek yoghurt low fat", "low fat greek yoghurt"]),
+            sampleFood("fruit yogurt pot", 125, 124, 5, 17, 4, ["fruit yoghurt pot"]),
+            sampleFood("fruit yogurt pot fat free", 125, 72, 6, 11, 0, ["fat free fruit yogurt pot", "fruit yoghurt pot fat free"]),
+            sampleFood("soya yogurt", 125, 91, 3, 16, 2, ["soya yoghurt"]),
+            sampleFood("chicken korma", 225, 286, 33, 10, 11),
+            sampleFood("king prawn bhuna", 175, 210, 15, 3, 15),
+            sampleFood("chicken tandoori", 175, 375, 48, 4, 19),
+            sampleFood("lamb biryani", 225, 439, 16, 47, 21),
+            sampleFood("chicken biryani", 225, 286, 33, 10, 11),
+            sampleFood("vegetable biryani", 225, 198, 5, 35, 7),
+            sampleFood("chicken tikka masala", 225, 325, 40, 8, 14),
+            sampleFood("cheese and onion samosa", 80, 166, 5, 18, 9, ["samosa cheese onion", "samosa cheese and onion"]),
+            sampleFood("vegetable samosa", 80, 142, 3, 18, 7, ["samosa vegetable"]),
+            sampleFood("jam", 12, 47, 0, 12, 0, ["strawberry jam"]),
+            sampleFood("cow meat", 100, 250, 26, 0, 15, ["beef"]),
+            sampleFood("chicken meat", 100, 165, 31, 0, 4, ["chicken breast"]),
+            sampleFood("salmon fish", 100, 208, 22, 0, 13, ["salmon"]),
+            sampleFood("potato vegetable", 173, 161, 4, 37, 0, ["potato"]),
+            sampleFood("tuna fish", 100, 132, 29, 0, 1, ["tuna"]),
+            sampleFood("olive oil", 15, 119, 0, 0, 14, ["olive oil"]),
+            sampleFood("peanut butter", 16, 94, 4, 3, 8, ["peanut butter"]),
+            sampleFood("feta cheese", 28, 75, 4, 1, 6, ["feta"]),
+            sampleFood("cheese", 28, 113, 7, 1, 9, ["cheese"]),
+            sampleFood("chedder cheese", 28, 104, 6, 0, 9, ["cheddar cheese", "cheddar"]),
+            sampleFood("onion", 110, 44, 1, 10, 0), 
+            sampleFood("tomato" , 123, 22, 1, 5, 0),
+            sampleFood("mango", 200, 150, 1, 35, 0),
+            sampleFood("avocado", 150, 240, 3, 12, 22),
+            sampleFood("burger sandwitch", 200, 500, 25, 50, 20, ["beef burger sandwitch", "chicken burger sandwitch", "veggie burger sandwitch", "burger sandwich", "beef burger sandwich", "chicken burger sandwich", "veggie burger sandwich"]),
+            sampleFood("ketchup", 15, 20, 0, 5, 0),
+            sampleFood("cheese cake", 100, 294, 4, 35, 16, ["cheesecake"]),
+            sampleFood("fruit cake", 100, 330, 3, 45, 10, ["fruitcake"]),
+            sampleFood("chocolate cake", 100, 350, 4, 40, 15, ["chocolate cake"]),
+            sampleFood("carrot", 61, 25, 1, 6, 0),
+            sampleFood("cucumber", 52, 8, 0, 2, 0),
+            sampleFood("broccoli", 91, 31, 3, 6, 0),
+            sampleFood("spinach", 30, 7, 1, 1, 0, ["spinach"]),
+            sampleFood("lettuce", 36, 5, 0, 1, 0),
+            sampleFood("zucchini", 124, 20, 2, 4, 0),
+            sampleFood("carrot cake", 100, 350, 4, 40, 15, ["carrot cake"]),
+            sampleFood("blueberry muffin", 100, 400, 5, 50, 15, ["blueberry muffin"]),
+            sampleFood("banana muffin", 100, 380, 4, 45, 12, ["banana muffin"]),
+            sampleFood("apple pie", 100, 320, 3, 40, 10, ["apple pie"]),
+            sampleFood("pumpkin pie", 100, 350, 4, 45, 15, ["pumpkin pie"]),
+            sampleFood("pancakes with syrup", 150, 350, 6, 50, 10, ["pancakes", "pancakes with syrup"]),
+            sampleFood("waffles with syrup", 150, 400, 6, 60, 15, ["waffles", "waffles with syrup"]),
+            sampleFood("pizza slice", 100, 285, 12, 36, 10, ["pizza"]),
+            sampleFood("pasta", 100, 131, 5, 25, 1, ["pasta cooked", "cooked pasta"])
+        ];
+
+        const builtInFoodProfiles = [
             { label: "egg", aliasPattern: "eggs?", calories: 78, protein: 6, carbs: 1, fat: 5, gramsPerServing: 50 },
             { label: "chicken breast", aliasPattern: "chicken(?:\\s+breast)?", calories: 165, protein: 31, carbs: 0, fat: 4, gramsPerServing: 100 },
             { label: "rice", aliasPattern: "(?:white\\s+|brown\\s+)?rice", calories: 206, protein: 4, carbs: 45, fat: 0, gramsPerServing: 158 },
@@ -748,8 +1104,115 @@
             { label: "tuna", aliasPattern: "tuna", calories: 132, protein: 29, carbs: 0, fat: 1, gramsPerServing: 100 },
             { label: "peanut butter", aliasPattern: "peanut\\s+butter", calories: 94, protein: 4, carbs: 3, fat: 8, gramsPerServing: 16 },
             { label: "olive oil", aliasPattern: "olive\\s+oil", calories: 119, protein: 0, carbs: 0, fat: 14, gramsPerServing: 15 },
-            { label: "cheese", aliasPattern: "cheese", calories: 113, protein: 7, carbs: 1, fat: 9, gramsPerServing: 28 }
+            { label: "cheese", aliasPattern: "cheese", calories: 113, protein: 7, carbs: 1, fat: 9, gramsPerServing: 28 },
+            { label: "cheddar cheese", aliasPattern: "cheddar(?:\\s+cheese)?", calories: 104, protein: 6, carbs: 0, fat: 9, gramsPerServing: 28 },
+            { label: "feta cheese", aliasPattern: "feta(?:\\s+cheese)?", calories: 75, protein: 4, carbs: 1, fat: 6, gramsPerServing: 28 },
+            { label: "onion", aliasPattern: "onions?", calories: 44, protein: 1, carbs: 10, fat: 0, gramsPerServing: 110 },
+            { label: "tomato", aliasPattern: "tomatoes?|tomato", calories: 22, protein: 1, carbs: 5, fat: 0, gramsPerServing: 123 },
+            { label: "mango", aliasPattern: "mangoes?|mango", calories: 150, protein: 1, carbs: 35, fat: 0, gramsPerServing: 200 },
+            { label: "avocado", aliasPattern: "avocado", calories: 240, protein: 3, carbs: 12, fat: 22, gramsPerServing: 150 },
+            { label: "ketchup", aliasPattern: "ketchup|catsup", calories: 20, protein: 0, carbs: 5, fat: 0, gramsPerServing: 15 },
+            { label: "pizza", aliasPattern: "pizza", calories: 285, protein: 12, carbs: 36, fat: 10, gramsPerServing: 100 },
+            { label: "pasta", aliasPattern: "(?:cooked\\s+)?pasta", calories: 131, protein: 5, carbs: 25, fat: 1, gramsPerServing: 100 }
         ];
+
+        const foodProfiles = [...carbsAndCalsSampleProfiles, ...builtInFoodProfiles]
+            .map((profile, index) => ({
+                ...profile,
+                source: profile.source || "Calories Zone preview",
+                sourcePriority: profile.sourcePriority || 0,
+                sourceOrder: index
+            }))
+            .sort((a, b) => {
+                if (b.sourcePriority !== a.sourcePriority) {
+                    return b.sourcePriority - a.sourcePriority;
+                }
+
+                if (b.label.length !== a.label.length) {
+                    return b.label.length - a.label.length;
+                }
+
+                return a.sourceOrder - b.sourceOrder;
+            });
+
+        function sampleFood(label, gramsPerServing, calories, protein, carbs, fat, aliases = []) {
+            return {
+                label,
+                aliasPattern: buildAliasPattern(label, aliases),
+                calories,
+                protein,
+                carbs,
+                fat,
+                gramsPerServing,
+                source: "Carbs & Cals sample PDF",
+                sourcePriority: 10
+            };
+        }
+
+        function buildAliasPattern(label, aliases) {
+            const phrases = [label, ...aliases, ...buildAutomaticAliases(label)]
+                .map(normalizeFoodPhrase)
+                .filter(Boolean);
+            const uniquePhrases = [...new Set(phrases)];
+            return uniquePhrases.map((phrase) => escapeRegex(phrase).replace(/\s+/g, "\\s+")).join("|");
+        }
+
+        function buildAutomaticAliases(label) {
+            const phrase = normalizeFoodPhrase(label);
+            if (!phrase) {
+                return [];
+            }
+
+            const aliases = [
+                phrase.replace(/\band\b/g, " "),
+                phrase.replace(/\s+/g, " ")
+            ];
+            const words = phrase.split(" ").filter(Boolean);
+            const lastWord = words[words.length - 1];
+            const leadFoodTerms = [
+                "bread",
+                "biscuit",
+                "burger",
+                "cake",
+                "cheese",
+                "chocolate",
+                "egg",
+                "juice",
+                "milk",
+                "omelette",
+                "potato",
+                "rice",
+                "salad",
+                "samosa",
+                "sandwich",
+                "sauce",
+                "sausage",
+                "soup",
+                "toast",
+                "yogurt"
+            ];
+
+            if (words.length > 1 && leadFoodTerms.includes(lastWord)) {
+                const modifiers = words.slice(0, -1).filter((word) => word !== "and");
+                aliases.push(`${lastWord} ${modifiers.join(" ")}`);
+                aliases.push(`${lastWord} ${words.slice(0, -1).join(" ")}`);
+            }
+
+            return aliases;
+        }
+
+        function normalizeFoodPhrase(value) {
+            return String(value)
+                .toLowerCase()
+                .replace(/[()]/g, " ")
+                .replace(/&/g, " and ")
+                .replace(/\s+/g, " ")
+                .trim();
+        }
+
+        function escapeRegex(value) {
+            return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        }
 
         const guideLowScoreThreshold = 70;
         const obesityBmiThreshold = 30;
@@ -761,6 +1224,14 @@
         const fastCarbTerms = ["bread", "toast", "white rice", "soda", "juice", "candy", "cake", "cookie", "donut"];
         const wholeFoodTerms = ["egg", "chicken", "rice", "oats", "oatmeal", "banana", "apple", "beans", "milk", "yogurt", "yoghurt", "salmon", "beef", "steak", "potato", "tuna", "olive oil"];
         const processedFoodTerms = ["soda", "chips", "candy", "cookie", "cake", "donut", "ice cream", "pizza", "burger", "fries", "fast food", "packaged", "snack", "sausage", "hot dog", "fried"];
+        const mealClassifications = {
+            beforeBreakfast: "Before breakfast",
+            breakfast: "Breakfast",
+            beforeLunch: "Before lunch",
+            lunch: "Lunch",
+            beforeDinner: "Before dinner",
+            dinner: "Dinner"
+        };
 
         const elements = {
             profileName: document.getElementById("profileName"),
@@ -776,6 +1247,7 @@
             mealName: document.getElementById("mealName"),
             mealAmount: document.getElementById("mealAmount"),
             mealUnit: document.getElementById("mealUnit"),
+            mealClassification: document.getElementById("mealClassification"),
             estimatedCaloriesValue: document.getElementById("estimatedCaloriesValue"),
             estimatedProteinValue: document.getElementById("estimatedProteinValue"),
             estimatedCarbsValue: document.getElementById("estimatedCarbsValue"),
@@ -796,6 +1268,7 @@
             chatList: document.getElementById("chatList"),
             chatInput: document.getElementById("chatInput"),
             sendChatButton: document.getElementById("sendChatButton"),
+            clearChatButton: document.getElementById("clearChatButton"),
             chatMessage: document.getElementById("chatMessage")
         };
 
@@ -813,6 +1286,7 @@
         }
 
         hydrateProfile();
+        refreshCurrentPlanForMacroRule();
         renderMeals();
         renderPlan(currentPlan);
         renderChatMessages();
@@ -869,6 +1343,7 @@
             const name = elements.mealName.value.trim();
             const amount = parseDecimal(elements.mealAmount.value);
             const unit = elements.mealUnit.value;
+            const classification = normalizeMealClassification(elements.mealClassification.value);
 
             if (!name || amount === null || amount <= 0) {
                 showMessage(elements.mealMessage, "Enter a meal name and meal entry amount before logging the meal.", true);
@@ -889,6 +1364,8 @@
                 proteinGrams: estimate.proteinGrams,
                 carbsGrams: estimate.carbsGrams,
                 fatGrams: estimate.fatGrams,
+                classification,
+                classificationLabel: mealClassificationLabel(classification),
                 loggedAtLabel: new Date().toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }),
                 matchedFoods: estimate.matchedFoods
             });
@@ -897,11 +1374,13 @@
             renderMeals();
             elements.mealName.value = "";
             elements.mealAmount.value = "";
+            elements.mealClassification.value = classification;
             updateMealEstimatePreview();
             showMessage(elements.mealMessage, "Meal logged in browser storage.", false);
         });
 
         elements.sendChatButton.addEventListener("click", sendChatMessage);
+        elements.clearChatButton.addEventListener("click", clearChatHistory);
 
         elements.chatInput.addEventListener("keydown", (event) => {
             if (event.key === "Enter" && !event.shiftKey) {
@@ -923,6 +1402,22 @@
             elements.sex.value = storedProfile.sex || "Male";
             elements.activityLevel.value = storedProfile.activityLevel || "Moderate";
             elements.goal.value = storedProfile.goal || "Maintain";
+        }
+
+        function refreshCurrentPlanForMacroRule() {
+            if (!currentPlan || currentPlan.macroRuleVersion === macroRuleVersion) {
+                return;
+            }
+
+            const input = getProfileInput();
+            if (!input) {
+                currentPlan = null;
+                localStorage.removeItem(storageKeys.plan);
+                return;
+            }
+
+            currentPlan = createPlan(input);
+            localStorage.setItem(storageKeys.plan, JSON.stringify(currentPlan));
         }
 
         function getProfileInput() {
@@ -964,6 +1459,7 @@
             return {
                 bmi,
                 bmr: Math.round(bmrRaw),
+                macroRuleVersion,
                 maintenanceCalories,
                 targetCalories,
                 proteinGrams,
@@ -1096,6 +1592,7 @@
                 elements.mealList.appendChild(empty);
             } else {
                 meals.slice(0, 8).forEach((meal) => {
+                    const classification = normalizeMealClassification(meal.classification);
                     const item = document.createElement("article");
                     item.className = "meal-item";
 	                    item.innerHTML = `
@@ -1103,6 +1600,9 @@
 	                            <span>${meal.name}</span>
 	                            <span>${meal.loggedAtLabel}</span>
 	                        </div>
+                            <div class="meal-meta">
+                                <span class="pill">${mealClassificationLabel(classification)}</span>
+                            </div>
 	                        <div>${meal.calories} kcal • P ${meal.proteinGrams}g • C ${meal.carbsGrams}g • F ${meal.fatGrams}g</div>
 	                    `;
 
@@ -1444,6 +1944,14 @@
             }
         }
 
+        function clearChatHistory() {
+            chatMessages = [createChatMessage("Assistant", defaultChatGreeting)];
+            persistChatMessages();
+            renderChatMessages();
+            elements.chatInput.value = "";
+            showMessage(elements.chatMessage, "Previous chat cleared from browser storage.", false);
+        }
+
         function buildChatReply(userMessage) {
             const normalized = userMessage.trim().toLowerCase();
             if (!normalized) {
@@ -1473,6 +1981,10 @@
         function completeChatPrompt(userMessage, context) {
             const normalized = userMessage.toLowerCase();
 
+            if (isMealCountQuestion(normalized)) {
+                return mealCountReply(context);
+            }
+
             if (containsAny(normalized, ["remaining", "left", "over", "target", "today"])) {
                 return calorieStatusReply(context);
             }
@@ -1496,6 +2008,10 @@
                 return "Hydration baseline: aim for steady water intake through the day and add extra around training or very hot weather.";
             }
 
+            if (containsAny(normalized, ["habit", "habits", "routine", "routines", "consistency", "consistent", "good habits"])) {
+                return habitsReply(context);
+            }
+
             if (containsAny(normalized, ["data", "privacy", "store", "offline", "local"])) {
                 return "Your profile, meals, and chat stay local on this device in this version.";
             }
@@ -1514,7 +2030,7 @@
                 return null;
             }
 
-            return `Estimated for ${estimatorInput}: ${estimate.calories} kcal • P ${estimate.proteinGrams}g • C ${estimate.carbsGrams}g • F ${estimate.fatGrams}g.`;
+            return `Estimated for ${estimatorInput}: ${estimate.calories} kcal • P ${estimate.proteinGrams}g • C ${estimate.carbsGrams}g • F ${estimate.fatGrams}g. Guide foods: ${estimate.matchedFoods.join(", ")}.`;
         }
 
         function toEstimatorInput(userMessage) {
@@ -1542,6 +2058,24 @@
             return `You have logged ${context.mealTotals.calories} kcal and your target is ${context.targetCalories} kcal. You are ${Math.abs(delta)} kcal over target today.`;
         }
 
+        function isMealCountQuestion(normalized) {
+            return containsAny(normalized, ["how many", "count", "number of"])
+                && containsAny(normalized, ["meal", "meals", "breakfast", "lunch", "dinner", "snack", "taken", "ate", "logged"]);
+        }
+
+        function mealCountReply(context) {
+            if (context.mealCount === 0) {
+                return "You have not logged any meals today yet.";
+            }
+
+            const mealWord = context.mealCount === 1 ? "meal" : "meals";
+            const classificationSummary = context.mealClassificationSummary
+                ? ` Breakdown: ${context.mealClassificationSummary}.`
+                : "";
+
+            return `You have logged ${context.mealCount} ${mealWord} today: ${context.mealNames.join(", ")}.${classificationSummary} Total so far: ${context.mealTotals.calories} kcal • P ${context.mealTotals.proteinGrams}g • C ${context.mealTotals.carbsGrams}g • F ${context.mealTotals.fatGrams}g.`;
+        }
+
         function macroReply(context) {
             let goalLine = "";
             if (context.goal === "LoseFat") {
@@ -1567,6 +2101,15 @@
             return "Try a higher-energy plate: rice or potatoes, salmon or beef, vegetables, and milk or yogurt.";
         }
 
+        function habitsReply(context) {
+            const targetLine = context.targetCalories === null
+                ? "Generate a plan when you want calorie-specific feedback."
+                : `Use your ${context.targetCalories} kcal target as a daily guide, not a reason to chase perfection.`;
+
+            return `${targetLine} Good habits: log meals soon after eating, build each main meal around protein and vegetables, drink water through the day, walk after meals when possible, keep sleep consistent, and review weekly trends instead of judging one day.`;
+        }
+
+
         function generalReply(context) {
             const targetLine = context.targetCalories === null
                 ? "Generate a plan to get your target calories first."
@@ -1582,12 +2125,23 @@
                 carbsGrams: acc.carbsGrams + meal.carbsGrams,
                 fatGrams: acc.fatGrams + meal.fatGrams
             }), { calories: 0, proteinGrams: 0, carbsGrams: 0, fatGrams: 0 });
+            const classificationCounts = meals.reduce((acc, meal) => {
+                const label = mealClassificationLabel(meal.classification);
+                acc[label] = (acc[label] || 0) + 1;
+                return acc;
+            }, {});
+            const mealClassificationSummary = Object.entries(classificationCounts)
+                .map(([label, count]) => `${label}: ${count}`)
+                .join(", ");
 
             return {
                 profileName: elements.profileName.value.trim() || "My profile",
                 goal: elements.goal.value,
                 targetCalories: currentPlan ? currentPlan.targetCalories : null,
-                mealTotals
+                mealTotals,
+                mealCount: meals.length,
+                mealNames: meals.map((meal) => meal.name),
+                mealClassificationSummary
             };
         }
 
@@ -1645,6 +2199,16 @@
             return `${formatAmount(amount)} ${unit} ${name}`;
         }
 
+        function normalizeMealClassification(value) {
+            return Object.prototype.hasOwnProperty.call(mealClassifications, value)
+                ? value
+                : "breakfast";
+        }
+
+        function mealClassificationLabel(value) {
+            return mealClassifications[normalizeMealClassification(value)];
+        }
+
         function estimateMealNutrition(mealText) {
             const normalizedMeal = mealText.trim().toLowerCase();
             if (!normalizedMeal) {
@@ -1656,13 +2220,23 @@
             let carbs = 0;
             let fat = 0;
             const matchedFoods = [];
+            const matchedSources = [];
+            const profileMatches = [];
 
             foodProfiles.forEach((profile) => {
-                const servings = findServings(normalizedMeal, profile);
-                if (servings <= 0) {
+                const match = findProfileMatch(normalizedMeal, profile);
+                if (!match || match.servings <= 0) {
                     return;
                 }
 
+                if (profileMatches.some((existingMatch) => rangesOverlap(existingMatch, match))) {
+                    return;
+                }
+
+                profileMatches.push({ ...match, profile });
+            });
+
+            profileMatches.forEach(({ profile, servings }) => {
                 calories += profile.calories * servings;
                 protein += profile.protein * servings;
                 carbs += profile.carbs * servings;
@@ -1672,6 +2246,10 @@
                     matchedFoods.push(profile.label);
                 } else {
                     matchedFoods.push(`${formatServings(servings)} x ${profile.label}`);
+                }
+
+                if (profile.source && !matchedSources.includes(profile.source)) {
+                    matchedSources.push(profile.source);
                 }
             });
 
@@ -1684,19 +2262,26 @@
                 proteinGrams: Math.max(0, Math.round(protein)),
                 carbsGrams: Math.max(0, Math.round(carbs)),
                 fatGrams: Math.max(0, Math.round(fat)),
-                matchedFoods
+                matchedFoods,
+                matchedSources
             };
         }
 
         function findServings(mealText, profile) {
+            return findProfileMatch(mealText, profile)?.servings || 0;
+        }
+
+        function findProfileMatch(mealText, profile) {
             const aliasRegex = new RegExp(`\\b(?:${profile.aliasPattern})\\b`, "i");
-            if (!aliasRegex.test(mealText)) {
-                return 0;
+            const aliasMatch = mealText.match(aliasRegex);
+            if (!aliasMatch) {
+                return null;
             }
 
             if (profile.gramsPerServing) {
+                const optionalDescriptors = "(?:[a-z]+\\s+){0,3}";
                 const metricRegex = new RegExp(
-                    `(\\d+(?:\\.\\d+)?)\\s*(g|gram|grams|ml|milliliter|milliliters|lb|lbs|pound|pounds)\\s*(?:of\\s+)?(?:${profile.aliasPattern})\\b|(?:${profile.aliasPattern})\\b\\s*(\\d+(?:\\.\\d+)?)\\s*(g|gram|grams|ml|milliliter|milliliters|lb|lbs|pound|pounds)`,
+                    `(\\d+(?:\\.\\d+)?)\\s*(g|gram|grams|ml|milliliter|milliliters|lb|lbs|pound|pounds)\\s*(?:of\\s+)?${optionalDescriptors}(?:${profile.aliasPattern})\\b|(?:${profile.aliasPattern})\\b\\s*(\\d+(?:\\.\\d+)?)\\s*(g|gram|grams|ml|milliliter|milliliters|lb|lbs|pound|pounds)`,
                     "i"
                 );
                 const metricMatch = mealText.match(metricRegex);
@@ -1706,7 +2291,11 @@
                     const gramsValue = toGrams(amountValue, unitLabel);
 
                     if (Number.isFinite(gramsValue) && gramsValue > 0) {
-                        return clamp(gramsValue / profile.gramsPerServing, 0.25, 20);
+                        return {
+                            servings: clamp(gramsValue / profile.gramsPerServing, 0.25, 20),
+                            start: metricMatch.index,
+                            end: metricMatch.index + metricMatch[0].length
+                        };
                     }
                 }
             }
@@ -1719,7 +2308,11 @@
             if (prefixMatch) {
                 const count = Number(prefixMatch[1]);
                 if (Number.isFinite(count) && count > 0) {
-                    return clamp(count, 0.25, 20);
+                    return {
+                        servings: clamp(count, 0.25, 20),
+                        start: prefixMatch.index,
+                        end: prefixMatch.index + prefixMatch[0].length
+                    };
                 }
             }
 
@@ -1731,11 +2324,23 @@
             if (postfixMatch) {
                 const count = Number(postfixMatch[1]);
                 if (Number.isFinite(count) && count > 0) {
-                    return clamp(count, 0.25, 20);
+                    return {
+                        servings: clamp(count, 0.25, 20),
+                        start: postfixMatch.index,
+                        end: postfixMatch.index + postfixMatch[0].length
+                    };
                 }
             }
 
-            return 1;
+            return {
+                servings: 1,
+                start: aliasMatch.index,
+                end: aliasMatch.index + aliasMatch[0].length
+            };
+        }
+
+        function rangesOverlap(left, right) {
+            return left.start < right.end && right.start < left.end;
         }
 
         function toGrams(value, unit) {
