@@ -1,6 +1,14 @@
 # Calories Zone
 
+[![Platform: Android](https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white)](https://www.android.com/)
+[![Google Play: Closed testing complete](https://img.shields.io/badge/Google_Play-Closed_testing_complete-34A853?logo=googleplay&logoColor=white)](#google-play-release-status)
+[![Release: Production next](https://img.shields.io/badge/Release-Production_next-4285F4)](#google-play-release-status)
+
 Calories Zone is a local-first Android calorie calculator built with Kotlin and Jetpack Compose. It estimates BMR, maintenance calories, target calories for cutting or bulking, and a macro split. The app now also saves a profile on-device and logs meals locally so you can use it without a backend.
+
+## Google Play release status
+
+**Calories Zone has successfully completed closed testing in Google Play Console and is now moving into the final production release phase.**
 
 ## What is included
 
